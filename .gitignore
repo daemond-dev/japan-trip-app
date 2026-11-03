@@ -1,7 +1,7 @@
 # per-copy settings and secrets
 android/local.properties
-android/*.keystore
-android/*.jks
+*.keystore
+*.jks
 # generated
 android/out/
 android/assets/www/index.html
