@@ -1,0 +1,237 @@
+{
+ "name": "seafood-allergy",
+ "description": "For a traveler allergic to all seafood (fish, shellfish, crustaceans, squid, octopus, and anything made from them). Ask whether seaweed is also off limits before adding the kelp-stock phrase.",
+ "sections": [
+  {
+   "after": "Food allergies",
+   "name": "Seafood allergy",
+   "phrases": [
+    {
+     "en": "Do you have any allergies?",
+     "ja": "アレルギーはございますか",
+     "ro": "arerugii wa gozaimasu ka",
+     "hear": true
+    },
+    {
+     "en": "One of us is allergic to all seafood",
+     "ja": "一人、魚介類アレルギーの者がいます",
+     "ro": "hitori, gyokairui arerugii no mono ga imasu"
+    },
+    {
+     "en": "I’m allergic to all seafood",
+     "ja": "私は魚介類アレルギーです",
+     "ro": "watashi wa gyokairui arerugii desu"
+    },
+    {
+     "en": "Fish, shellfish, shrimp and crab, squid and octopus: none of it, raw or cooked",
+     "ja": "魚も貝もエビ・カニもイカ・タコも、生でも加熱していても食べられません",
+     "ro": "sakana mo kai mo ebi kani mo ika tako mo, nama demo kanetsu shite ite mo taberaremasen"
+    },
+    {
+     "en": "Full allergy note (show to staff)",
+     "ja": "同行者が魚介類全般にアレルギーがあります。魚、貝類、エビ・カニなどの甲殻類、イカ・タコは、生でも加熱したものでも食べられません。かつお節や煮干しなど魚のだし、魚醤、オイスターソースなど魚介由来の調味料も同様です。魚介類を一切使っていない料理を教えていただけますか。お手数をおかけしますが、ご配慮のほどよろしくお願いいたします。",
+     "ro": "One of us is allergic to all seafood: fish, shellfish, crustaceans (shrimp, crab), squid and octopus, raw or cooked. That includes fish stock (bonito flakes, dried sardines), fish sauce and oyster sauce. Could you tell us which dishes use no seafood at all?",
+     "card": true
+    },
+    {
+     "en": "Is there any seafood in this?",
+     "ja": "これに魚介類は入っていますか",
+     "ro": "kore ni gyokairui wa haitte imasu ka"
+    },
+    {
+     "en": "Yes, it has that in it",
+     "ja": "入っています",
+     "ro": "haitte imasu",
+     "hear": true
+    },
+    {
+     "en": "No, it doesn’t have that",
+     "ja": "入っていません",
+     "ro": "haitte imasen",
+     "hear": true
+    },
+    {
+     "en": "Is the stock made with fish?",
+     "ja": "だしに魚は使っていますか",
+     "ro": "dashi ni sakana wa tsukatte imasu ka"
+    },
+    {
+     "en": "Which dishes have no seafood at all?",
+     "ja": "魚介類を全く使っていない料理はどれですか",
+     "ro": "gyokairui o mattaku tsukatte inai ryouri wa dore desu ka"
+    },
+    {
+     "en": "Can you make it without any seafood?",
+     "ja": "魚介類を一切入れずに作れますか",
+     "ro": "gyokairui o issai irezu ni tsukuremasu ka"
+    },
+    {
+     "en": "Even cooked, it’s not OK",
+     "ja": "加熱してあっても食べられません",
+     "ro": "kanetsu shite atte mo taberaremasen"
+    },
+    {
+     "en": "Even a little is a problem",
+     "ja": "少しでも入っているとだめです",
+     "ro": "sukoshi demo haitte iru to dame desu"
+    },
+    {
+     "en": "Does the sauce have fish or oyster in it?",
+     "ja": "ソースに魚やカキは入っていますか",
+     "ro": "soosu ni sakana ya kaki wa haitte imasu ka"
+    },
+    {
+     "en": "Are there bonito flakes on top?",
+     "ja": "上にかつお節はかかっていますか",
+     "ro": "ue ni katsuobushi wa kakatte imasu ka"
+    },
+    {
+     "en": "Without bonito flakes, please",
+     "ja": "かつお節なしでお願いします",
+     "ro": "katsuobushi nashi de onegai shimasu"
+    },
+    {
+     "en": "Seafood (fish and shellfish)",
+     "ja": "魚介類",
+     "ro": "gyokairui"
+    },
+    {
+     "en": "Fish stock / bonito stock",
+     "ja": "魚のだし・かつおだし",
+     "ro": "sakana no dashi, katsuo dashi"
+    },
+    {
+     "en": "Dried sardine stock",
+     "ja": "煮干しだし",
+     "ro": "niboshi dashi"
+    },
+    {
+     "en": "Fish sauce",
+     "ja": "魚醤",
+     "ro": "gyoshou"
+    },
+    {
+     "en": "Oyster sauce",
+     "ja": "オイスターソース",
+     "ro": "oisutaa soosu"
+    },
+    {
+     "en": "Fish cake (in ramen, udon, oden)",
+     "ja": "かまぼこ・ちくわ・なると",
+     "ro": "kamaboko, chikuwa, naruto"
+    },
+    {
+     "en": "Fish roe",
+     "ja": "いくら・明太子・たらこ",
+     "ro": "ikura, mentaiko, tarako"
+    },
+    {
+     "en": "Shrimp and crab",
+     "ja": "エビ・カニ",
+     "ro": "ebi, kani"
+    },
+    {
+     "en": "Squid and octopus",
+     "ja": "イカ・タコ",
+     "ro": "ika, tako"
+    },
+    {
+     "en": "Shellfish (clams, oysters, scallops)",
+     "ja": "貝類",
+     "ro": "kairui"
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "ja": "魚介",
+   "ro": "gyokai",
+   "en": "Seafood (fish and shellfish)"
+  },
+  {
+   "ja": "海鮮",
+   "ro": "kaisen",
+   "en": "Seafood (on menus)"
+  },
+  {
+   "ja": "えび / エビ",
+   "ro": "ebi",
+   "en": "Shrimp"
+  },
+  {
+   "ja": "かに / カニ",
+   "ro": "kani",
+   "en": "Crab"
+  },
+  {
+   "ja": "貝",
+   "ro": "kai",
+   "en": "Shellfish"
+  },
+  {
+   "ja": "いか / イカ",
+   "ro": "ika",
+   "en": "Squid"
+  },
+  {
+   "ja": "たこ / タコ",
+   "ro": "tako",
+   "en": "Octopus"
+  },
+  {
+   "ja": "だし",
+   "ro": "dashi",
+   "en": "Stock (usually bonito)"
+  },
+  {
+   "ja": "かつお",
+   "ro": "katsuo",
+   "en": "Bonito"
+  }
+ ],
+ "synonyms": [
+  [
+   "seafood",
+   "shellfish",
+   "shrimp",
+   "crab",
+   "prawn",
+   "crustacean",
+   "fish",
+   "squid",
+   "octopus",
+   "dashi",
+   "stock",
+   "broth",
+   "bonito",
+   "oyster",
+   "roe"
+  ]
+ ],
+ "tips": [
+  {
+   "name": "Seafood allergy",
+   "items": [
+    "Dashi, the stock in miso soup, udon and soba broth, oden, chawanmushi, tamagoyaki and most simmered dishes, is usually bonito (katsuobushi) plus kelp. Ask at every meal.",
+    "Hidden sources: bonito flakes on okonomiyaki, takoyaki and cold tofu; fish cake (kamaboko, chikuwa, naruto) in ramen, udon and oden; dried-sardine (niboshi) and fish-blend (gyokai) ramen broths; sakura ebi, shirasu and fish roe (ikura, mentaiko, tarako) in onigiri, pasta and toppings; furikake; shrimp crackers.",
+    "Sauces: okonomiyaki sauce and some tonkatsu sauces list oyster or fish extract, Chinese-style dishes use oyster sauce, Caesar dressing has anchovy, and tempura dipping sauce (tentsuyu) is dashi. Ask for salt with tempura.",
+    "Packaged food must label shrimp and crab, but fish, squid, salmon, mackerel and roe are only recommended labels. Read the ingredients for 魚, だし, かつお, 魚醤 and 魚介エキス.",
+    "Safer bets, still ask: yakiniku, tonkatsu without the sauce, yakitori with salt, Japanese curry, shojin ryori (Buddhist vegetarian) restaurants, and sukiyaki or shabu-shabu with a kelp-only broth."
+   ]
+  }
+ ],
+ "optional_phrases": {
+  "if seaweed is safe": {
+   "en": "Kelp-only stock is fine",
+   "ja": "昆布だしだけなら大丈夫です",
+   "ro": "konbu dashi dake nara daijoubu desu"
+  },
+  "if seaweed is not safe": {
+   "en": "No seaweed either",
+   "ja": "海藻もだめです",
+   "ro": "kaisou mo dame desu"
+  }
+ },
+ "travelers_note": "One traveler is allergic to all seafood, raw or cooked: fish, shellfish, crustaceans, squid and octopus, plus fish stock, bonito flakes, fish sauce and oyster sauce."
+}

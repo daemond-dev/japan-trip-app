@@ -1,0 +1,134 @@
+{
+ "groups": [
+  {
+   "items": [
+    {
+     "label": "Konbini onigiri",
+     "note": "7-Eleven, Lawson, FamilyMart, Oct 2026",
+     "yen": [
+      171,
+      235
+     ]
+    },
+    {
+     "label": "Konbini hot coffee, small",
+     "note": "Oct 2026",
+     "yen": [
+      140,
+      160
+     ]
+    },
+    {
+     "label": "Konbini lunch: 2 onigiri, fried chicken, coffee",
+     "note": "Oct 2026",
+     "yen": [
+      790,
+      839
+     ]
+    },
+    {
+     "label": "Vending machine drink",
+     "yen": [
+      120,
+      180
+     ]
+    },
+    {
+     "label": "Bowl of ramen",
+     "note": "National average for shoyu ramen was ¥736 in Mar 2026; popular shops run higher",
+     "yen": [
+      800,
+      1200
+     ]
+    },
+    {
+     "label": "Beef bowl at Sukiya",
+     "yen": 450
+    },
+    {
+     "label": "Izakaya table charge (otoshi), per person",
+     "note": "Added automatically with a small dish",
+     "yen": [
+      300,
+      600
+     ]
+    }
+   ],
+   "name": "Food and drink"
+  },
+  {
+   "items": [
+    {
+     "label": "Tokyo Metro ride, Suica",
+     "note": "Most central trips ¥178–252",
+     "yen": [
+      178,
+      324
+     ]
+    },
+    {
+     "label": "JR minimum fare",
+     "note": "After the Mar 2026 fare increase",
+     "yen": 160
+    },
+    {
+     "label": "Tokyo taxi, first 1 km",
+     "note": "Then ¥100 per 232 m; 20% more 22:00–5:00. A 1–2 km hop runs about ¥700–900",
+     "yen": 500
+    },
+    {
+     "label": "Suica card deposit",
+     "note": "Refundable",
+     "yen": 500
+    },
+    {
+     "label": "Narita Express, Narita T1 to Shinjuku, Green Car, each",
+     "note": "What you paid Oct 28: fare ¥1,600, limited express ¥1,200, Green Car ¥1,300",
+     "yen": 4100
+    },
+    {
+     "label": "Romancecar base fare, Shinjuku to Hakone-Yumoto, each",
+     "note": "Tap Suica; seat ticket already bought",
+     "yen": 1270
+    },
+    {
+     "label": "Takkyubin, one size-160 bag within Tokyo",
+     "note": "Next day; the 165 cm case is the larger 180 size and costs more",
+     "yen": 2410
+    }
+   ],
+   "name": "Getting around"
+  },
+  {
+   "name": "Admissions",
+   "items": [
+    {
+     "label": "Tenryu-ji garden admission, each",
+     "yen": 500
+    },
+    {
+     "label": "DisneySea Premier Access, per person per ride",
+     "yen": 2000
+    }
+   ]
+  },
+  {
+   "items": [
+    {
+     "label": "Tax-free minimum, per store, pre-tax",
+     "yen": 5000
+    },
+    {
+     "label": "Seven Bank ATM, max per withdrawal",
+     "yen": 100000
+    },
+    {
+     "label": "Kyoto accommodation tax, per person per night, rate ¥20,000–49,999 per person",
+     "note": "¥4,000 at ¥50,000–99,999 per person; charged at check-in",
+     "yen": 1000
+    }
+   ],
+   "name": "Rules of thumb"
+  }
+ ]
+}

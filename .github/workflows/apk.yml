@@ -1,0 +1,65 @@
+# Builds the Android app in the cloud and publishes it on the repo's Releases page (Releases > Latest > the .apk).
+# Run it from the Actions tab ("Run workflow") with the version and the live URL (the GitHub Pages site for a
+# no-account app, or a claude.ai artifact link). Signing: set the repo secrets SIGNING_KEYSTORE_B64, SIGNING_ALIAS and
+# SIGNING_PASS (scripts/make_keystore.py makes them); without them a throwaway key is used and the APK can't be
+# updated in place later.
+name: Build the Android app
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version name, e.g. 1.0"
+        required: true
+      live_url:
+        description: "Live URL the app opens (GitHub Pages site or claude.ai artifact)"
+        required: true
+      app_id:
+        description: "Android package name"
+        default: "com.example.japantrip"
+      app_name:
+        description: "Launcher label"
+        default: "Japan 2026"
+      release:
+        description: "Publish on the Releases page"
+        type: boolean
+        default: true
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+        with:
+          accept-android-sdk-licenses: true
+      - run: $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - run: curl -sSL -o /tmp/ecj.jar https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.38.0/ecj-3.38.0.jar
+      - name: Write local.properties and the keystore
+        env:
+          KS_B64: ${{ secrets.SIGNING_KEYSTORE_B64 }}
+          KS_ALIAS: ${{ secrets.SIGNING_ALIAS }}
+          KS_PASS: ${{ secrets.SIGNING_PASS }}
+        run: |
+          cd android
+          if [ -n "$KS_B64" ]; then echo "$KS_B64" | base64 -d > signing.keystore; else echo "::warning::No SIGNING_KEYSTORE_B64 secret: signing with a throwaway key, so this APK can't be updated in place later."; fi
+          printf 'APP_ID=%s\nAPP_NAME=%s\nLIVE_URL=%s\nKEYSTORE=signing.keystore\nKS_ALIAS=%s\nKS_PASS=%s\n' \
+            "${{ inputs.app_id }}" "${{ inputs.app_name }}" "${{ inputs.live_url }}" "${KS_ALIAS:-app}" "${KS_PASS:-changeme}" > local.properties
+      - name: Build
+        run: cd android && SDK=$ANDROID_HOME ECJ=/tmp/ecj.jar ./build.sh "${{ inputs.version }}" "${{ github.run_number }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk-${{ inputs.version }}
+          path: android/out/*-${{ inputs.version }}.apk
+      - name: Publish on Releases
+        if: ${{ inputs.release }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v${{ inputs.version }}"; APK=$(ls android/out/*-${{ inputs.version }}.apk)
+          if gh release view "$TAG" >/dev/null 2>&1; then gh release upload "$TAG" "$APK" --clobber; else gh release create "$TAG" "$APK" --title "Android app ${{ inputs.version }}" --notes "Opens ${{ inputs.live_url }}. Android only: download, open, allow the install."; fi
+          echo "APK published: https://github.com/${{ github.repository }}/releases/tag/$TAG" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,18 @@
+{
+ "title": "Japan 2026",
+ "homeTz": "America/Los_Angeles",
+ "travelers": "",
+ "rate": {
+  "asOf": "2026-10-30",
+  "jpyPerUsd": 157.6,
+  "source": "mid-market close from Trading Economics (markets closed over the weekend)"
+ },
+ "weather": {
+  "updatedAt": null,
+  "source": "",
+  "days": []
+ },
+ "updatedAt": "2026-11-03",
+ "source": "Template data; no itinerary yet",
+ "apkLatest": "1.0"
+}

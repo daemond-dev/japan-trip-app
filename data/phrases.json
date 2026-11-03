@@ -1,0 +1,2175 @@
+{
+ "emergency": [
+  {
+   "label": "Police",
+   "number": "110"
+  },
+  {
+   "label": "Ambulance or fire",
+   "number": "119"
+  },
+  {
+   "label": "Japan Visitor Hotline (JNTO), 24 hours, English",
+   "number": "050-3816-2787"
+  },
+  {
+   "label": "US Embassy Tokyo, also the after-hours emergency line",
+   "number": "03-3224-5000"
+  },
+  {
+   "label": "US Consulate General Osaka-Kobe (covers Kyoto)",
+   "number": "06-6315-5900"
+  }
+ ],
+ "groups": [
+  {
+   "name": "Core",
+   "phrases": [
+    {
+     "en": "Excuse me / sorry",
+     "ja": "すみません",
+     "ro": "sumimasen"
+    },
+    {
+     "en": "Thank you",
+     "ja": "ありがとうございます",
+     "ro": "arigatou gozaimasu"
+    },
+    {
+     "en": "Yes",
+     "ja": "はい",
+     "ro": "hai"
+    },
+    {
+     "en": "No",
+     "ja": "いいえ",
+     "ro": "iie"
+    },
+    {
+     "en": "I'm fine / no thank you",
+     "ja": "大丈夫です",
+     "ro": "daijoubu desu"
+    },
+    {
+     "en": "Yes, please",
+     "ja": "はい、お願いします",
+     "ro": "hai, onegai shimasu"
+    },
+    {
+     "en": "I'd like ~, please",
+     "ja": "～をお願いします",
+     "ro": "~ o onegai shimasu"
+    },
+    {
+     "en": "Welcome (no reply needed)",
+     "hear": true,
+     "ja": "いらっしゃいませ",
+     "ro": "irasshaimase"
+    },
+    {
+     "en": "One moment, please",
+     "hear": true,
+     "ja": "少々お待ちください",
+     "ro": "shoushou omachi kudasai"
+    },
+    {
+     "en": "Hello / good afternoon",
+     "ja": "こんにちは",
+     "ro": "konnichiwa"
+    },
+    {
+     "en": "Good morning",
+     "ja": "おはようございます",
+     "ro": "ohayou gozaimasu"
+    },
+    {
+     "en": "Good evening",
+     "ja": "こんばんは",
+     "ro": "konbanwa"
+    },
+    {
+     "en": "Do you have ~?",
+     "ja": "～はありますか",
+     "ro": "~ wa arimasu ka"
+    },
+    {
+     "en": "I understand / got it",
+     "ja": "分かりました",
+     "ro": "wakarimashita"
+    },
+    {
+     "en": "I don't understand",
+     "ja": "分かりません",
+     "ro": "wakarimasen"
+    },
+    {
+     "en": "One more time, please",
+     "ja": "もう一度お願いします",
+     "ro": "mou ichido onegai shimasu"
+    },
+    {
+     "en": "Could you speak slowly?",
+     "ja": "ゆっくり話していただけますか",
+     "ro": "yukkuri hanashite itadakemasu ka"
+    },
+    {
+     "en": "Do you speak English?",
+     "ja": "英語は話せますか",
+     "ro": "eigo wa hanasemasu ka"
+    },
+    {
+     "en": "I only speak a little Japanese",
+     "ja": "日本語は少しだけ話せます",
+     "ro": "nihongo wa sukoshi dake hanasemasu"
+    },
+    {
+     "en": "I don’t speak Japanese",
+     "ja": "日本語は話せません",
+     "ro": "nihongo wa hanasemasen"
+    },
+    {
+     "en": "Just a moment (you saying it)",
+     "ja": "ちょっと待ってください",
+     "ro": "chotto matte kudasai"
+    },
+    {
+     "en": "Excuse me, do you have a moment?",
+     "ja": "すみません、ちょっといいですか",
+     "ro": "sumimasen, chotto ii desu ka"
+    },
+    {
+     "en": "Could you take a picture for me?",
+     "ja": "写真を撮っていただけますか",
+     "ro": "shashin o totte itadakemasu ka"
+    },
+    {
+     "en": "May I take a photo?",
+     "ja": "写真を撮ってもいいですか",
+     "ro": "shashin o totte mo ii desu ka"
+    },
+    {
+     "en": "Go ahead",
+     "hear": true,
+     "ja": "どうぞ",
+     "ro": "douzo"
+    },
+    {
+     "en": "Please don’t take photos",
+     "hear": true,
+     "ja": "撮影はご遠慮ください",
+     "ro": "satsuei wa go-enryo kudasai"
+    },
+    {
+     "en": "I'm sorry (apology)",
+     "ja": "ごめんなさい",
+     "ro": "gomen nasai"
+    },
+    {
+     "en": "You're welcome",
+     "ja": "どういたしまして",
+     "ro": "dou itashimashite"
+    },
+    {
+     "en": "Goodbye",
+     "ja": "さようなら",
+     "ro": "sayounara"
+    },
+    {
+     "en": "Good night",
+     "ja": "おやすみなさい",
+     "ro": "oyasumi nasai"
+    },
+    {
+     "en": "Nice to meet you. I'm ~",
+     "ja": "はじめまして。～と申します",
+     "ro": "hajimemashite. ~ to moushimasu"
+    },
+    {
+     "en": "I want to go to Tokyo",
+     "ja": "東京に行きたいです",
+     "ro": "toukyou ni ikitai desu"
+    },
+    {
+     "en": "I feel sick",
+     "ja": "気分が悪いです",
+     "ro": "kibun ga warui desu"
+    },
+    {
+     "en": "Help!",
+     "ja": "助けて！",
+     "ro": "tasukete!"
+    },
+    {
+     "en": "Please call an ambulance",
+     "ja": "救急車を呼んでください",
+     "ro": "kyuukyuusha o yonde kudasai"
+    },
+    {
+     "en": "Please call the police",
+     "ja": "警察を呼んでください",
+     "ro": "keisatsu o yonde kudasai"
+    }
+   ]
+  },
+  {
+   "name": "Pointing",
+   "phrases": [
+    {
+     "en": "This one, please",
+     "ja": "これをください",
+     "ro": "kore o kudasai"
+    },
+    {
+     "en": "Is this the one?",
+     "hear": true,
+     "ja": "こちらでよろしいですか",
+     "ro": "kochira de yoroshii desu ka"
+    },
+    {
+     "en": "What is this?",
+     "ja": "これは何ですか",
+     "ro": "kore wa nan desu ka"
+    },
+    {
+     "en": "How much is this?",
+     "ja": "これはいくらですか",
+     "ro": "kore wa ikura desu ka"
+    },
+    {
+     "en": "Two of these, please",
+     "ja": "これを二つください",
+     "ro": "kore o futatsu kudasai"
+    },
+    {
+     "en": "One of this and two of this, please",
+     "ja": "これを一つと、これを二つください",
+     "ro": "kore o hitotsu to, kore o futatsu kudasai"
+    },
+    {
+     "en": "That one, please (near you)",
+     "ja": "それをください",
+     "ro": "sore o kudasai"
+    },
+    {
+     "en": "That one over there, please",
+     "ja": "あれをください",
+     "ro": "are o kudasai"
+    },
+    {
+     "en": "I’ll take this one",
+     "ja": "これにします",
+     "ro": "kore ni shimasu"
+    },
+    {
+     "en": "Not this one, that one",
+     "ja": "これじゃなくて、それです",
+     "ro": "kore ja nakute, sore desu"
+    },
+    {
+     "en": "The one next to it",
+     "ja": "その隣です",
+     "ro": "sono tonari desu"
+    },
+    {
+     "en": "The one to the right of that (display case)",
+     "ja": "その右のです",
+     "ro": "sono migi no desu"
+    },
+    {
+     "en": "The one to the left of that (display case)",
+     "ja": "その左のです",
+     "ro": "sono hidari no desu"
+    },
+    {
+     "en": "The one on the top shelf",
+     "ja": "上の段のです",
+     "ro": "ue no dan no desu"
+    },
+    {
+     "en": "The one on the bottom shelf",
+     "ja": "下の段のです",
+     "ro": "shita no dan no desu"
+    },
+    {
+     "en": "The same as that, please (another table, a sample)",
+     "ja": "あれと同じものをください",
+     "ro": "are to onaji mono o kudasai"
+    },
+    {
+     "en": "What’s in this?",
+     "ja": "これは何が入っていますか",
+     "ro": "kore wa nani ga haitte imasu ka"
+    },
+    {
+     "en": "Could I see this one? (in a case)",
+     "ja": "これを見せてください",
+     "ro": "kore o misete kudasai"
+    },
+    {
+     "en": "May I try this?",
+     "ja": "これを試してもいいですか",
+     "ro": "kore o tameshite mo ii desu ka"
+    },
+    {
+     "en": "Do you have this in a bigger size?",
+     "ja": "これの大きいサイズはありますか",
+     "ro": "kore no ookii saizu wa arimasu ka"
+    },
+    {
+     "en": "Do you have this in a smaller size?",
+     "ja": "これの小さいサイズはありますか",
+     "ro": "kore no chiisai saizu wa arimasu ka"
+    },
+    {
+     "en": "Do you have this in another color?",
+     "ja": "これの色違いはありますか",
+     "ro": "kore no irochigai wa arimasu ka"
+    },
+    {
+     "en": "How many people is this for?",
+     "ja": "これは何人分ですか",
+     "ro": "kore wa nannin-bun desu ka"
+    },
+    {
+     "en": "Which button do I press for this? (ticket machine)",
+     "ja": "これはどれを押せばいいですか",
+     "ro": "kore wa dore o oseba ii desu ka"
+    },
+    {
+     "en": "Do you have this?",
+     "ja": "これはありますか",
+     "ro": "kore wa arimasu ka"
+    },
+    {
+     "en": "Do you have this color?",
+     "ja": "この色はありますか",
+     "ro": "kono iro wa arimasu ka"
+    }
+   ]
+  },
+  {
+   "name": "Finding things",
+   "phrases": [
+    {
+     "en": "Where is the restroom?",
+     "ja": "トイレはどこですか",
+     "ro": "toire wa doko desu ka"
+    },
+    {
+     "en": "Where is ~?",
+     "ja": "～はどこですか",
+     "ro": "~ wa doko desu ka"
+    },
+    {
+     "en": "It’s over there",
+     "hear": true,
+     "ja": "あちらです",
+     "ro": "achira desu"
+    },
+    {
+     "en": "Where can I find ~? (in a store)",
+     "ja": "～はどこにありますか",
+     "ro": "~ wa doko ni arimasu ka"
+    },
+    {
+     "en": "I’m looking for ~",
+     "ja": "～を探しています",
+     "ro": "~ o sagashite imasu"
+    },
+    {
+     "en": "Do you sell ~?",
+     "ja": "～は売っていますか",
+     "ro": "~ wa utte imasu ka"
+    },
+    {
+     "en": "Sorry, we don’t carry it",
+     "hear": true,
+     "ja": "申し訳ございません、置いていません",
+     "ro": "moushiwake gozaimasen, oite imasen"
+    },
+    {
+     "en": "Is there a convenience store nearby?",
+     "ja": "近くにコンビニはありますか",
+     "ro": "chikaku ni konbini wa arimasu ka"
+    },
+    {
+     "en": "Where’s the nearest ~?",
+     "ja": "一番近い～はどこですか",
+     "ro": "ichiban chikai ~ wa doko desu ka"
+    },
+    {
+     "en": "Which floor is ~ on?",
+     "ja": "～は何階ですか",
+     "ro": "~ wa nankai desu ka"
+    },
+    {
+     "en": "It’s on floor ~",
+     "hear": true,
+     "ja": "～階にございます",
+     "ro": "~ kai ni gozaimasu"
+    },
+    {
+     "en": "Where’s a trash can?",
+     "ja": "ゴミ箱はどこですか",
+     "ro": "gomibako wa doko desu ka"
+    },
+    {
+     "en": "Where’s the elevator?",
+     "ja": "エレベーターはどこですか",
+     "ro": "erebeetaa wa doko desu ka"
+    },
+    {
+     "en": "Where’s an ATM?",
+     "ja": "ATMはどこですか",
+     "ro": "ee-tii-emu wa doko desu ka"
+    },
+    {
+     "en": "Where are the coin lockers?",
+     "ja": "コインロッカーはどこですか",
+     "ro": "koin rokkaa wa doko desu ka"
+    },
+    {
+     "en": "Could you show me on the map?",
+     "ja": "地図で教えてもらえますか",
+     "ro": "chizu de oshiete moraemasu ka"
+    },
+    {
+     "en": "Go straight",
+     "hear": true,
+     "ja": "まっすぐ行ってください",
+     "ro": "massugu itte kudasai"
+    },
+    {
+     "en": "Turn right",
+     "hear": true,
+     "ja": "右に曲がってください",
+     "ro": "migi ni magatte kudasai"
+    },
+    {
+     "en": "Turn left",
+     "hear": true,
+     "ja": "左に曲がってください",
+     "ro": "hidari ni magatte kudasai"
+    },
+    {
+     "en": "Can I walk there?",
+     "ja": "歩いて行けますか",
+     "ro": "aruite ikemasu ka"
+    },
+    {
+     "en": "Is it far from here?",
+     "ja": "ここから遠いですか",
+     "ro": "koko kara tooi desu ka"
+    },
+    {
+     "en": "Where is Tokyo Station?",
+     "ja": "東京駅はどこですか",
+     "ro": "toukyou eki wa doko desu ka"
+    },
+    {
+     "en": "Where’s a pharmacy?",
+     "ja": "薬局はどこですか",
+     "ro": "yakkyoku wa doko desu ka"
+    }
+   ]
+  },
+  {
+   "name": "Restaurant",
+   "phrases": [
+    {
+     "en": "Sorry for the trouble",
+     "ja": "お手数おかけしてすみません",
+     "ro": "otesuu okake shite sumimasen"
+    },
+    {
+     "en": "How many people?",
+     "hear": true,
+     "ja": "何名様ですか",
+     "ro": "nanmei-sama desu ka"
+    },
+    {
+     "en": "~ people",
+     "ja": "～人です",
+     "ro": "~ nin desu"
+    },
+    {
+     "en": "This way, please",
+     "hear": true,
+     "ja": "こちらへどうぞ",
+     "ro": "kochira e douzo"
+    },
+    {
+     "en": "Excuse me, we’d like to order",
+     "ja": "すみません、注文お願いします",
+     "ro": "sumimasen, chuumon onegai shimasu"
+    },
+    {
+     "en": "Ready to order?",
+     "hear": true,
+     "ja": "ご注文はお決まりですか",
+     "ro": "go-chuumon wa o-kimari desu ka"
+    },
+    {
+     "en": "We need a little more time",
+     "ja": "もう少し待ってください",
+     "ro": "mou sukoshi matte kudasai"
+    },
+    {
+     "en": "One ~, please",
+     "ja": "～を一つください",
+     "ro": "~ o hitotsu kudasai"
+    },
+    {
+     "en": "One more, please",
+     "ja": "もう一つお願いします",
+     "ro": "mou hitotsu onegai shimasu"
+    },
+    {
+     "en": "What would you like to drink?",
+     "hear": true,
+     "ja": "お飲み物はいかがなさいますか",
+     "ro": "o-nomimono wa ikaga nasaimasu ka"
+    },
+    {
+     "en": "Water, please",
+     "ja": "お水をください",
+     "ro": "omizu o kudasai"
+    },
+    {
+     "en": "Will that be all?",
+     "hear": true,
+     "ja": "以上でよろしいですか",
+     "ro": "ijou de yoroshii desu ka"
+    },
+    {
+     "en": "Yes, that’s all",
+     "ja": "はい、以上です",
+     "ro": "hai, ijou desu"
+    },
+    {
+     "en": "Also ~, please",
+     "ja": "あと～もお願いします",
+     "ro": "ato ~ mo onegai shimasu"
+    },
+    {
+     "en": "Certainly (order taken)",
+     "hear": true,
+     "ja": "かしこまりました",
+     "ro": "kashikomarimashita"
+    },
+    {
+     "en": "Sorry to keep you waiting (here's your order)",
+     "hear": true,
+     "ja": "お待たせいたしました",
+     "ro": "omatase itashimashita"
+    },
+    {
+     "en": "Said before eating",
+     "ja": "いただきます",
+     "ro": "itadakimasu"
+    },
+    {
+     "en": "Thank you for the meal",
+     "ja": "ごちそうさまでした",
+     "ro": "gochisousama deshita"
+    },
+    {
+     "en": "That was delicious",
+     "ja": "おいしかったです",
+     "ro": "oishikatta desu"
+    },
+    {
+     "en": "Cheers!",
+     "ja": "乾杯",
+     "ro": "kanpai"
+    },
+    {
+     "en": "What do you recommend?",
+     "ja": "おすすめは何ですか",
+     "ro": "osusume wa nan desu ka"
+    },
+    {
+     "en": "Do you have an English menu?",
+     "ja": "英語のメニューはありますか",
+     "ro": "eigo no menyuu wa arimasu ka"
+    },
+    {
+     "en": "I have a reservation under ~",
+     "ja": "～の名前で予約しています",
+     "ro": "~ no namae de yoyaku shite imasu"
+    },
+    {
+     "en": "We don’t have a reservation. Can ~ of us get in?",
+     "ja": "予約していないんですが、～人入れますか",
+     "ro": "yoyaku shite inai n desu ga, ~ nin hairemasu ka"
+    },
+    {
+     "en": "We don’t have a reservation",
+     "ja": "予約はありません",
+     "ro": "yoyaku wa arimasen"
+    },
+    {
+     "en": "We’re full right now",
+     "hear": true,
+     "ja": "ただいま満席です",
+     "ro": "tadaima manseki desu"
+    },
+    {
+     "en": "How long is the wait?",
+     "ja": "どのくらい待ちますか",
+     "ro": "dono kurai machimasu ka"
+    },
+    {
+     "en": "We’ll wait",
+     "ja": "待ちます",
+     "ro": "machimasu"
+    },
+    {
+     "en": "Please write your name here (sign-up sheet)",
+     "hear": true,
+     "ja": "こちらにお名前をお書きください",
+     "ro": "kochira ni o-namae o o-kaki kudasai"
+    },
+    {
+     "en": "We’ll come back another time",
+     "ja": "また来ます",
+     "ro": "mata kimasu"
+    },
+    {
+     "en": "Is the counter OK?",
+     "hear": true,
+     "ja": "カウンター席でもよろしいですか",
+     "ro": "kauntaa-seki demo yoroshii desu ka"
+    },
+    {
+     "en": "Please order on the tablet",
+     "hear": true,
+     "ja": "タブレットでご注文ください",
+     "ro": "taburetto de go-chuumon kudasai"
+    },
+    {
+     "en": "Please order from the QR code",
+     "hear": true,
+     "ja": "QRコードからご注文ください",
+     "ro": "kyuuaaru koodo kara go-chuumon kudasai"
+    },
+    {
+     "en": "Please buy a meal ticket first",
+     "hear": true,
+     "ja": "先に食券をお買い求めください",
+     "ro": "saki ni shokken o o-kaimotome kudasai"
+    },
+    {
+     "en": "Eating here, or taking it out?",
+     "hear": true,
+     "ja": "店内でお召し上がりですか、お持ち帰りですか",
+     "ro": "tennai de omeshiagari desu ka, omochikaeri desu ka"
+    },
+    {
+     "en": "For here, please",
+     "ja": "店内でお願いします",
+     "ro": "tennai de onegai shimasu"
+    },
+    {
+     "en": "To go, please",
+     "ja": "持ち帰りでお願いします",
+     "ro": "mochikaeri de onegai shimasu"
+    },
+    {
+     "en": "Without ~, please",
+     "ja": "～抜きでお願いします",
+     "ro": "~ nuki de onegai shimasu"
+    },
+    {
+     "en": "I can't eat ~",
+     "ja": "～が食べられません",
+     "ro": "~ ga taberaremasen"
+    },
+    {
+     "en": "~ is fine for me",
+     "ja": "～は大丈夫です",
+     "ro": "~ wa daijoubu desu"
+    },
+    {
+     "en": "The same, please",
+     "ja": "同じものをください",
+     "ro": "onaji mono o kudasai"
+    },
+    {
+     "en": "Small plates for sharing, please",
+     "ja": "取り皿をください",
+     "ro": "torizara o kudasai"
+    },
+    {
+     "en": "Is it spicy?",
+     "ja": "からいですか",
+     "ro": "karai desu ka"
+    },
+    {
+     "en": "Not spicy, please",
+     "ja": "からくしないでください",
+     "ro": "karaku shinaide kudasai"
+    },
+    {
+     "en": "How firm do you want the noodles?",
+     "hear": true,
+     "ja": "麺のかたさはどうしますか",
+     "ro": "men no katasa wa dou shimasu ka"
+    },
+    {
+     "en": "Regular, please (noodle firmness, portion)",
+     "ja": "普通でお願いします",
+     "ro": "futsuu de onegai shimasu"
+    },
+    {
+     "en": "Large portion, please",
+     "ja": "大盛りでお願いします",
+     "ro": "oomori de onegai shimasu"
+    },
+    {
+     "en": "Smaller portion, please",
+     "ja": "少なめでお願いします",
+     "ro": "sukuname de onegai shimasu"
+    },
+    {
+     "en": "No ice, please",
+     "ja": "氷なしでお願いします",
+     "ro": "koori nashi de onegai shimasu"
+    },
+    {
+     "en": "Which drinks work with the dice game (chinchirorin)?",
+     "ja": "チンチロリンできるドリンクはどれですか",
+     "ro": "chinchirorin dekiru dorinku wa dore desu ka"
+    },
+    {
+     "en": "~ with the dice game (chinchirorin), please",
+     "ja": "～をチンチロリンでお願いします",
+     "ro": "~ o chinchirorin de onegai shimasu"
+    },
+    {
+     "en": "Please roll the dice",
+     "hear": true,
+     "ja": "サイコロを振ってください",
+     "ro": "saikoro o futte kudasai"
+    },
+    {
+     "en": "How many dice rolls do we have left?",
+     "ja": "チンチロリンはあと何回できますか",
+     "ro": "chinchirorin wa ato nankai dekimasu ka"
+    },
+    {
+     "en": "Does it come with ~?",
+     "ja": "～は付いていますか",
+     "ro": "~ wa tsuite imasu ka"
+    },
+    {
+     "en": "Shall I heat it up?",
+     "hear": true,
+     "ja": "温めますか",
+     "ro": "atatamemasu ka"
+    },
+    {
+     "en": "Please heat it up",
+     "ja": "温めてください",
+     "ro": "atatamete kudasai"
+    },
+    {
+     "en": "No need to heat it",
+     "ja": "そのままで大丈夫です",
+     "ro": "sono mama de daijoubu desu"
+    },
+    {
+     "en": "Do you want chopsticks?",
+     "hear": true,
+     "ja": "お箸はお付けしますか",
+     "ro": "ohashi wa otsuke shimasu ka"
+    },
+    {
+     "en": "Our order hasn’t come yet",
+     "ja": "注文したものがまだ来ていません",
+     "ro": "chuumon shita mono ga mada kite imasen"
+    },
+    {
+     "en": "Sold out",
+     "hear": true,
+     "ja": "売り切れです",
+     "ro": "urikire desu"
+    },
+    {
+     "en": "Last orders",
+     "hear": true,
+     "ja": "ラストオーダーです",
+     "ro": "rasuto oodaa desu"
+    }
+   ]
+  },
+  {
+   "name": "Paying",
+   "phrases": [
+    {
+     "en": "Check, please",
+     "ja": "お会計お願いします",
+     "ro": "okaikei onegai shimasu"
+    },
+    {
+     "en": "I’d like to pay for this, please (handing over the bill)",
+     "ja": "これ、お会計お願いします",
+     "ro": "kore, okaikei onegai shimasu"
+    },
+    {
+     "en": "That comes to ¥~",
+     "hear": true,
+     "ja": "～円になります",
+     "ro": "~ en ni narimasu"
+    },
+    {
+     "en": "Can I pay by card?",
+     "ja": "カードで払えますか",
+     "ro": "kaado de haraemasu ka"
+    },
+    {
+     "en": "How would you like to pay?",
+     "hear": true,
+     "ja": "お支払い方法はいかがなさいますか",
+     "ro": "o-shiharai houhou wa ikaga nasaimasu ka"
+    },
+    {
+     "en": "I’ll pay by card",
+     "ja": "カードで払います",
+     "ro": "kaado de haraimasu"
+    },
+    {
+     "en": "I’ll pay cash",
+     "ja": "現金で払います",
+     "ro": "genkin de haraimasu"
+    },
+    {
+     "en": "I’ll pay with Suica",
+     "ja": "Suicaで払います",
+     "ro": "suika de haraimasu"
+    },
+    {
+     "en": "I’d like to top up my Suica, please",
+     "ja": "Suicaのチャージをお願いします",
+     "ro": "suika no chaaji o onegai shimasu"
+    },
+    {
+     "en": "Please tap your card",
+     "hear": true,
+     "ja": "カードをタッチしてください",
+     "ro": "kaado o tacchi shite kudasai"
+    },
+    {
+     "en": "Please insert your card",
+     "hear": true,
+     "ja": "カードを差し込んでください",
+     "ro": "kaado o sashikonde kudasai"
+    },
+    {
+     "en": "Please enter your PIN",
+     "hear": true,
+     "ja": "暗証番号を入力してください",
+     "ro": "anshou bangou o nyuuryoku shite kudasai"
+    },
+    {
+     "en": "In one payment? (credit card)",
+     "hear": true,
+     "ja": "一括払いでよろしいですか",
+     "ro": "ikkatsu-barai de yoroshii desu ka"
+    },
+    {
+     "en": "One payment, please",
+     "ja": "一括でお願いします",
+     "ro": "ikkatsu de onegai shimasu"
+    },
+    {
+     "en": "Out of ¥~ (confirming what you handed over)",
+     "hear": true,
+     "ja": "～円お預かりします",
+     "ro": "~ en o-azukari shimasu"
+    },
+    {
+     "en": "Here’s ¥~ in change",
+     "hear": true,
+     "ja": "～円のお返しです",
+     "ro": "~ en no o-kaeshi desu"
+    },
+    {
+     "en": "Do you want the receipt?",
+     "hear": true,
+     "ja": "レシートはご利用ですか",
+     "ro": "reshiito wa go-riyou desu ka"
+    },
+    {
+     "en": "Receipt, please",
+     "ja": "レシートをください",
+     "ro": "reshiito o kudasai"
+    },
+    {
+     "en": "Can I pay contactless (tap)?",
+     "ja": "タッチ決済できますか",
+     "ro": "tacchi kessai dekimasu ka"
+    },
+    {
+     "en": "Can I use ~? (Visa, Apple Pay, Suica)",
+     "ja": "～は使えますか",
+     "ro": "~ wa tsukaemasu ka"
+    },
+    {
+     "en": "Please pay at the register",
+     "hear": true,
+     "ja": "お会計はレジでお願いします",
+     "ro": "o-kaikei wa reji de onegai shimasu"
+    },
+    {
+     "en": "Please bring the bill to the register",
+     "hear": true,
+     "ja": "伝票をレジまでお持ちください",
+     "ro": "denpyou o reji made o-mochi kudasai"
+    },
+    {
+     "en": "Where do I pay?",
+     "ja": "お会計はどこですか",
+     "ro": "o-kaikei wa doko desu ka"
+    },
+    {
+     "en": "How much is it in total?",
+     "ja": "全部でいくらですか",
+     "ro": "zenbu de ikura desu ka"
+    },
+    {
+     "en": "Paying together?",
+     "hear": true,
+     "ja": "お支払いはご一緒でよろしいですか",
+     "ro": "o-shiharai wa go-issho de yoroshii desu ka"
+    },
+    {
+     "en": "Pay together, please",
+     "ja": "一緒でお願いします",
+     "ro": "issho de onegai shimasu"
+    },
+    {
+     "en": "Separate checks, please",
+     "ja": "別々でお願いします",
+     "ro": "betsubetsu de onegai shimasu"
+    },
+    {
+     "en": "Please pay at this machine",
+     "hear": true,
+     "ja": "お支払いはこちらの機械でお願いします",
+     "ro": "o-shiharai wa kochira no kikai de onegai shimasu"
+    },
+    {
+     "en": "Is tax included?",
+     "ja": "税込みですか",
+     "ro": "zeikomi desu ka"
+    },
+    {
+     "en": "Please sign",
+     "hear": true,
+     "ja": "サインをお願いします",
+     "ro": "sain o onegai shimasu"
+    },
+    {
+     "en": "Is a ¥10,000 note OK?",
+     "ja": "一万円札でも大丈夫ですか",
+     "ro": "ichiman-en satsu demo daijoubu desu ka"
+    }
+   ]
+  },
+  {
+   "name": "Food allergies",
+   "phrases": [
+    {
+     "en": "Do you have any allergies?",
+     "ja": "アレルギーはございますか",
+     "ro": "arerugii wa gozaimasu ka",
+     "hear": true
+    },
+    {
+     "en": "I’m allergic to ~",
+     "ja": "私は～アレルギーです",
+     "ro": "watashi wa ~ arerugii desu"
+    },
+    {
+     "en": "One of us is allergic to ~",
+     "ja": "一人、～アレルギーの者がいます",
+     "ro": "hitori, ~ arerugii no mono ga imasu"
+    },
+    {
+     "en": "Is there any ~ in this?",
+     "ja": "これに～は入っていますか",
+     "ro": "kore ni ~ wa haitte imasu ka"
+    },
+    {
+     "en": "Yes, it has that in it",
+     "ja": "入っています",
+     "ro": "haitte imasu",
+     "hear": true
+    },
+    {
+     "en": "No, it doesn’t have that",
+     "ja": "入っていません",
+     "ro": "haitte imasen",
+     "hear": true
+    },
+    {
+     "en": "Can you make it without ~?",
+     "ja": "～抜きでできますか",
+     "ro": "~ nuki de dekimasu ka"
+    },
+    {
+     "en": "Which dishes don’t use ~?",
+     "ja": "～を使っていない料理はどれですか",
+     "ro": "~ o tsukatte inai ryouri wa dore desu ka"
+    },
+    {
+     "en": "Even a little is a problem",
+     "ja": "少しでも入っているとだめです",
+     "ro": "sukoshi demo haitte iru to dame desu"
+    },
+    {
+     "en": "Wheat",
+     "ja": "小麦",
+     "ro": "komugi"
+    },
+    {
+     "en": "Eggs",
+     "ja": "卵",
+     "ro": "tamago"
+    },
+    {
+     "en": "Dairy",
+     "ja": "乳製品",
+     "ro": "nyuuseihin"
+    },
+    {
+     "en": "Peanuts",
+     "ja": "落花生・ピーナッツ",
+     "ro": "rakkasei, piinattsu"
+    },
+    {
+     "en": "Tree nuts",
+     "ja": "ナッツ類",
+     "ro": "nattsu-rui"
+    },
+    {
+     "en": "Soy",
+     "ja": "大豆",
+     "ro": "daizu"
+    },
+    {
+     "en": "Buckwheat (soba)",
+     "ja": "そば",
+     "ro": "soba"
+    },
+    {
+     "en": "Sesame",
+     "ja": "ごま",
+     "ro": "goma"
+    },
+    {
+     "en": "Shrimp and crab",
+     "ja": "エビ・カニ",
+     "ro": "ebi, kani"
+    },
+    {
+     "en": "Fish",
+     "ja": "魚",
+     "ro": "sakana"
+    }
+   ]
+  },
+  {
+   "name": "Ryokan and hotel",
+   "phrases": [
+    {
+     "en": "Check-in, please",
+     "ja": "チェックインをお願いします",
+     "ro": "chekkuin o onegai shimasu"
+    },
+    {
+     "en": "I have a reservation under ~",
+     "ja": "～の名前で予約しています",
+     "ro": "~ no namae de yoyaku shite imasu"
+    },
+    {
+     "en": "I'll show you to your room",
+     "hear": true,
+     "ja": "お部屋にご案内します",
+     "ro": "o-heya ni go-annai shimasu"
+    },
+    {
+     "en": "Could you hold our luggage?",
+     "ja": "荷物を預かっていただけますか",
+     "ro": "nimotsu o azukatte itadakemasu ka"
+    },
+    {
+     "en": "I’d like to pick up our bags",
+     "ja": "預けた荷物を受け取りたいです",
+     "ro": "azuketa nimotsu o uketoritai desu"
+    },
+    {
+     "en": "What's the Wi-Fi password?",
+     "ja": "Wi-Fiのパスワードは何ですか",
+     "ro": "waifai no pasuwaado wa nan desu ka"
+    },
+    {
+     "en": "What time is breakfast?",
+     "ja": "朝食は何時ですか",
+     "ro": "choushoku wa nanji desu ka"
+    },
+    {
+     "en": "What time is dinner?",
+     "ja": "夕食は何時ですか",
+     "ro": "yuushoku wa nanji desu ka"
+    },
+    {
+     "en": "Check-out, please",
+     "ja": "チェックアウトをお願いします",
+     "ro": "chekkuauto o onegai shimasu"
+    },
+    {
+     "en": "Men's bath",
+     "ja": "男湯",
+     "ro": "otokoyu"
+    },
+    {
+     "en": "Women's bath",
+     "ja": "女湯",
+     "ro": "onnayu"
+    }
+   ]
+  },
+  {
+   "name": "Trains and taxis",
+   "phrases": [
+    {
+     "en": "To Tokyo Station, please (taxi)",
+     "ja": "東京駅までお願いします",
+     "ro": "toukyou eki made onegai shimasu"
+    },
+    {
+     "en": "Please stop here",
+     "ja": "ここで止めてください",
+     "ro": "koko de tomete kudasai"
+    },
+    {
+     "en": "Which platform for Tokyo?",
+     "ja": "東京行きは何番線ですか",
+     "ro": "toukyou yuki wa nanbansen desu ka"
+    },
+    {
+     "en": "Which exit for ~?",
+     "ja": "～は何番出口ですか",
+     "ro": "~ wa nanban deguchi desu ka"
+    },
+    {
+     "en": "Does this train stop at Tokyo?",
+     "ja": "この電車は東京に止まりますか",
+     "ro": "kono densha wa toukyou ni tomarimasu ka"
+    },
+    {
+     "en": "Could you open the trunk?",
+     "ja": "トランクを開けていただけますか",
+     "ro": "toranku o akete itadakemasu ka"
+    },
+    {
+     "en": "A little further, please",
+     "ja": "もう少し先までお願いします",
+     "ro": "mou sukoshi saki made onegai shimasu"
+    },
+    {
+     "en": "Could you call a taxi?",
+     "ja": "タクシーを呼んでいただけますか",
+     "ro": "takushii o yonde itadakemasu ka"
+    }
+   ]
+  },
+  {
+   "name": "Shopping",
+   "phrases": [
+    {
+     "en": "Do you need a bag?",
+     "hear": true,
+     "ja": "袋はご利用ですか",
+     "ro": "fukuro wa go-riyou desu ka"
+    },
+    {
+     "en": "I don't need a bag",
+     "ja": "袋はいりません",
+     "ro": "fukuro wa irimasen"
+    },
+    {
+     "en": "A bag, please",
+     "ja": "袋をお願いします",
+     "ro": "fukuro o onegai shimasu"
+    },
+    {
+     "en": "How much is it?",
+     "ja": "いくらですか",
+     "ro": "ikura desu ka"
+    },
+    {
+     "en": "I'm just looking",
+     "ja": "見ているだけです",
+     "ro": "mite iru dake desu"
+    },
+    {
+     "en": "May I try this on?",
+     "ja": "試着してもいいですか",
+     "ro": "shichaku shite mo ii desu ka"
+    },
+    {
+     "en": "May I try these on? (shoes, pants)",
+     "ja": "これを履いてみてもいいですか",
+     "ro": "kore o haite mite mo ii desu ka"
+    },
+    {
+     "en": "Where’s the fitting room?",
+     "ja": "試着室はどこですか",
+     "ro": "shichakushitsu wa doko desu ka"
+    },
+    {
+     "en": "How many items?",
+     "hear": true,
+     "ja": "何点ですか",
+     "ro": "nanten desu ka"
+    },
+    {
+     "en": "Is there a mirror?",
+     "ja": "鏡はありますか",
+     "ro": "kagami wa arimasu ka"
+    },
+    {
+     "en": "How’s the size?",
+     "hear": true,
+     "ja": "サイズはいかがですか",
+     "ro": "saizu wa ikaga desu ka"
+    },
+    {
+     "en": "It fits well",
+     "ja": "ちょうどいいです",
+     "ro": "choudo ii desu"
+    },
+    {
+     "en": "It’s a little big",
+     "ja": "少し大きいです",
+     "ro": "sukoshi ookii desu"
+    },
+    {
+     "en": "It’s a little small",
+     "ja": "少し小さいです",
+     "ro": "sukoshi chiisai desu"
+    },
+    {
+     "en": "I’ll pass this time",
+     "ja": "やめておきます",
+     "ro": "yamete okimasu"
+    },
+    {
+     "en": "Next in line, please",
+     "hear": true,
+     "ja": "お次の方どうぞ",
+     "ro": "otsugi no kata douzo"
+    },
+    {
+     "en": "Can I buy this tax-free?",
+     "ja": "免税できますか",
+     "ro": "menzei dekimasu ka"
+    },
+    {
+     "en": "Shall I bag these separately?",
+     "hear": true,
+     "ja": "袋はお分けしますか",
+     "ro": "fukuro wa o-wake shimasu ka"
+    },
+    {
+     "en": "Separate bags, please",
+     "ja": "分けてください",
+     "ro": "wakete kudasai"
+    },
+    {
+     "en": "Together is fine (one bag)",
+     "ja": "一緒で大丈夫です",
+     "ro": "issho de daijoubu desu"
+    }
+   ]
+  },
+  {
+   "name": "Small talk",
+   "phrases": [
+    {
+     "en": "Where are you from?",
+     "hear": true,
+     "ja": "どちらから来ましたか",
+     "ro": "dochira kara kimashita ka"
+    },
+    {
+     "en": "We’re from ~, in the US",
+     "ja": "アメリカの～から来ました",
+     "ro": "Amerika no ~ kara kimashita"
+    },
+    {
+     "en": "Here for sightseeing?",
+     "hear": true,
+     "ja": "観光ですか",
+     "ro": "kankou desu ka"
+    },
+    {
+     "en": "Yes, sightseeing",
+     "ja": "はい、観光です",
+     "ro": "hai, kankou desu"
+    },
+    {
+     "en": "That was really delicious",
+     "ja": "とてもおいしかったです",
+     "ro": "totemo oishikatta desu"
+    },
+    {
+     "en": "Nice weather, isn’t it?",
+     "ja": "いい天気ですね",
+     "ro": "ii tenki desu ne"
+    },
+    {
+     "en": "It’s cold today, isn’t it?",
+     "ja": "今日は寒いですね",
+     "ro": "kyou wa samui desu ne"
+    },
+    {
+     "en": "It’s nice and cool",
+     "ja": "涼しくて気持ちいいですね",
+     "ro": "suzushikute kimochi ii desu ne"
+    },
+    {
+     "en": "The autumn leaves are beautiful",
+     "ja": "紅葉がきれいですね",
+     "ro": "kouyou ga kirei desu ne"
+    },
+    {
+     "en": "What a lovely shop",
+     "ja": "素敵なお店ですね",
+     "ro": "suteki na omise desu ne"
+    },
+    {
+     "en": "What a beautiful place",
+     "ja": "きれいな所ですね",
+     "ro": "kirei na tokoro desu ne"
+    },
+    {
+     "en": "Your Japanese is good!",
+     "hear": true,
+     "ja": "日本語お上手ですね",
+     "ro": "nihongo ojouzu desu ne"
+    },
+    {
+     "en": "Oh no, I’ve got a long way to go",
+     "ja": "いえいえ、まだまだです",
+     "ro": "iie iie, mada mada desu"
+    },
+    {
+     "en": "I’m studying a little Japanese",
+     "ja": "日本語を少し勉強しています",
+     "ro": "nihongo o sukoshi benkyou shite imasu"
+    },
+    {
+     "en": "We love Japan",
+     "ja": "日本が大好きです",
+     "ro": "nihon ga daisuki desu"
+    },
+    {
+     "en": "That was fun",
+     "ja": "楽しかったです",
+     "ro": "tanoshikatta desu"
+    },
+    {
+     "en": "We’ll come again!",
+     "ja": "また来ますね",
+     "ro": "mata kimasu ne"
+    },
+    {
+     "en": "Any places you’d recommend?",
+     "ja": "おすすめの場所はありますか",
+     "ro": "osusume no basho wa arimasu ka"
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "en": "Restroom (most common: stations, convenience stores, shops)",
+   "ja": "トイレ",
+   "ro": "toire"
+  },
+  {
+   "en": "Exit",
+   "ja": "出口",
+   "ro": "deguchi"
+  },
+  {
+   "en": "Entrance",
+   "ja": "入口",
+   "ro": "iriguchi"
+  },
+  {
+   "en": "Man / men (baths, toilets)",
+   "ja": "男",
+   "ro": "otoko"
+  },
+  {
+   "en": "Woman / women (baths, toilets)",
+   "ja": "女",
+   "ro": "onna"
+  },
+  {
+   "en": "Men's restroom",
+   "ja": "男性",
+   "ro": "dansei"
+  },
+  {
+   "en": "Women's restroom",
+   "ja": "女性",
+   "ro": "josei"
+  },
+  {
+   "en": "Restroom (politer: restaurants, department stores, hotels, temples)",
+   "ja": "お手洗い",
+   "ro": "otearai"
+  },
+  {
+   "en": "Restroom (“powder room”: department stores, hotels, airports)",
+   "ja": "化粧室",
+   "ro": "keshoushitsu"
+  },
+  {
+   "en": "Ticket gate",
+   "ja": "改札",
+   "ro": "kaisatsu"
+  },
+  {
+   "en": "Open for business",
+   "ja": "営業中",
+   "ro": "eigyouchuu"
+  },
+  {
+   "en": "Closed / preparing (not open yet)",
+   "ja": "準備中",
+   "ro": "junbichuu"
+  },
+  {
+   "en": "Cash only",
+   "ja": "現金のみ",
+   "ro": "genkin nomi"
+  },
+  {
+   "en": "Cards accepted",
+   "ja": "カード可",
+   "ro": "kaado ka"
+  },
+  {
+   "en": "Tax included",
+   "ja": "税込",
+   "ro": "zeikomi"
+  },
+  {
+   "en": "Before tax (tax added at the register)",
+   "ja": "税抜",
+   "ro": "zeinuki"
+  },
+  {
+   "en": "Station",
+   "ja": "駅",
+   "ro": "eki"
+  },
+  {
+   "en": "Yen",
+   "ja": "円",
+   "ro": "en"
+  },
+  {
+   "en": "No smoking",
+   "ja": "禁煙",
+   "ro": "kin'en"
+  },
+  {
+   "en": "Smoking area",
+   "ja": "喫煙所",
+   "ro": "kitsuenjo"
+  },
+  {
+   "en": "Draft beer",
+   "ja": "生ビール",
+   "ro": "nama biiru"
+  },
+  {
+   "en": "Meat",
+   "ja": "肉",
+   "ro": "niku"
+  },
+  {
+   "en": "Fish",
+   "ja": "魚",
+   "ro": "sakana"
+  },
+  {
+   "en": "Chicken",
+   "ja": "鶏",
+   "ro": "tori"
+  },
+  {
+   "en": "Beef",
+   "ja": "牛",
+   "ro": "gyuu"
+  },
+  {
+   "en": "Pork",
+   "ja": "豚",
+   "ro": "buta"
+  },
+  {
+   "en": "Water",
+   "ja": "水",
+   "ro": "mizu"
+  },
+  {
+   "en": "Emergency exit",
+   "ja": "非常口",
+   "ro": "hijouguchi"
+  },
+  {
+   "en": "Closed today (regular day off)",
+   "ja": "定休日",
+   "ro": "teikyuubi"
+  },
+  {
+   "en": "Adult",
+   "ja": "大人",
+   "ro": "otona"
+  },
+  {
+   "en": "Child (on ticket prices)",
+   "ja": "小人",
+   "ro": "shounin"
+  },
+  {
+   "en": "North",
+   "ja": "北",
+   "ro": "kita"
+  },
+  {
+   "en": "South",
+   "ja": "南",
+   "ro": "minami"
+  },
+  {
+   "en": "East",
+   "ja": "東",
+   "ro": "higashi"
+  },
+  {
+   "en": "West",
+   "ja": "西",
+   "ro": "nishi"
+  }
+ ],
+ "synonyms": [
+  [
+   "talk",
+   "speak",
+   "say",
+   "language"
+  ],
+  [
+   "toilet",
+   "restroom",
+   "bathroom",
+   "washroom",
+   "lavatory",
+   "wc",
+   "loo"
+  ],
+  [
+   "bill",
+   "check, please",
+   "separate checks",
+   "paying together"
+  ],
+  [
+   "pay",
+   "payment",
+   "paying"
+  ],
+  [
+   "money",
+   "cash",
+   "yen"
+  ],
+  [
+   "card",
+   "credit card",
+   "credit",
+   "debit"
+  ],
+  [
+   "suica",
+   "ic card",
+   "pasmo",
+   "transit card"
+  ],
+  [
+   "bag",
+   "plastic bag",
+   "sack"
+  ],
+  [
+   "luggage",
+   "baggage",
+   "suitcase",
+   "bags"
+  ],
+  [
+   "locker",
+   "lockers",
+   "coin locker",
+   "storage"
+  ],
+  [
+   "food",
+   "eat",
+   "meal",
+   "dish"
+  ],
+  [
+   "drink",
+   "beverage"
+  ],
+  [
+   "help",
+   "emergency",
+   "sos",
+   "assist"
+  ],
+  [
+   "sick",
+   "ill",
+   "unwell",
+   "nauseous",
+   "feel bad"
+  ],
+  [
+   "doctor",
+   "hospital",
+   "medical",
+   "clinic",
+   "ambulance"
+  ],
+  [
+   "pharmacy",
+   "drugstore",
+   "medicine",
+   "chemist"
+  ],
+  [
+   "police",
+   "cop",
+   "cops"
+  ],
+  [
+   "train",
+   "rail",
+   "railway",
+   "subway",
+   "metro",
+   "platform",
+   "line"
+  ],
+  [
+   "taxi",
+   "cab",
+   "driver"
+  ],
+  [
+   "exit",
+   "way out",
+   "leave"
+  ],
+  [
+   "entrance",
+   "way in",
+   "enter"
+  ],
+  [
+   "hotel",
+   "ryokan",
+   "inn",
+   "room",
+   "front desk"
+  ],
+  [
+   "bath",
+   "onsen",
+   "hot spring"
+  ],
+  [
+   "allergy",
+   "allergic",
+   "allergies"
+  ],
+  [
+   "price",
+   "cost",
+   "how much",
+   "expensive"
+  ],
+  [
+   "buy",
+   "purchase",
+   "shop",
+   "shopping"
+  ],
+  [
+   "reservation",
+   "booking",
+   "reserve",
+   "book"
+  ],
+  [
+   "wait",
+   "waiting",
+   "moment",
+   "minute",
+   "hold on"
+  ],
+  [
+   "sorry",
+   "excuse",
+   "apologize",
+   "pardon"
+  ],
+  [
+   "thanks",
+   "thank you",
+   "arigatou"
+  ],
+  [
+   "hello",
+   "hi",
+   "good morning",
+   "good evening",
+   "greeting"
+  ],
+  [
+   "goodbye",
+   "bye",
+   "good night"
+  ],
+  [
+   "yes",
+   "ok",
+   "okay",
+   "sure"
+  ],
+  [
+   "no",
+   "nope",
+   "no thanks",
+   "no thank you",
+   "fine"
+  ],
+  [
+   "understand",
+   "got it",
+   "know"
+  ],
+  [
+   "photo",
+   "picture",
+   "camera"
+  ],
+  [
+   "where",
+   "location",
+   "directions",
+   "find"
+  ],
+  [
+   "smoke",
+   "smoking",
+   "cigarette"
+  ],
+  [
+   "tax",
+   "tax-free",
+   "duty free",
+   "tax free"
+  ],
+  [
+   "menu",
+   "order",
+   "ordering"
+  ],
+  [
+   "heat",
+   "hot",
+   "warm",
+   "microwave"
+  ],
+  [
+   "chopsticks",
+   "utensils",
+   "fork",
+   "spoon"
+  ],
+  [
+   "takeout",
+   "take out",
+   "takeaway",
+   "carry out",
+   "to go, please"
+  ],
+  [
+   "for here",
+   "eat in",
+   "dine in",
+   "eating here"
+  ],
+  [
+   "separate",
+   "separately",
+   "split"
+  ],
+  [
+   "together",
+   "same check"
+  ],
+  [
+   "breakfast",
+   "dinner",
+   "lunch",
+   "meal time"
+  ],
+  [
+   "delicious",
+   "tasty",
+   "yummy"
+  ],
+  [
+   "cheers",
+   "toast",
+   "kanpai"
+  ],
+  [
+   "wifi",
+   "wi-fi",
+   "internet",
+   "password"
+  ],
+  [
+   "trunk",
+   "boot"
+  ],
+  [
+   "men",
+   "man",
+   "male",
+   "gentlemen"
+  ],
+  [
+   "women",
+   "woman",
+   "female",
+   "ladies"
+  ],
+  [
+   "child",
+   "kid",
+   "kids",
+   "children"
+  ],
+  [
+   "closed",
+   "close",
+   "shut"
+  ],
+  [
+   "open",
+   "opening"
+  ],
+  [
+   "slow",
+   "slowly",
+   "again",
+   "repeat",
+   "one more time"
+  ],
+  [
+   "noodles",
+   "ramen",
+   "noodle"
+  ],
+  [
+   "recommend",
+   "recommendation",
+   "suggest",
+   "best"
+  ],
+  [
+   "stop",
+   "drop off",
+   "here is fine"
+  ],
+  [
+   "spicy",
+   "chili",
+   "hot sauce"
+  ],
+  [
+   "portion",
+   "size",
+   "serving",
+   "large",
+   "small",
+   "big"
+  ],
+  [
+   "sold out",
+   "out of stock",
+   "none left"
+  ],
+  [
+   "tablet",
+   "qr code",
+   "qr",
+   "screen"
+  ],
+  [
+   "share",
+   "sharing",
+   "plates",
+   "plate"
+  ],
+  [
+   "ice",
+   "no ice"
+  ],
+  [
+   "again",
+   "same",
+   "another",
+   "one more",
+   "refill"
+  ],
+  [
+   "restaurant",
+   "dining",
+   "eating out",
+   "izakaya",
+   "cafe",
+   "café"
+  ],
+  [
+   "shopping",
+   "store",
+   "shops",
+   "souvenir"
+  ],
+  [
+   "emergency",
+   "urgent",
+   "danger"
+  ],
+  [
+   "contactless",
+   "tap",
+   "touch",
+   "apple pay",
+   "google pay",
+   "tap to pay"
+  ],
+  [
+   "change",
+   "coins",
+   "coin"
+  ],
+  [
+   "register",
+   "cashier",
+   "checkout",
+   "counter",
+   "till"
+  ],
+  [
+   "pin",
+   "pin number",
+   "pin code"
+  ],
+  [
+   "installments",
+   "one payment",
+   "lump sum"
+  ],
+  [
+   "signature",
+   "sign"
+  ],
+  [
+   "receipt",
+   "receipts"
+  ],
+  [
+   "display",
+   "case",
+   "showcase",
+   "shelf",
+   "counter"
+  ],
+  [
+   "color",
+   "colour"
+  ],
+  [
+   "size",
+   "bigger",
+   "smaller",
+   "larger"
+  ],
+  [
+   "try",
+   "test",
+   "try on"
+  ],
+  [
+   "button",
+   "ticket machine",
+   "machine"
+  ],
+  [
+   "floor",
+   "level",
+   "which floor",
+   "storey"
+  ],
+  [
+   "nearby",
+   "near",
+   "close",
+   "nearest",
+   "around here"
+  ],
+  [
+   "trash",
+   "garbage",
+   "rubbish",
+   "bin",
+   "trash can"
+  ],
+  [
+   "elevator",
+   "lift"
+  ],
+  [
+   "far",
+   "distance",
+   "walk",
+   "walking"
+  ],
+  [
+   "finding",
+   "looking for",
+   "locate",
+   "search"
+  ],
+  [
+   "walk in",
+   "walk-in",
+   "no reservation",
+   "without a reservation",
+   "get in"
+  ],
+  [
+   "full",
+   "no seats",
+   "busy"
+  ],
+  [
+   "wait list",
+   "waitlist",
+   "sign up",
+   "name"
+  ],
+  [
+   "total",
+   "comes to",
+   "amount"
+  ],
+  [
+   "name",
+   "under the name",
+   "booked under"
+  ],
+  [
+   "both",
+   "either"
+  ],
+  [
+   "try on",
+   "fitting",
+   "fitting room",
+   "changing room",
+   "dressing room",
+   "try"
+  ],
+  [
+   "mirror"
+  ],
+  [
+   "fit",
+   "fits",
+   "too big",
+   "too small"
+  ],
+  [
+   "small talk",
+   "chat",
+   "chitchat",
+   "conversation"
+  ],
+  [
+   "weather",
+   "cold",
+   "cool",
+   "sunny",
+   "warm"
+  ],
+  [
+   "autumn",
+   "fall",
+   "leaves",
+   "foliage",
+   "koyo"
+  ],
+  [
+   "from",
+   "where are you from",
+   "country",
+   "america",
+   "home"
+  ],
+  [
+   "compliment",
+   "lovely",
+   "beautiful",
+   "nice"
+  ],
+  [
+   "seafood",
+   "shellfish",
+   "shrimp",
+   "crab",
+   "prawn",
+   "fish"
+  ]
+ ],
+ "taxi": "この住所までお願いします",
+ "taxiRo": "kono juusho made onegai shimasu"
+}

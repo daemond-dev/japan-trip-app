@@ -1,0 +1,42 @@
+{
+ "groups": [
+  {
+   "name": "Cash",
+   "items": [
+    "Get yen from 7-Eleven (Seven Bank) ATMs with a debit card. Skip exchanging before the trip.",
+    "When the ATM offers a currency, choose yen, never USD.",
+    "Check your bank's foreign ATM fees before you go, and carry a backup card or about $100 in case a card gets declined."
+   ]
+  },
+  {
+   "name": "Getting around",
+   "items": [
+    "One physical Suica or Welcome Suica each covers trains, subways, buses, konbini and vending machines nationwide.",
+    "Riding an express takes the base fare (Suica at the gate) plus a seat ticket. smartEX and the N’EX round trip bundle both; Romancecar seats on EMot don’t.",
+    "If a foreign card fails online, any JR ticket office sells the same tickets."
+   ]
+  },
+  {
+   "name": "Tax-free",
+   "items": [
+    "Since Nov 1, 2026: pay full price, passport scanned at purchase, claim the 10% at the airport before security.",
+    "¥5,000 per-store minimum, pre-tax."
+   ]
+  },
+  {
+   "name": "Luggage",
+   "items": [
+    "Takkyubin from any hotel front desk; Yamato counters are in most hotels.",
+    "Bags over 160 cm total on the Shinkansen need a seat with an oversized baggage area, free to reserve, ¥1,000 fee without one.",
+    "Never abandon an old suitcase. Ask the store that sells you the new one, then the hotel front desk (about ¥2,000), then the airport luggage shop."
+   ]
+  },
+  {
+   "name": "Shopping",
+   "items": [
+    "Sony and Sigma lenses bought in Japan usually carry a Japan-only warranty. Compare on kakaku.com first.",
+    "Knives go in checked bags."
+   ]
+  }
+ ]
+}

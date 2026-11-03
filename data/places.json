@@ -1,0 +1,1038 @@
+{
+ "groups": [
+  {
+   "name": "Tokyo",
+   "places": [
+    {
+     "addr": "〒282-0011 千葉県成田市三里塚御料牧場1-1",
+     "addrRo": "Chiba-ken Narita-shi Sanrizuka Goryou-bokujou 1-1",
+     "area": "Narita, Chiba",
+     "cat": "Travel",
+     "district": "Outskirts (Narita, DisneySea)",
+     "id": "narita",
+     "ja": "成田空港 第1ターミナル",
+     "lat": 35.7636035,
+     "lng": 140.3859353,
+     "name": "Narita Airport Terminal 1",
+     "note": "JR Narita Express and Keisei Skyliner leave from the station under this terminal.",
+     "placeId": "ChIJb8n8uwvzImAR-RJHLJTlTdU",
+     "ro": "Narita Kuukou Dai-ichi Taaminaru",
+     "station": "Narita Airport Terminal 1 Station (JR, Keisei)"
+    },
+    {
+     "addr": "〒160-0023 東京都新宿区西新宿1-2-2",
+     "addrRo": "Toukyou-to Shinjuku-ku Nishi-Shinjuku 1-2-2",
+     "area": "Nishi-Shinjuku",
+     "cat": "Food",
+     "district": "West (Shinjuku, Shibuya)",
+     "id": "omoide",
+     "ja": "思い出横丁",
+     "lat": 35.6927037,
+     "lng": 139.6995778,
+     "name": "Omoide Yokocho",
+     "note": "Lantern-lit alleys of tiny yakitori stalls. No reservation; bring cash.",
+     "placeId": "ChIJP9eKBdeMGGAR0zzBXJNVj5A",
+     "ro": "Omoide Yokochou",
+     "station": "Shinjuku Station, West Exit"
+    },
+    {
+     "addr": "東京都渋谷区宇田川町36-2 ノア渋谷 B1F",
+     "addrRo": "Toukyou-to Shibuya-ku Udagawa-chou 36-2, Noa Shibuya B1F",
+     "area": "Udagawacho, Shibuya",
+     "cat": "Food",
+     "district": "West (Shinjuku, Shibuya)",
+     "id": "toriko",
+     "ja": "挽き肉のトリコ 渋谷店",
+     "lat": 35.6620501,
+     "lng": 139.69724,
+     "name": "Hikiniku no Toriko",
+     "note": "Hamburg steak.",
+     "placeId": "ChIJew-9aNuNGGAR2S95lc352aA",
+     "ro": "Hikiniku no Toriko Shibuya-ten",
+     "station": "Shibuya Station",
+     "tel": "03-6433-7433"
+    },
+    {
+     "addr": "〒150-0042 東京都渋谷区宇田川町12-18",
+     "addrRo": "Toukyou-to Shibuya-ku Udagawa-chou 12-18",
+     "area": "Udagawacho, Shibuya",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "floorUrl": {
+      "label": "Search for the floor guide",
+      "url": "https://www.google.com/search?q=%E3%83%8F%E3%83%B3%E3%82%BA%E6%B8%8B%E8%B0%B7%E5%BA%97%20%E3%83%95%E3%83%AD%E3%82%A2%E3%82%AC%E3%82%A4%E3%83%89"
+     },
+     "floors": [
+      "24 half-floors from B2 to 7F, split into A, B and C levels, linked by 408 steps",
+      "Easiest: take the elevator to the top and walk down",
+      "Closes for good Nov 15, 2026"
+     ],
+     "hours": "Daily 10:00–21:00 · closes for good Nov 15",
+     "id": "hands_shibuya",
+     "ja": "ハンズ渋谷店",
+     "lat": 35.6620337,
+     "lng": 139.6979319,
+     "name": "Hands Shibuya",
+     "note": "Flagship maze of half-floors: stationery, craft, tools, housewares.",
+     "placeId": "ChIJSXJEFqmMGGAR8ctb-YsQ_xM",
+     "ro": "Hanzu Shibuya-ten",
+     "station": "Shibuya Station",
+     "tel": "03-5489-5111"
+    },
+    {
+     "addr": "〒150-0042 東京都渋谷区宇田川町31-2 渋谷BEAM B2F",
+     "addrRo": "Toukyou-to Shibuya-ku Udagawa-chou 31-2, Shibuya BEAM B2F",
+     "area": "Udagawacho, Shibuya",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "hours": "Daily 12:00–20:00",
+     "id": "mandarake_shibuya",
+     "ja": "まんだらけ 渋谷店",
+     "lat": 35.6615247,
+     "lng": 139.6977267,
+     "name": "Mandarake Shibuya, Shibuya BEAM B2F",
+     "note": "Vintage toys, anime cels, retro games, art books. Three flights down.",
+     "placeId": "ChIJF2HRSKiMGGAR1qOAPQK1yko",
+     "ro": "Mandarake Shibuya-ten",
+     "station": "Shibuya Station",
+     "tel": "03-3477-0777"
+    },
+    {
+     "addr": "〒150-0042 東京都渋谷区宇田川町15-1 渋谷PARCO 6F",
+     "addrRo": "Toukyou-to Shibuya-ku Udagawa-chou 15-1, Shibuya PARCO 6F",
+     "area": "Udagawacho, Shibuya",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "hours": "Daily 10:00–21:00",
+     "id": "nintendo_tokyo",
+     "ja": "Nintendo TOKYO（渋谷PARCO 6階）",
+     "lat": 35.6621161,
+     "lng": 139.6986385,
+     "name": "Nintendo Tokyo, Shibuya PARCO 6F",
+     "note": "Next to Pokémon Center.",
+     "placeId": "ChIJ7Su1FK6NGGARAr7UK5NjmMo",
+     "ro": "Nintendou Toukyou (Shibuya Paruko rokkai)",
+     "station": "Shibuya Station",
+     "tel": "03-6712-7155"
+    },
+    {
+     "addr": "〒150-0042 東京都渋谷区宇田川町15-1 渋谷PARCO 6F",
+     "addrRo": "Toukyou-to Shibuya-ku Udagawa-chou 15-1, Shibuya PARCO 6F",
+     "area": "Udagawacho, Shibuya",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "hours": "Daily 10:00–21:00",
+     "id": "pokemon_shibuya",
+     "ja": "ポケモンセンターシブヤ（渋谷PARCO 6階）",
+     "lat": 35.6619557,
+     "lng": 139.6984408,
+     "name": "Pokémon Center Shibuya, Shibuya PARCO 6F",
+     "note": "Next to Nintendo Tokyo. Crowded; checkout lines.",
+     "placeId": "ChIJ313pNISNGGARmnrx-nT6xR4",
+     "ro": "Pokemon Sentaa Shibuya (Shibuya Paruko rokkai)",
+     "station": "Shibuya Station",
+     "tel": "03-5422-3522"
+    },
+    {
+     "addr": "〒150-0042 東京都渋谷区宇田川町28-6",
+     "addrRo": "Toukyou-to Shibuya-ku Udagawa-chou 28-6",
+     "area": "Udagawacho, Shibuya",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "floorNote": "From a 2025 floor-by-floor guide. Free shopping baskets carry a floor map.",
+     "floorUrl": {
+      "label": "Store guide (Go Tokyo, English)",
+      "url": "https://www.gotokyo.org/en/spot/1879/"
+     },
+     "floors": [
+      {
+       "en": "Souvenirs and the tax-free checkout",
+       "f": "7F"
+      },
+      {
+       "en": "Gadgets, electronics and hobbies",
+       "f": "6F"
+      },
+      {
+       "en": "Character goods and party supplies",
+       "f": "5F"
+      },
+      {
+       "en": "Fashion and luxury brands",
+       "f": "4F"
+      },
+      {
+       "en": "Beauty and health: cosmetics, skincare, medicine",
+       "f": "3F"
+      },
+      {
+       "en": "Sweets, snacks and everyday goods",
+       "f": "2F"
+      },
+      {
+       "en": "Entrance: trending items and Shibuya souvenirs",
+       "f": "1F"
+      },
+      {
+       "en": "Food: a full Japanese supermarket, fresh fruit, roasted sweet potatoes",
+       "f": "B1F"
+      }
+     ],
+     "hours": "Open 24 hours",
+     "id": "donki_shibuya",
+     "ja": "MEGAドン・キホーテ 渋谷本店",
+     "lat": 35.6603873,
+     "lng": 139.6978172,
+     "name": "MEGA Don Quijote Shibuya",
+     "note": "Tax-free counter on 7F; card name must match passport.",
+     "placeId": "ChIJr4J6pKmMGGARdQLOgrzToH4",
+     "ro": "Mega Don Kihoote Shibuya Honten",
+     "station": "Shibuya Station",
+     "tel": "0570-076-311"
+    },
+    {
+     "addr": "〒160-0023 東京都新宿区西新宿1-1-3 小田急新宿駅 地下1階",
+     "addrRo": "Toukyou-to Shinjuku-ku Nishi-Shinjuku 1-1-3, Odakyuu Shinjuku-eki B1",
+     "area": "Shinjuku Station, Odakyu B1",
+     "cat": "Travel",
+     "district": "West (Shinjuku, Shibuya)",
+     "id": "odakyu",
+     "ja": "小田急線 新宿駅（ロマンスカーカウンター）",
+     "lat": 35.6910978,
+     "lng": 139.6996503,
+     "name": "Odakyu Romancecar ticket counter",
+     "note": "Where the Romancecar to Hakone leaves from.",
+     "placeId": "ChIJuz95Yl2NGGARAcfVOdhTDpA",
+     "ro": "Odakyuu-sen Shinjuku-eki (Romansukaa kauntaa)",
+     "station": "Shinjuku Station (Odakyu)"
+    },
+    {
+     "addr": "〒104-0061 東京都中央区銀座3-14-6",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 3-14-6",
+     "area": "Ginza 3-chome",
+     "cat": "Food",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "Daily 9:00–16:00",
+     "id": "cloudclub",
+     "ja": "CLOUD CLUB MATCHA",
+     "lat": 35.6702824,
+     "lng": 139.7697951,
+     "name": "Cloud Club Matcha",
+     "note": "Matcha and hojicha lattes, ¥1,000–2,000 (about $6–13). Expect a line; reviews mention 20 min to an hour.",
+     "placeId": "ChIJd1OtenGLGGARP0elPg7hhXc",
+     "ro": "Kuraudo Kurabu Maccha",
+     "station": "Higashi-ginza Station, a few min"
+    },
+    {
+     "addr": "〒106-0032 東京都港区六本木6-1-8 六本木グリーンビル 3F",
+     "addrRo": "Toukyou-to Minato-ku Roppongi 6-1-8, Roppongi Guriin Biru 3F",
+     "area": "Roppongi",
+     "cat": "Food",
+     "district": "Central (Ginza, Tokyo Station)",
+     "id": "sougo",
+     "ja": "精進料理 宗胡",
+     "lat": 35.66254,
+     "lng": 139.732203,
+     "name": "Shojin Sougo",
+     "note": "Shojin ryori kaiseki (Buddhist vegetarian course).",
+     "placeId": "ChIJYfexWZ2LGGARnca0sslzjCw",
+     "ro": "Shoujin Ryouri Sougo",
+     "station": "Roppongi Station, about 10 min from Ginza on the Hibiya Line",
+     "tel": "03-5414-1133"
+    },
+    {
+     "addr": "〒104-0061 東京都中央区銀座2-7-15",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 2-7-15",
+     "area": "Ginza 2-chome",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "floorUrl": {
+      "label": "Itoya (English site)",
+      "url": "https://www.ito-ya.co.jp/lang/en/index.html"
+     },
+     "floors": [
+      "B1: exhibition hall and events",
+      "1F SENSE: seasonal cards and gifts, drink bar",
+      "2F SHARE: letter paper, cards and postcards, with a mailbox to post them",
+      "3F DESK: fountain pens and fine pens, with try-before-you-buy",
+      "4F MEETING: notebooks and planners; Note Couture custom notebooks",
+      "5F TRAVEL: bags, luggage tags and travel goods",
+      "6F HOME: home and kitchen goods",
+      "7F FINE PAPER: about 1,000 kinds of Western paper",
+      "8F CRAFT: washi, wrapping paper, origami and stamps; gift wrapping",
+      "12F: CAFE Stylo",
+      "11F: indoor farm",
+      "10F: lounge",
+      "K.Itoya, the annex just behind: pens and art supplies"
+     ],
+     "hours": "10:00–20:00 · Sun 10:00–19:00",
+     "id": "itoya",
+     "ja": "銀座・伊東屋 本店（G.Itoya）",
+     "lat": 35.6731273,
+     "lng": 139.7672138,
+     "name": "G.Itoya",
+     "note": "Stationery, 12 floors.",
+     "placeId": "ChIJKQAKAOSLGGARwGhpOXWgfYo",
+     "ro": "Ginza Itouya Honten",
+     "station": "Ginza area"
+    },
+    {
+     "addr": "〒104-0061 東京都中央区銀座6-10-1 GINZA SIX B2F",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 6-10-1, GINZA SIX B2F",
+     "area": "Ginza 6-chome",
+     "cat": "Food",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "Daily 10:30–20:30",
+     "id": "tenfactory",
+     "ja": "10FACTORY（GINZA SIX 地下2階）",
+     "lat": 35.6696829,
+     "lng": 139.7638134,
+     "name": "10FACTORY, Ginza Six B2F",
+     "note": "Ehime mandarin juice and citrus tasting. No reservation.",
+     "placeId": "ChIJg_pPOOaLGGARPM0dkTsOIFY",
+     "ro": "Ten Fakutorii (Ginza Shikkusu chika nikai)",
+     "station": "Ginza Station"
+    },
+    {
+     "addr": "〒104-0061 東京都中央区銀座4-13-8 1F",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 4-13-8, 1F",
+     "area": "Ginza 4-chome",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "Daily 11:00–19:00",
+     "id": "imabari",
+     "ja": "今治浴巾 imabari yokkin 銀座店",
+     "lat": 35.6691934,
+     "lng": 139.7685714,
+     "name": "imabari yokkin, Sophia Square Ginza 1F",
+     "note": "Imabari towels and baby gifts.",
+     "placeId": "ChIJvffUWlmNGGAR3L-Po01ALFQ",
+     "ro": "Imabari Yokkin Ginza-ten",
+     "station": "Ginza Station"
+    },
+    {
+     "addr": "東京都港区南青山6-2-13 2F",
+     "addrRo": "Toukyou-to Minato-ku Minami-Aoyama 6-2-13, 2F",
+     "area": "Minami-Aoyama (Kotto-dori)",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "hours": "11:30–19:00 · closed Tue",
+     "id": "ikeuchi",
+     "ja": "IKEUCHI ORGANIC 東京ストア",
+     "lat": 35.6610909,
+     "lng": 139.7150047,
+     "name": "IKEUCHI ORGANIC Tokyo Store",
+     "note": "Imabari organic towels; baby line, birth gifts and gift wrapping. 2F, up the stairs above a Chinese restaurant on Kotto-dori.",
+     "placeId": "ChIJN_LrM2GLGGARSQndSHnD10c",
+     "ro": "Ikeuchi Oogaanikku Toukyou Sutoa",
+     "station": "Omotesando Station, Exit B3, about 7 min walk",
+     "tel": "03-6427-7870"
+    },
+    {
+     "addr": "東京都千代田区有楽町1-9-1 1F",
+     "addrRo": "Toukyou-to Chiyoda-ku Yuurakuchou 1-9-1, 1F",
+     "area": "Yurakucho (Hibiya)",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "11:00–20:00",
+     "id": "proteca",
+     "ja": "PROTECA 日比谷店",
+     "lat": 35.6751655,
+     "lng": 139.76019349999999,
+     "name": "PROTECA Hibiya (flagship)",
+     "note": "Made-in-Japan suitcases (ACE). Tax-free with passports.",
+     "placeId": "ChIJAQBQMvCLGGARRNtqmmKVSBQ",
+     "ro": "Puroteka Hibiya-ten",
+     "station": "Hibiya Station, about 5 min walk",
+     "tel": "03-6273-4911"
+    },
+    {
+     "addr": "東京都中央区銀座6-14-10 コートヤード・マリオット銀座東武ホテル 1F",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 6-14-10, Kooto Yaado Mariotto Ginza Toubu Hoteru 1F",
+     "area": "Ginza 6-chome",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "Daily 10:30–20:30",
+     "id": "ace_ginza",
+     "ja": "ACE Bags & Luggage コートヤード・マリオット銀座店",
+     "lat": 35.6683167,
+     "lng": 139.7649128,
+     "name": "ACE Bags & Luggage, Courtyard Marriott Ginza 1F",
+     "note": "ACE's own shop. A reviewer saw ¥90,000 carry-ons, so likely some Proteca, but unconfirmed. Ask about any member sale on top of tax-free; one reviewer says staff confused the two.",
+     "placeId": "ChIJrxdlEKyLGGARHO5_eyxiVKg",
+     "ro": "Eesu Baggu ando Ragegeeji Kooto Yaado Mariotto Ginza-ten",
+     "station": "Higashi-ginza Station, 2–3 min",
+     "tel": "03-6264-0180"
+    },
+    {
+     "addr": "東京都中央区銀座4-6-16",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 4-6-16",
+     "area": "Ginza 4-chome",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "floorNote": "Shops may move during renovations. Each floor’s Map button opens the store’s own floor plan, machine-translated into English.",
+     "floorUrl": {
+      "label": "Official floor guide (English)",
+      "url": "https://cp.mistore.jp/global/en/ginza.html"
+     },
+     "floors": [
+      {
+       "en": "Restaurants, 11:00–23:00",
+       "f": "12F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor12.html"
+      },
+      {
+       "en": "Restaurants, 11:00–23:00",
+       "f": "11F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor11.html"
+      },
+      {
+       "en": "Baby and children’s goods",
+       "f": "10F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor10.html"
+      },
+      {
+       "en": "Ginza Terrace rooftop garden; entrance to the Art Aquarium",
+       "f": "9F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor9.html"
+      },
+      {
+       "en": "Art Aquarium Museum GINZA, 10:00–19:00 (enter from 9F)",
+       "f": "8F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor8.html"
+      },
+      {
+       "en": "Household goods, event space, and the International Customer Service Center: tax-free counter and tourist information",
+       "f": "7F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor7.html"
+      },
+      {
+       "en": "Men’s clothing and accessories, glasses",
+       "f": "6F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor6.html"
+      },
+      {
+       "en": "Men’s and women’s clothing, accessories, women’s shoes",
+       "f": "5F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor5.html"
+      },
+      {
+       "en": "Women’s clothing, watches",
+       "f": "4F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor4.html"
+      },
+      {
+       "en": "Women’s clothing, lingerie, accessories, socks",
+       "f": "3F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor3.html"
+      },
+      {
+       "en": "Jewelry",
+       "f": "Annex 2F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floorm2.html"
+      },
+      {
+       "en": "Luxury boutiques and luxury accessories",
+       "f": "2F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor2.html"
+      },
+      {
+       "en": "Handbags, jewelry and accessories",
+       "f": "1F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floor1.html"
+      },
+      {
+       "en": "Cosmetics",
+       "f": "B1F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floorB1.html"
+      },
+      {
+       "en": "Food hall",
+       "f": "B2F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floorB2.html"
+      },
+      {
+       "en": "Food hall",
+       "f": "B3F",
+       "map": "https://www.mistore.jp.e.az.hp.transer.com/store/ginza/shops/floorB3.html"
+      }
+     ],
+     "hours": "Daily 10:00–20:00",
+     "id": "mitsukoshi_ginza",
+     "ja": "銀座三越",
+     "lat": 35.6712864,
+     "lng": 139.7657382,
+     "name": "Mitsukoshi Ginza, 5F travel floor",
+     "note": "Department store luggage floor; carries Proteca. Tax-free at a central counter, not the register; bring passports.",
+     "placeId": "ChIJX9MhjuaLGGARvoMvduRK-5E",
+     "ro": "Ginza Mitsukoshi",
+     "station": "Ginza Station",
+     "tel": "03-3562-1111"
+    },
+    {
+     "addr": "東京都中央区銀座3-6-1",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 3-6-1",
+     "area": "Ginza 3-chome",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "floorNote": "Floors 11:00–20:00 (19:30 on Sundays and the last day of a holiday). The Japanese line is what the store’s signs say. Each floor’s Map button opens the store’s floor plan.",
+     "floorUrl": {
+      "label": "Official floor guide (English)",
+      "url": "https://www.matsuyaginza.com/en/ginza/floor"
+     },
+     "floors": [
+      {
+       "en": "Rooftop: golf school, prayer room",
+       "f": "RF",
+       "ja": "屋上｜ゴルフスクール｜礼拝室",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=R"
+      },
+      {
+       "en": "Event Square; Restaurant City GINZA, 11:00–22:00 (last order 21:00)",
+       "f": "8F",
+       "ja": "イベントスクエア｜レストラン",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=8F"
+      },
+      {
+       "en": "Lifestyle and home goods (THE HOME), gift salon, gift certificates, card center",
+       "f": "7F",
+       "ja": "ライフスタイル｜リビング｜ギフトサロン｜商品券｜カードセンター",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=7F"
+      },
+      {
+       "en": "Lingerie, bedding and nightwear, kids, golf, sports",
+       "f": "6F",
+       "ja": "ランジェリー｜寝具・婦人紳士ナイトウェア｜子供｜ゴルフ｜スポーツ",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=6F"
+      },
+      {
+       "en": "Men’s and women’s clothing, men’s accessories, shoes and bags, travel goods",
+       "f": "5F",
+       "ja": "紳士服｜婦人服｜紳士雑貨｜靴・鞄｜旅行用品",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=5F"
+      },
+      {
+       "en": "Women’s clothing, jewelry and watches",
+       "f": "4F",
+       "ja": "婦人服｜宝飾・時計",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=4F"
+      },
+      {
+       "en": "Women’s clothing; shoes, bags and women’s accessories",
+       "f": "3F",
+       "ja": "婦人服｜シューズ・バッグ・婦人雑貨",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=3F"
+      },
+      {
+       "en": "International boutiques",
+       "f": "2F",
+       "ja": "インターナショナルブティック",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=2F"
+      },
+      {
+       "en": "Cosmetics, accessories",
+       "f": "1F",
+       "ja": "化粧品｜アクセサリー",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=1F"
+      },
+      {
+       "en": "Food (GINZA Food Stage); underground link to Ginza Station",
+       "f": "B1F",
+       "ja": "食品＜GINZAフードステージ＞｜地下鉄連絡口（東京メトロ銀座駅）",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=B1"
+      },
+      {
+       "en": "Fresh food (GINZA Food Stage)",
+       "f": "B2F",
+       "ja": "生鮮食品＜GINZAフードステージ＞",
+       "map": "https://www.matsuyaginza.com/en/ginza/floor-map?floor=B2"
+      }
+     ],
+     "hours": "11:00–20:00 · Sun 11:00–19:30",
+     "id": "matsuya_ginza",
+     "ja": "松屋銀座",
+     "lat": 35.6720816,
+     "lng": 139.7666576,
+     "name": "Matsuya Ginza, 5F travel goods",
+     "note": "Department store luggage floor; carries Proteca, plus a Rimowa counter for side-by-side comparison. Tax-free at a central counter; bring passports.",
+     "placeId": "ChIJ5UsboeaLGGARV2ODxt0ic1I",
+     "ro": "Matsuya Ginza",
+     "station": "Ginza Station Exit A12 (direct)",
+     "tel": "03-3567-1211"
+    },
+    {
+     "addr": "東京都中央区銀座5-2-1 東急プラザ銀座 8F ロッテ免税店銀座店内",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 5-2-1, Toukyuu Puraza Ginza 8F, Rotte Menzeiten Ginza-ten nai",
+     "area": "Ginza 5-chome (Sukiyabashi)",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "Daily 11:00–21:00",
+     "id": "karen_lotte_ginza",
+     "ja": "銀座カレン ロッテ免税店銀座店",
+     "lat": 35.672263099999995,
+     "lng": 139.7626752,
+     "name": "Ginza Karen, Lotte Duty Free (Tokyu Plaza Ginza 8F)",
+     "note": "Discount luggage counter inside Lotte Duty Free. House-brand cases from about ¥9,800; cheap overflow bag, not a quality case; reviews mention scratch-prone shells and mixed service. Other luggage sellers share the floor, so look for the Ginza Karen sign.",
+     "placeId": "ChIJY9M6G9CLGGARU7aWYBws3MU",
+     "ro": "Ginza Karen Rotte Menzeiten Ginza-ten",
+     "station": "Ginza Station (Sukiyabashi side)",
+     "tel": "03-6264-6860"
+    },
+    {
+     "addr": "千葉県浦安市舞浜1-13",
+     "addrRo": "Chiba-ken Urayasu-shi Maihama 1-13",
+     "area": "Maihama, Urayasu",
+     "cat": "Activity",
+     "district": "Outskirts (Narita, DisneySea)",
+     "id": "disneysea",
+     "ja": "東京ディズニーシー",
+     "lat": 35.6267108,
+     "lng": 139.8850779,
+     "name": "Tokyo DisneySea",
+     "note": "Theme park at Maihama; the Disney Resort Line monorail links the station and the park.",
+     "placeId": "ChIJszdHEQN9GGARJS23SnAdR0E",
+     "ro": "Toukyou Dizunii Shii",
+     "station": "Maihama Station, then Disney Resort Line"
+    },
+    {
+     "addr": "〒100-0005 東京都千代田区丸の内1-9",
+     "addrRo": "Toukyou-to Chiyoda-ku Marunouchi 1-9",
+     "area": "Marunouchi",
+     "cat": "Travel",
+     "district": "Central (Ginza, Tokyo Station)",
+     "id": "tokyostn",
+     "ja": "東京駅",
+     "lat": 35.6812996,
+     "lng": 139.7670658,
+     "name": "Tokyo Station",
+     "note": "Shinkansen to Kyoto and the Narita Express to the airport.",
+     "placeId": "ChIJC3Cf2PuLGGAROO00ukl8JwA",
+     "ro": "Toukyou-eki",
+     "station": "Tokyo Station"
+    },
+    {
+     "addr": "〒101-0021 東京都千代田区外神田1-11-2 北林ビル 3〜5F",
+     "addrRo": "Toukyou-to Chiyoda-ku Sotokanda 1-11-2, Kitabayashi Biru 3F–5F",
+     "area": "Sotokanda, Akihabara",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "floorUrl": {
+      "label": "Floor guide",
+      "url": "https://en.akihabara-bc.jp/akihabara-superpotato/"
+     },
+     "floors": [
+      "3F: retro consoles and games",
+      "4F: more games, plus soundtracks, DVDs and magazines",
+      "5F: retro arcade and candy"
+     ],
+     "hours": "Daily 11:00–20:00",
+     "id": "superpotato",
+     "ja": "スーパーポテト 秋葉原店（レトロ館）",
+     "lat": 35.6993585,
+     "lng": 139.7707015,
+     "name": "Super Potato Retro-kan",
+     "note": "Retro games, rooftop arcade. 3F–5F.",
+     "placeId": "ChIJcUJuHqeOGGARd-7iN1Ijt2k",
+     "ro": "Suupaa Poteto Akihabara-ten (Retoro-kan)",
+     "station": "Akihabara Station"
+    },
+    {
+     "addr": "東京都台東区上野3-6-10 ユニオンビル1F",
+     "addrRo": "Toukyou-to Taitou-ku Ueno 3-6-10, Yunion Biru 1F",
+     "area": "Ueno 3-chome",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "hours": "Mon–Thu, Sun 12:00–19:00 · Fri 12:00–20:00 · Sat 11:00–20:00",
+     "id": "yushakobo",
+     "ja": "遊舎工房",
+     "lat": 35.7040044,
+     "lng": 139.7734149,
+     "name": "Yushakobo",
+     "note": "Custom keyboard parts: switch testers, keycaps, cases, PCBs; workshop next door. Price-check prebuilt boards at Yodobashi Akiba.",
+     "placeId": "ChIJcQKBgfGPGGARlaD2q6fLOD0",
+     "ro": "Yuusha Koubou",
+     "station": "Suehirocho Station (Ginza Line, direct from Ginza); walkable from Akihabara",
+     "tel": "050-3196-4687"
+    },
+    {
+     "addr": "〒160-0023 東京都新宿区西新宿1-12-5 ぶらんしぇビル",
+     "addrRo": "Toukyou-to Shinjuku-ku Nishi-Shinjuku 1-12-5, Buranshe Biru",
+     "area": "Nishi-Shinjuku",
+     "cat": "Shop",
+     "district": "West (Shinjuku, Shibuya)",
+     "floorUrl": {
+      "label": "Search for the floor guide",
+      "url": "https://www.google.com/search?q=%E3%83%9E%E3%83%83%E3%83%97%E3%82%AB%E3%83%A1%E3%83%A9%20%E6%9C%AC%E9%A4%A8%20%E3%83%95%E3%83%AD%E3%82%A2%E3%82%AC%E3%82%A4%E3%83%89"
+     },
+     "hours": "Daily 11:00–19:00",
+     "id": "mapcamera",
+     "ja": "マップカメラ 本館",
+     "lat": 35.6894431,
+     "lng": 139.6972617,
+     "name": "Map Camera",
+     "note": "Used lenses in very good condition.",
+     "placeId": "ChIJ50R7W9GMGGAR4GZfxnwj2Qg",
+     "ro": "Mappu Kamera Honkan",
+     "station": "Shinjuku Station, West Exit"
+    },
+    {
+     "addr": "〒111-0035 東京都台東区西浅草1-4-3 西浅草松井ビル",
+     "addrRo": "Toukyou-to Taitou-ku Nishi-Asakusa 1-4-3, Nishi-Asakusa Matsui Biru",
+     "area": "Nishi-Asakusa",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "hours": "Daily 10:00–18:00",
+     "id": "dengama",
+     "ja": "田窯",
+     "lat": 35.7104353,
+     "lng": 139.7885064,
+     "name": "Dengama, Kappabashi",
+     "note": "Kiln-direct tableware. Many Kappabashi shops close Sundays and holidays.",
+     "placeId": "ChIJoTtGg76OGGARY_PxYBgyqGM",
+     "ro": "Dengama",
+     "station": "Tawaramachi Station (Ginza Line), 3 min"
+    },
+    {
+     "addr": "東京都台東区松が谷2-24-1",
+     "addrRo": "Toukyou-to Taitou-ku Matsugaya 2-24-1",
+     "area": "Matsugaya, Kappabashi",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "hours": "Daily 11:00–17:30",
+     "id": "kamaasa",
+     "ja": "釜浅商店",
+     "lat": 35.7139913,
+     "lng": 139.7887057,
+     "name": "Kama-Asa, Kappabashi",
+     "note": "Knives and pots. Take a ticket for a one-on-one consultation (English available); engraving offered.",
+     "placeId": "ChIJ___D5JWOGGARopAlYm8Rv2I",
+     "ro": "Kama-Asa Shouten",
+     "station": "Tawaramachi Station (Ginza Line), about 8 min",
+     "tel": "03-3841-9357"
+    },
+    {
+     "addr": "東京都台東区松が谷2-12-6",
+     "addrRo": "Toukyou-to Taitou-ku Matsugaya 2-12-6",
+     "area": "Matsugaya, Kappabashi",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "hours": "Daily 10:00–18:00",
+     "id": "kamata",
+     "ja": "かまた刃研社",
+     "lat": 35.7131424,
+     "lng": 139.7884622,
+     "name": "Kamata Hakensha, Kappabashi",
+     "note": "Knife shop since 1923. Free engraving; English-speaking staff. Knives go in checked bags.",
+     "placeId": "ChIJGf4KAb6OGGARjclSdbpCst0",
+     "ro": "Kamata Hakensha",
+     "station": "Tawaramachi Station (Ginza Line), about 6 min",
+     "tel": "03-3841-4205"
+    },
+    {
+     "area": "Akihabara",
+     "cat": "Activity",
+     "district": "East (Akihabara, Asakusa)",
+     "id": "akiba_walk",
+     "lat": 35.698917,
+     "lng": 139.774798,
+     "name": "Akihabara walk: Yodobashi to Suehirocho",
+     "note": "About 1.5 km of walking; the shops are what take the time. Sundays: Chuo-dori is car-free 13:00–17:00 (Oct–Mar) and very crowded.",
+     "placeId": "ChIJGU_M2aeOGGARdnOLcMYXuXs",
+     "routeUrl": "https://www.google.com/maps/dir/?api=1&travelmode=walking&origin=Yodobashi%20Akiba&origin_place_id=ChIJGU_M2aeOGGARdnOLcMYXuXs&destination=Yushakobo&destination_place_id=ChIJcQKBgfGPGGARlaD2q6fLOD0&waypoints=Akihabara%20Radio%20Kaikan%7CSuper%20Potato%20Retro-kan&waypoint_place_ids=ChIJ__-AdayOGGAR6EGPwvcpzTA%7CChIJcUJuHqeOGGARd-7iN1Ijt2k",
+     "station": "Start: Akihabara Station (Hibiya Line or JR). End: Suehirocho Station (Ginza Line)",
+     "steps": [
+      "Yodobashi Akiba, by the Showa-dori exit",
+      "Through the station to the Electric Town exit: Radio Kaikan is right outside",
+      "Super Potato, a few minutes west, just off Chuo-dori",
+      "North up Chuo-dori to Yushakobo, near Suehirocho Station",
+      "Ginza Line from Suehirocho toward Ginza or Asakusa"
+     ]
+    },
+    {
+     "addr": "〒101-0021 東京都千代田区外神田1-15-16",
+     "addrRo": "Toukyou-to Chiyoda-ku Sotokanda 1-15-16",
+     "area": "Sotokanda, Akihabara",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "floorUrl": {
+      "label": "Floor-by-floor guide",
+      "url": "https://skdesu.com/en/radio-kaikan-guide/"
+     },
+     "floors": [
+      "1F: trading cards and gift shops",
+      "2F: Astop rental showcases (figures listed by individual sellers)",
+      "3F–4F: AmiAmi figures",
+      "5F: magi trading cards",
+      "6F: Yellow Submarine (models, board games, cards)",
+      "9F: Card Lab and Full Comp trading cards",
+      "10F: event hall",
+      "Tenants change; check the signs by the escalators."
+     ],
+     "hours": "10:00–20:00",
+     "id": "radiokaikan",
+     "ja": "秋葉原ラジオ会館",
+     "lat": 35.6979149,
+     "lng": 139.7719571,
+     "name": "Akihabara Radio Kaikan",
+     "note": "10 floors of hobby shops: trading cards, figures (AmiAmi on 3F and 4F), models and rental showcases. Very crowded on weekends.",
+     "placeId": "ChIJ__-AdayOGGAR6EGPwvcpzTA",
+     "ro": "Akihabara Rajio Kaikan",
+     "station": "Akihabara Station (Electric Town exit), 1 min"
+    },
+    {
+     "addr": "〒101-0028 東京都千代田区神田花岡町1-1",
+     "addrRo": "Toukyou-to Chiyoda-ku Kanda Hanaoka-chou 1-1",
+     "area": "Kanda Hanaoka-cho, Akihabara",
+     "cat": "Shop",
+     "district": "East (Akihabara, Asakusa)",
+     "floorNote": "Yodobashi itself fills 1F–6F; which department sits on which of 1F–3F wasn’t confirmed, so check the directory by the escalators.",
+     "floorUrl": {
+      "label": "Search for the floor guide",
+      "url": "https://www.google.com/search?q=%E3%83%A8%E3%83%89%E3%83%90%E3%82%B7Akiba%20%E3%83%95%E3%83%AD%E3%82%A2%E3%82%AC%E3%82%A4%E3%83%89"
+     },
+     "floors": [
+      {
+       "en": "Golf",
+       "f": "9F"
+      },
+      {
+       "en": "Restaurant floor, about 30 restaurants",
+       "f": "8F"
+      },
+      {
+       "en": "Specialty shops, including Tower Records",
+       "f": "7F"
+      },
+      {
+       "en": "Games, toys and hobby goods",
+       "f": "6F"
+      },
+      {
+       "en": "Home appliances",
+       "f": "5F"
+      },
+      {
+       "en": "TVs and audio",
+       "f": "4F"
+      },
+      {
+       "en": "Phones, computers and cameras",
+       "f": "1F–3F"
+      }
+     ],
+     "hours": "Daily 9:30–22:00",
+     "id": "yodobashi_akiba",
+     "ja": "ヨドバシカメラ マルチメディアAkiba",
+     "lat": 35.698917,
+     "lng": 139.774798,
+     "name": "Yodobashi Akiba",
+     "note": "Huge electronics store: cameras, computers, games, toys, home goods, and a restaurant floor at the top. Tax-free with your passport.",
+     "placeId": "ChIJGU_M2aeOGGARdnOLcMYXuXs",
+     "ro": "Yodobashi Kamera Maruchimedia Akiba",
+     "station": "Akihabara Station (Showa-dori exit), 1 min",
+     "tel": "03-5209-1010"
+    },
+    {
+     "addr": "〒104-0061 東京都中央区銀座6-9-5 ギンザコマツ東館 1〜12F",
+     "addrRo": "Toukyou-to Chuuou-ku Ginza 6-9-5, Ginza Komatsu Higashikan 1F–12F",
+     "area": "Ginza",
+     "cat": "Shop",
+     "district": "Central (Ginza, Tokyo Station)",
+     "hours": "Daily 11:00–21:00",
+     "id": "uniqlo_ginza",
+     "ja": "ユニクロ 銀座店",
+     "lat": 35.6702448,
+     "lng": 139.7634686,
+     "name": "UNIQLO Ginza",
+     "note": "UNIQLO’s 12-floor flagship (Ginza Komatsu East building), with a map at each floor and tax-free counters; UNIQLO Coffee upstairs.",
+     "placeId": "ChIJb9MHbuaLGGAR0xi-noU25UU",
+     "ro": "Yunikuro Ginza-ten",
+     "station": "Ginza Station, about 3 min"
+    }
+   ]
+  },
+  {
+   "name": "Hakone",
+   "places": [
+    {
+     "addr": "〒250-0311 神奈川県足柄下郡箱根町湯本",
+     "addrRo": "Kanagawa-ken Ashigarashimo-gun Hakone-machi Yumoto",
+     "area": "Yumoto, Hakone",
+     "cat": "Travel",
+     "district": "Hakone-Yumoto",
+     "id": "yumoto",
+     "ja": "箱根湯本駅",
+     "lat": 35.2332816,
+     "lng": 139.1035878,
+     "name": "Hakone-Yumoto Station",
+     "note": "Romancecar terminus from Shinjuku.",
+     "placeId": "ChIJcX9RE3WjGWARooaTIj-NpZs",
+     "ro": "Hakone-Yumoto-eki",
+     "station": "Hakone-Yumoto Station"
+    }
+   ]
+  },
+  {
+   "name": "Kyoto",
+   "places": [
+    {
+     "addr": "〒600-8216 京都府京都市下京区東塩小路釜殿町",
+     "addrRo": "Kyouto-fu Kyouto-shi Shimogyou-ku Higashi-Shiokouji Kamadono-chou",
+     "area": "Shimogyo",
+     "cat": "Travel",
+     "district": "Kyoto Station",
+     "id": "kyotostn",
+     "ja": "京都駅",
+     "lat": 34.985849,
+     "lng": 135.7587667,
+     "name": "Kyoto Station",
+     "note": "Shinkansen and the JR Sagano Line to Arashiyama.",
+     "placeId": "ChIJ7wKLka4IAWARCByidG5EGrY",
+     "ro": "Kyouto-eki",
+     "station": "Kyoto Station"
+    },
+    {
+     "addr": "京都府京都市下京区烏丸通塩小路下ル東塩小路町 ジェイアール京都伊勢丹",
+     "addrRo": "Kyouto-fu Kyouto-shi Shimogyou-ku Karasuma-doori Shiokouji Sagaru Higashi-Shiokouji-chou, Jei Aaru Kyouto Isetan",
+     "area": "Kyoto Station building",
+     "cat": "Shop",
+     "district": "Kyoto Station",
+     "id": "nishikawa",
+     "ja": "nishikawaショップ スリープナビ ジェイアール京都伊勢丹店",
+     "lat": 34.9860382,
+     "lng": 135.7573821,
+     "name": "Nishikawa Sleep Navi, JR Kyoto Isetan 8F",
+     "note": "Custom pillow fittings.",
+     "placeId": "ChIJs--bSnEJAWAReqzDFDzh0_Y",
+     "ro": "Nishikawa Shoppu Suriipu Nabi, Jei Aaru Kyouto Isetan-ten",
+     "station": "Kyoto Station",
+     "tel": "075-341-2055"
+    },
+    {
+     "addr": "〒616-8385 京都府京都市右京区嵯峨天龍寺芒ノ馬場町68",
+     "addrRo": "Kyouto-fu Kyouto-shi Ukyou-ku Saga Tenryuuji Susukinobaba-chou 68",
+     "area": "Saga, Arashiyama",
+     "cat": "Food",
+     "district": "Outskirts (Arashiyama, Kitayama)",
+     "id": "shigetsu",
+     "ja": "天龍寺 篩月",
+     "lat": 35.0152053,
+     "lng": 135.6735833,
+     "name": "Shigetsu, Tenryu-ji",
+     "note": "Shojin ryori (Buddhist vegetarian) lunch inside Tenryu-ji; reserve through the temple's form. ¥500 garden admission each, cash.",
+     "placeId": "ChIJxWDbqAGqAWARVFKptreTKe8",
+     "ro": "Tenryuu-ji Shigetsu",
+     "station": "Saga-Arashiyama Station (JR Sagano Line), about 15 min from Kyoto",
+     "tel": "075-882-9725"
+    },
+    {
+     "addr": "〒616-8363 京都府京都市右京区嵯峨柳田町45-1",
+     "addrRo": "Kyouto-fu Kyouto-shi Ukyou-ku Saga Yanagida-chou 45-1",
+     "area": "Saga, Arashiyama",
+     "cat": "Food",
+     "district": "Outskirts (Arashiyama, Kitayama)",
+     "hours": "11:00–15:00 · closed Thu",
+     "id": "maikohan",
+     "ja": "舞妓飯 嵐山店",
+     "lat": 35.0135501,
+     "lng": 135.6844248,
+     "name": "Maikohan Arashiyama",
+     "note": "Tempura lunch with Katsura River views. Book a window seat online.",
+     "placeId": "ChIJ4aIwOVcHAWARNN2zbEOZ0is",
+     "ro": "Maikohan Arashiyama-ten",
+     "station": "Hankyu Arashiyama Station"
+    },
+    {
+     "addr": "〒604-0821 京都府京都市中京区観音町64-1 ヤマムラビル",
+     "addrRo": "Kyouto-fu Kyouto-shi Nakagyou-ku Kannon-chou 64-1, Yamamura Biru",
+     "area": "Nakagyo",
+     "cat": "Food",
+     "district": "Downtown and Gion",
+     "hours": "11:30–14:50 and 18:00–21:00",
+     "id": "takakura",
+     "ja": "麺屋 高倉二条",
+     "lat": 35.013556,
+     "lng": 135.7624627,
+     "name": "Menya Takakura Nijo",
+     "note": "Ramen and tsukemen, 6 counter seats. Order at the tablet inside the leftmost of three unmarked doors.",
+     "placeId": "ChIJG9sCuogIAWAR1S9t2fRIb7k",
+     "ro": "Men'ya Takakura Nijou",
+     "station": "Karasuma Oike Station, about 7 min walk"
+    },
+    {
+     "addr": "〒600-8002 京都府京都市下京区御旅町35 京都髙島屋S.C. T8 7F",
+     "addrRo": "Kyouto-fu Kyouto-shi Shimogyou-ku Otabi-chou 35, Kyouto Takashimaya S.C. T8 7F",
+     "area": "Shijo-Kawaramachi",
+     "cat": "Shop",
+     "district": "Downtown and Gion",
+     "hours": "Daily 10:30–20:00",
+     "id": "nintendo",
+     "ja": "Nintendo KYOTO（京都髙島屋S.C. T8 7階）",
+     "lat": 35.0035271,
+     "lng": 135.768255,
+     "name": "Nintendo Kyoto, Takashimaya S.C. 7F",
+     "note": "Kyoto-exclusive merch.",
+     "placeId": "ChIJ3dxPvegJAWARjuprBYA4hJE",
+     "ro": "Nintendou Kyouto (Kyouto Takashimaya Esu Shii, Tii Eito nanakai)",
+     "station": "Kyoto-Kawaramachi Station (Hankyu)"
+    },
+    {
+     "addr": "〒605-0084 京都府京都市東山区清本町363",
+     "addrRo": "Kyouto-fu Kyouto-shi Higashiyama-ku Kiyomoto-chou 363",
+     "area": "Kiyomotocho, Higashiyama (Gion)",
+     "cat": "Food",
+     "district": "Downtown and Gion",
+     "hours": "Lunch 11:00–14:15 · dinner 17:00–20:20 · weekends also 8:00–10:00 · closed Wed",
+     "id": "htc_kyoto",
+     "ja": "挽肉と米 京都",
+     "lat": 35.0050975,
+     "lng": 135.7745747,
+     "name": "Hikiniku to Come Kyoto",
+     "note": "363 Kiyomotocho. Card only. Not booked; reviews say same-day slots go to a morning queue.",
+     "placeId": "ChIJY28nVm4JAWARwfSwGp7gxk0",
+     "ro": "Hikiniku to Kome Kyouto",
+     "station": "About 20 min from Kyoto Station"
+    },
+    {
+     "addr": "〒605-0846 京都府京都市東山区五条橋東6-539",
+     "addrRo": "Kyouto-fu Kyouto-shi Higashiyama-ku Goujoubashi-higashi 6-539",
+     "area": "Gojo-zaka, Higashiyama",
+     "cat": "Shop",
+     "district": "Downtown and Gion",
+     "hours": "Daily 9:00–18:00",
+     "id": "tohgoro",
+     "ja": "東五六",
+     "lat": 34.9950549,
+     "lng": 135.7805641,
+     "name": "Tohgoro",
+     "note": "Kiyomizu-yaki and work by local artists. 6-539 Gojobashi-higashi. On Gojo-zaka, the slope up to Kiyomizu-dera, with more ceramics shops along the climb.",
+     "placeId": "ChIJbWiYBc4IAWARDcZDy58SlgA",
+     "ro": "Tougorou",
+     "station": "Kiyomizu-Gojo Station (Keihan), about 10 min walk; or city bus to Gojozaka",
+     "tel": "075-561-0056"
+    }
+   ]
+  },
+  {
+   "name": "Osaka",
+   "places": [
+    {
+     "addr": "〒552-0022 大阪府大阪市港区海岸通1-1-10",
+     "addrRo": "Oosaka-fu Oosaka-shi Minato-ku Kaigan-doori 1-1-10",
+     "area": "Tempozan, Minato",
+     "cat": "Activity",
+     "district": "Tempozan",
+     "id": "kaiyukan",
+     "ja": "海遊館",
+     "lat": 34.6545182,
+     "lng": 135.4289645,
+     "name": "Osaka Aquarium Kaiyukan",
+     "note": "Osaka Aquarium at Tempozan.",
+     "placeId": "ChIJzakNjPToAGARzCwIriDFg28",
+     "ro": "Kaiyuukan",
+     "station": "Osakako Station (Chuo Line), about 5 min walk"
+    }
+   ]
+  }
+ ]
+}

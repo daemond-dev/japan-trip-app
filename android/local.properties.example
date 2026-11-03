@@ -1,0 +1,7 @@
+# Copy to android/local.properties (gitignored) and fill in. build.sh reads it.
+APP_ID=com.example.japantrip          # Android package name; use your own, e.g. com.<surname>.japantrip
+APP_NAME=Japan 2026                   # launcher label (also the Pictures/ and Downloads/ folder name)
+LIVE_URL=https://claude.ai/artifact/XXXXXXXXXXXXXXXXXXXXXX   # your published artifact, or your GitHub Pages URL for a static-only app
+KEYSTORE=signing.keystore             # created on the first build if missing; keep it, never commit it
+KS_ALIAS=app
+KS_PASS=changeme

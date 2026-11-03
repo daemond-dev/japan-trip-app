@@ -1,0 +1,245 @@
+{
+ "name": "kids-and-baby",
+ "description": "For a party with children or a baby: restaurants, strollers, changing tables, nursing rooms, formula, kids' menus, tickets, hotel rooms, drugstore items.",
+ "sections": [
+  {
+   "after": "Food allergies",
+   "name": "Kids and baby",
+   "phrases": [
+    {
+     "en": "We have a baby with us",
+     "ja": "赤ちゃんも一緒です",
+     "ro": "akachan mo issho desu"
+    },
+    {
+     "en": "~ of us, including a baby",
+     "ja": "～人です。赤ちゃんも一緒です",
+     "ro": "~ nin desu. akachan mo issho desu"
+    },
+    {
+     "en": "~ adults and ~ children",
+     "ja": "大人～人と子供～人です",
+     "ro": "otona ~ nin to kodomo ~ nin desu"
+    },
+    {
+     "en": "Do you have a high chair?",
+     "ja": "子供用の椅子はありますか",
+     "ro": "kodomo-you no isu wa arimasu ka"
+    },
+    {
+     "en": "Can we bring the stroller in?",
+     "ja": "ベビーカーのまま入れますか",
+     "ro": "bebiikaa no mama hairemasu ka"
+    },
+    {
+     "en": "Could you hold the stroller for us?",
+     "ja": "ベビーカーを預かってもらえますか",
+     "ro": "bebiikaa o azukatte moraemasu ka"
+    },
+    {
+     "en": "Where can we leave the stroller?",
+     "ja": "ベビーカーはどこに置けばいいですか",
+     "ro": "bebiikaa wa doko ni okeba ii desu ka"
+    },
+    {
+     "en": "Is there a place to change a diaper?",
+     "ja": "おむつ替えができる場所はありますか",
+     "ro": "omutsu-gae ga dekiru basho wa arimasu ka"
+    },
+    {
+     "en": "Is there a nursing room?",
+     "ja": "授乳室はありますか",
+     "ro": "junyuushitsu wa arimasu ka"
+    },
+    {
+     "en": "Where is the multipurpose restroom? (has a changing table)",
+     "ja": "多目的トイレはどこですか",
+     "ro": "tamokuteki toire wa doko desu ka"
+    },
+    {
+     "en": "Could we get hot water for formula?",
+     "ja": "ミルク用のお湯をいただけますか",
+     "ro": "miruku-you no oyu o itadakemasu ka"
+    },
+    {
+     "en": "Could you warm the baby food?",
+     "ja": "離乳食を温めてもらえますか",
+     "ro": "rinyuushoku o atatamete moraemasu ka"
+    },
+    {
+     "en": "Is it OK to bring in baby food?",
+     "ja": "離乳食の持ち込みはできますか",
+     "ro": "rinyuushoku no mochikomi wa dekimasu ka"
+    },
+    {
+     "en": "Do you have a kids’ menu?",
+     "ja": "お子様メニューはありますか",
+     "ro": "okosama menyuu wa arimasu ka"
+    },
+    {
+     "en": "Kids’ plates and spoons, please",
+     "ja": "子供用の取り皿とスプーンをお願いします",
+     "ro": "kodomo-you no torizara to supuun o onegai shimasu"
+    },
+    {
+     "en": "Could you cut it into small pieces?",
+     "ja": "小さく切ってもらえますか",
+     "ro": "chiisaku kitte moraemasu ka"
+    },
+    {
+     "en": "A table, please (not the counter)",
+     "ja": "テーブル席でお願いします",
+     "ro": "teeburu-seki de onegai shimasu"
+    },
+    {
+     "en": "Sorry about the noise",
+     "ja": "うるさくてすみません",
+     "ro": "urusakute sumimasen"
+    },
+    {
+     "en": "Careful, it’s hot",
+     "ja": "熱いのでお気をつけください",
+     "ro": "atsui node o-ki o tsuke kudasai",
+     "hear": true
+    },
+    {
+     "en": "How old is the child?",
+     "ja": "お子様は何歳ですか",
+     "ro": "okosama wa nansai desu ka",
+     "hear": true
+    },
+    {
+     "en": "The baby is ~ months old",
+     "ja": "赤ちゃんは生後～か月です",
+     "ro": "akachan wa seigo ~ kagetsu desu"
+    },
+    {
+     "en": "This child is ~ years old",
+     "ja": "この子は～歳です",
+     "ro": "kono ko wa ~ sai desu"
+    },
+    {
+     "en": "Up to what age are children free?",
+     "ja": "子供は何歳まで無料ですか",
+     "ro": "kodomo wa nansai made muryou desu ka"
+    },
+    {
+     "en": "~ adult tickets and ~ child tickets, please",
+     "ja": "大人～枚と子供～枚ください",
+     "ro": "otona ~ mai to kodomo ~ mai kudasai"
+    },
+    {
+     "en": "Which car has the stroller space? (train)",
+     "ja": "ベビーカーのスペースは何号車ですか",
+     "ro": "bebiikaa no supeesu wa nangousha desu ka"
+    },
+    {
+     "en": "Do you have a crib?",
+     "ja": "ベビーベッドはありますか",
+     "ro": "bebii beddo wa arimasu ka"
+    },
+    {
+     "en": "Can ~ of us stay in one room?",
+     "ja": "～人で一部屋に泊まれますか",
+     "ro": "~ nin de hitoheya ni tomaremasu ka"
+    },
+    {
+     "en": "Do you sell diapers?",
+     "ja": "おむつは売っていますか",
+     "ro": "omutsu wa utte imasu ka"
+    },
+    {
+     "en": "Diapers",
+     "ja": "おむつ",
+     "ro": "omutsu"
+    },
+    {
+     "en": "Baby wipes",
+     "ja": "おしりふき",
+     "ro": "oshirifuki"
+    },
+    {
+     "en": "Formula (powdered)",
+     "ja": "粉ミルク",
+     "ro": "kona miruku"
+    },
+    {
+     "en": "Liquid formula",
+     "ja": "液体ミルク",
+     "ro": "ekitai miruku"
+    },
+    {
+     "en": "Baby food",
+     "ja": "離乳食",
+     "ro": "rinyuushoku"
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "ja": "授乳室",
+   "ro": "junyuushitsu",
+   "en": "Nursing room"
+  },
+  {
+   "ja": "おむつ交換台",
+   "ro": "omutsu koukandai",
+   "en": "Diaper changing table"
+  },
+  {
+   "ja": "多目的トイレ",
+   "ro": "tamokuteki toire",
+   "en": "Multipurpose restroom (changing table inside)"
+  },
+  {
+   "ja": "優先席",
+   "ro": "yuusenseki",
+   "en": "Priority seats"
+  },
+  {
+   "ja": "ベビーカー",
+   "ro": "bebiikaa",
+   "en": "Stroller"
+  },
+  {
+   "ja": "子供",
+   "ro": "kodomo",
+   "en": "Child, children"
+  }
+ ],
+ "synonyms": [
+  [
+   "baby",
+   "infant",
+   "toddler",
+   "stroller",
+   "pram",
+   "buggy",
+   "high chair",
+   "highchair",
+   "diaper",
+   "nappy",
+   "crib",
+   "cot",
+   "nursing",
+   "breastfeeding",
+   "formula",
+   "baby food",
+   "family"
+  ]
+ ],
+ "tips": [
+  {
+   "name": "Kids and baby",
+   "items": [
+    "JR trains: under 6 ride free with an adult (two per paying adult; a reserved seat for them costs the child fare), 6 to 11 pay half. Child Suica cards exist for ages 6 to 11.",
+    "Department stores have a nursing room and changing tables on the baby floor; station multipurpose restrooms (多目的トイレ) usually have a changing table.",
+    "Drugstores (Matsumoto Kiyoshi, Welcia, Sundrug) sell diapers, wipes, powdered and liquid formula and baby food pouches.",
+    "Stations have elevators, but not every exit does; look for the elevator icon on the station map before leaving the platform with the stroller.",
+    "Restaurants in Japan are often small with counter seating; ask for a table and whether the stroller can come in before you sit down."
+   ]
+  }
+ ],
+ "travelers_note": "Traveling with children; fill in the ages."
+}

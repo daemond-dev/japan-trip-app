@@ -1,0 +1,11 @@
+# per-copy settings and secrets
+android/local.properties
+android/*.keystore
+android/*.jks
+# generated
+android/out/
+android/assets/www/index.html
+android/assets/www/data.js
+site/
+__pycache__/
+.DS_Store

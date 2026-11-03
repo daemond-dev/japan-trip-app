@@ -1,0 +1,21 @@
+# Runs the page tests (live, offline, static modes and the service worker) on every push and pull request.
+name: Test the app
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: python -c "import json,glob; [json.load(open(f)) for f in glob.glob('data/**/*.json', recursive=True)]; print('json ok')"
+      - run: python3 scripts/test_page.py live
+      - run: python3 scripts/test_page.py offline
+      - run: python3 scripts/test_page.py static
+      - run: python3 scripts/test_page.py sw
