@@ -393,7 +393,11 @@ html{touch-action:pan-x pan-y}
 
 /* Add to a day */
 .place .addday{float:right;margin:0 0 4px 8px;min-height:32px;padding:4px 10px;font-size:13px;gap:3px}
-.addday svg{width:14px;height:14px}
+.addday svg,.btn.addc svg{width:14px;height:14px}
+.btn.addc{gap:3px}
+.btn.addc[data-addcity]{white-space:nowrap}
+#setupSheet .addrow > span,#citySheet .addrow > span,#placeSheet .addrow > span{flex-basis:80px}
+.hero .cityrow .cityl{display:flex;align-items:center;gap:6px;flex:0 0 auto;max-width:52%;font-size:13px;color:var(--ink-2)}
 #addDays{margin:6px 0 10px}
 #addDays .btn{flex:0 0 auto;flex-direction:column;gap:0;line-height:1.15;padding:6px 10px}
 #addDays .btn small{font-size:11px;color:var(--ink-2)}
@@ -446,16 +450,25 @@ html{touch-action:pan-x pan-y}
 .show .en{font-size:15px;color:var(--ink-2)}
 .show .rom{margin-top:-10px;font-size:16px;line-height:1.4;color:var(--ink-2);overflow-wrap:anywhere}
 .show .row{display:flex;gap:8px;justify-content:space-between}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:15;max-width:calc(100% - 32px);padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:14px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:27;max-width:calc(100% - 32px);padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:14px}
 .toast[hidden]{display:none}
 .toast button{margin-left:12px;padding:2px 12px;border:1px solid currentColor;border-radius:99px;background:none;color:inherit;font:inherit;font-weight:700;cursor:pointer}
 @media (prefers-reduced-motion:no-preference){ .show:not([hidden]){animation:rise .18s ease-out} @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}} }
+/* Set up this copy, Add a city, Add a place */
+.sheet-card h3{margin:16px 0 6px;font-size:15px;color:var(--ink)}
+.sheet-card select,.addrow select,.addrow input[type=date]{flex:1;min-width:0;font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink)}
+#setupTz{width:100%}
+.addrow .btn{flex:0 0 auto}
+.hero .cityrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.hero .cityrow .city{margin-top:0;min-width:0}
+.hero .cityrow select{flex:0 1 auto;min-width:0;font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
+.btn.warnb{color:var(--warn);border-color:var(--warn)}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <div class="bar"><button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="dot" id="conn" hidden></span><span class="cnt" id="todoCnt" hidden></span></button><h1 id="appTitle">Japan 2026</h1><span class="clock" id="clock" aria-label="Home time" title="Home time (meta.homeTz)"></span></div>
+    <div class="bar"><button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="dot" id="conn" hidden></span><span class="cnt" id="todoCnt" hidden></span></button><h1 id="appTitle">Japan 2026</h1><span class="clock" id="clock" aria-label="Home time" title="Home time"></span></div>
     <div class="strip" id="strip" role="group" aria-label="Choose a day"></div>
   </div>
 </header>
@@ -494,6 +507,9 @@ html{touch-action:pan-x pan-y}
   <button type="button" class="btn wide" id="tripBtn" style="margin-bottom:10px">Trip overview, to-do and tips</button>
   <button type="button" class="btn wide" id="setBtn" aria-expanded="false" aria-controls="setPanel">Settings</button>
   <div class="setp" id="setPanel" hidden>
+    <h3>Your copy</h3>
+    <p class="note" id="mineNote"></p>
+    <div class="seg"><button type="button" class="btn" id="setupBtn">Set up this copy</button><button type="button" class="btn warnb" id="mineForget">Forget my setup</button></div>
     <h3>Theme</h3>
     <div class="seg" id="themeSeg" role="group" aria-label="Theme">
       <button type="button" class="btn" data-theme-set="auto">Match phone</button>
@@ -520,6 +536,47 @@ html{touch-action:pan-x pan-y}
     <button type="button" class="btn" id="secReset">Restore the original sections</button>
   </div>
 </aside>
+<div class="sheet" id="setupSheet" hidden role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+  <div class="sheet-card">
+    <div class="sheet-ttl" id="setupTitle">Set up this copy</div>
+    <p class="note">Kept on this phone only. Change it anytime from the menu, under Settings.</p>
+    <h3>Home time zone</h3>
+    <p class="note">The clock in the header shows home time, since the phone itself already shows Japan time.</p>
+    <select id="setupTz" aria-label="Home time zone"></select>
+    <p class="note" id="setupTzNow"></p>
+    <div id="setupDatesWrap">
+      <h3>Your dates in Japan</h3>
+      <label class="addrow"><span>First day</span><input type="date" id="setupFrom"></label>
+      <label class="addrow"><span>Last day</span><input type="date" id="setupTo"></label>
+      <p class="note" id="setupDatesNote"></p>
+    </div>
+    <h3>Cities</h3>
+    <label class="addrow" id="setupCityRow"><span>Most days</span><select id="setupCity" aria-label="City for most of your days"></select></label>
+    <div class="filters sub" id="setupCities" role="group" aria-label="Cities you added"></div>
+    <div class="addrow"><span>Add</span><input type="text" id="setupNewCity" placeholder="Another city, e.g. Nara" autocomplete="off" aria-label="City to add"><button type="button" class="btn" id="setupAddCity">Add</button></div>
+    <div class="acts"><button type="button" class="btn primary" id="setupOk">Save</button><button type="button" class="btn" id="setupLater">Later</button></div>
+  </div>
+</div>
+<div class="sheet" id="citySheet" hidden role="dialog" aria-modal="true" aria-labelledby="cityTitle">
+  <div class="sheet-card">
+    <div class="sheet-ttl" id="cityTitle">Add a city</div>
+    <p class="note">Kept on this phone. You can then add your own places under it and give your days that city.</p>
+    <label class="addrow"><span>City</span><input type="text" id="cityName" placeholder="e.g. Nara" autocomplete="off"></label>
+    <div class="acts"><button type="button" class="btn primary" id="cityOk">Add</button><button type="button" class="btn" id="cityCancel">Cancel</button></div>
+  </div>
+</div>
+<div class="sheet" id="placeSheet" hidden role="dialog" aria-modal="true" aria-labelledby="placeTitle">
+  <div class="sheet-card">
+    <div class="sheet-ttl" id="placeTitle">Add a place</div>
+    <p class="note" id="placeWhere"></p>
+    <label class="addrow"><span>Name</span><input type="text" id="plName" autocomplete="off"></label>
+    <label class="addrow"><span>Japanese</span><input type="text" id="plJa" placeholder="Optional; helps the Maps search" autocomplete="off"></label>
+    <label class="addrow"><span>Type</span><select id="plCat"><option value="Food">Restaurant</option><option value="Shop">Shop</option><option value="Activity">Sightseeing</option><option value="Travel">Travel</option><option value="Hotel">Hotel</option></select></label>
+    <label class="addrow"><span>Area</span><input type="text" id="plArea" placeholder="Neighborhood or station, optional" autocomplete="off"></label>
+    <label class="addrow"><span>Note</span><input type="text" id="plNote" placeholder="Optional" autocomplete="off"></label>
+    <div class="acts"><button type="button" class="btn primary" id="plOk">Add</button><button type="button" class="btn" id="plCancel">Cancel</button></div>
+  </div>
+</div>
 <div class="sheet" id="addSheet" hidden role="dialog" aria-modal="true" aria-labelledby="addTitle">
   <div class="sheet-card">
     <div class="sheet-ttl" id="addTitle">Add to a day</div>
@@ -577,7 +634,7 @@ const CACHE = "jt-cache-v1";
 const S = {meta:null,days:null,stays:null,places:null,prices:null,phrases:null,tips:null,todos:[]};
 /* In the Android app, window.TripApp keeps settings and the latest data on the phone so the offline copy matches. */
 const TA = window.TripApp || null;
-const SHARED = ["jt-visited", "jt-past", "jt-rate", "jt-theme", "jt-filters", "jt-spot", "jt-hint-arrange"];
+const SHARED = ["jt-visited", "jt-past", "jt-rate", "jt-theme", "jt-filters", "jt-spot", "jt-hint-arrange", "jt-mine"];
 const store = {
   get(k){
     if(TA && SHARED.includes(k)){ try{ const v = TA.getLocal(k); if(v != null && v !== "") return v; }catch(e){} }
@@ -587,6 +644,19 @@ const store = {
   del(k){ try{ localStorage.removeItem(k); }catch(e){} if(TA && SHARED.includes(k)){ try{ TA.saveLocal(k, ""); }catch(e){} } }
 };
 try{ const c = JSON.parse(store.get(CACHE) || "null"); if(c) Object.assign(S, c); }catch(e){}
+/* This phone's own setup ("Set up this copy", asked on the first start): the home time zone for the header clock, the
+   traveler's own dates as days while the shared plan has none, and cities and places they add. Kept on the phone only
+   (jt-mine; mirrored into the Android app's settings store), never written to the shared database. */
+const MINEKEY = "jt-mine";
+let mine = {done:false, tz:"", days:[], cities:[], places:[]};
+try{ const m = JSON.parse(store.get(MINEKEY) || "null"); if(m && typeof m === "object") Object.assign(mine, m); }catch(e){}
+function normMine(){
+  ["days", "cities", "places"].forEach(k => { if(!Array.isArray(mine[k])) mine[k] = []; });
+  if(!mine.past || typeof mine.past !== "object") mine.past = {};
+  mine.days.forEach(d => { if(!Array.isArray(d.items)) d.items = []; d.mine = true; });
+}
+normMine();
+function saveMine(){ store.set(MINEKEY, JSON.stringify(mine)); }
 /* filter choices on Reservations and Places survive closing the app */
 const FKEY = "jt-filters";
 let F = {}; try{ F = JSON.parse(store.get(FKEY) || "{}") || {}; }catch(e){ F = {}; }
@@ -649,7 +719,7 @@ const jstStamp = ms => { const d = new Date(ms + 9*3600e3); return MO[d.getUTCMo
 const HOME_TZ_DEFAULT = "America/Los_Angeles";
 let homeTzF = null, homeTzKey = "";
 function homeFmt(){
-  const tz = (S.meta && S.meta.homeTz) || HOME_TZ_DEFAULT;
+  const tz = mine.tz || (S.meta && S.meta.homeTz) || HOME_TZ_DEFAULT;
   if(homeTzKey !== tz){ homeTzKey = tz; try{ homeTzF = new Intl.DateTimeFormat("en-US", {timeZone:tz, weekday:"short", hour:"2-digit", minute:"2-digit", hourCycle:"h23", timeZoneName:"short"}); }catch(e){ homeTzF = null; } }
   return homeTzF;
 }
@@ -684,15 +754,25 @@ function trApp(){
   return "https://translate.google.com/";
 }
 // Places from Google Maps carry a placeId; places added from Ask may only have coordinates (TomTom) or a name and area.
-const mapQuery = p => p.lat && p.lng && !p.placeId ? p.lat + "," + p.lng : [p.name, p.placeId ? "" : p.area, p.placeId ? "" : "Japan"].filter(Boolean).join(", ");
+const mapQuery = p => p.lat && p.lng && !p.placeId ? p.lat + "," + p.lng : [p.mine && p.ja ? p.ja : p.name, p.placeId ? "" : p.area, p.placeId ? "" : "Japan"].filter(Boolean).join(", ");
 const mapUrl = p => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(mapQuery(p)) + (p.placeId ? "&query_place_id=" + encodeURIComponent(p.placeId) : "");
 const dirUrl = p => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(mapQuery(p)) + (p.placeId ? "&destination_place_id=" + encodeURIComponent(p.placeId) : "") + "&travelmode=transit";
 const telUrl = n => "tel:" + String(n).replace(/[^0-9+]/g, "");
 const ext = (href, label, cls) => `<a class="btn ${cls||""}" href="${esc(href)}" target="_blank" rel="noopener">${esc(label)}</a>`;
 
 /* lookups */
-function placeMap(){ const m = {}; (S.places?.groups || []).forEach(g => (g.places || []).forEach(p => { m[p.id] = {...p, city:g.name}; })); return m; }
-const days = () => S.days?.days || [];
+/* Shared place groups plus this phone's own cities and places (see "Set up this copy"). */
+function placeGroups(){
+  const gs = (S.places?.groups || []).map(g => ({...g, places:[...(g.places || [])]}));
+  const find = n => gs.find(g => String(g.name).toLowerCase() === String(n).toLowerCase());
+  mine.cities.forEach(c => { if(!find(c)) gs.push({name:c, places:[], mine:true}); });
+  mine.places.forEach(p => { let g = find(p.city); if(!g){ g = {name:p.city, places:[], mine:true}; gs.push(g); } g.places.push({...p, mine:true}); });
+  return gs;
+}
+function placeMap(){ const m = {}; placeGroups().forEach(g => (g.places || []).forEach(p => { m[p.id] = {...p, city:g.name}; })); return m; }
+const sharedDays = () => S.days?.days || [];
+const usingMine = () => !sharedDays().length && mine.days.length > 0;
+const days = () => sharedDays().length ? sharedDays() : mine.days;
 const rate = () => { const o = parseFloat(store.get("jt-rate") || ""); if(o > 0) return o; return S.meta?.rate?.jpyPerUsd || 0; };
 const yen = n => "¥" + Math.round(n).toLocaleString("en-US");
 const usd = n => n < 100 ? "$" + n.toFixed(2) : "$" + Math.round(n).toLocaleString("en-US");
@@ -1000,9 +1080,12 @@ document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => setTab(
 document.querySelectorAll("#pswitch [data-goto]").forEach(b => b.onclick = () => setTab(b.dataset.goto));
 /* Android back button: close what's open, then step back through the views you came from, then Today, then leave */
 function appCanBack(){
-  return !$("#addSheet").hidden || !$("#sheet").hidden || docOpen || askOpen || !$("#show").hidden || $("#drawer").classList.contains("open") || tabStack.length > 0 || tab !== "today";
+  return !$("#setupSheet").hidden || !$("#citySheet").hidden || !$("#placeSheet").hidden || !$("#addSheet").hidden || !$("#sheet").hidden || docOpen || askOpen || !$("#show").hidden || $("#drawer").classList.contains("open") || tabStack.length > 0 || tab !== "today";
 }
 function appBack(){
+  if(!$("#setupSheet").hidden){ closeSetup(); return true; }
+  if(!$("#citySheet").hidden){ closeCitySheet(); return true; }
+  if(!$("#placeSheet").hidden){ closePlaceSheet(); return true; }
   if(!$("#addSheet").hidden){ closeAddDay(); return true; }
   if(!$("#sheet").hidden){ closeSheet(); return true; }
   if(docOpen){ closeDoc(); return true; }
@@ -1101,7 +1184,9 @@ function isVisited(id){
   return AUTOVIS.has(id);
 }
 function saveVisLocal(){ store.set(VISKEY, JSON.stringify(visOv)); }
+const isMinePlace = id => mine.places.some(p => p.id === id);
 function setVisited(id, v){
+  if(isMinePlace(id)){ visOv[id] = v; saveVisLocal(); renderPlacesBody(); return; }   // the phone's own place: never in the shared doc
   if(db && !window.__APK){
     const ids = {...(S.visited?.ids || {})};
     if(v === AUTOVIS.has(id)) delete ids[id]; else ids[id] = !!v;
@@ -1113,10 +1198,10 @@ function setVisited(id, v){
 }
 function pushLocalVisited(){
   if(!db || window.__APK) return;
-  const ks = Object.keys(visOv); if(!ks.length) return;
-  const local = visOv, ids = {...(S.visited?.ids || {})};
+  const ks = Object.keys(visOv).filter(k => !isMinePlace(k)); if(!ks.length) return;
+  const local = {...visOv}, ids = {...(S.visited?.ids || {})};
   ks.forEach(k => { if(!!local[k] === AUTOVIS.has(k)) delete ids[k]; else ids[k] = !!local[k]; });
-  visOv = {}; saveVisLocal(); S.visited = {ids}; saveCache();
+  ks.forEach(k => { delete visOv[k]; }); saveVisLocal(); S.visited = {ids}; saveCache();
   db.doc("trip/visited").set({ids}).catch(() => { visOv = local; saveVisLocal(); });
 }
 
@@ -1130,7 +1215,7 @@ function renderStrip(){
 }
 
 const EMPTY_LOAD = `<div class="empty">Nothing loaded yet. Open this page while online, or ask Claude to sync the app.</div>`;
-const EMPTY_DAYS = `<div class="empty">No itinerary yet. Ask Claude to add your days to the app (the build notes describe the day format).</div>`;
+const EMPTY_DAYS = `<div class="empty">No days yet. Add your travel dates and the Today tab gets one day per date; put places on a day from the Places tab.<div class="acts" style="margin-top:12px"><button type="button" class="btn primary" data-setup="1">Set up this copy</button></div></div>`;
 /* "Nothing loaded" only while the data hasn't arrived; once it has, an empty day list is an empty itinerary. */
 const emptyMsg = () => (S.days && Array.isArray(S.days.days)) ? EMPTY_DAYS : EMPTY_LOAD;
 const EMPTY = EMPTY_LOAD;
@@ -1210,7 +1295,10 @@ function renderToday(){
   let lastPast = -1;
   if(active) spans.forEach((x, i) => { if(x.e != null && x.e <= now) lastPast = i; });
   const auto = d.items.map((it, i) => i <= lastPast);
-  const past = d.items.map((it, i) => { const o = pastOf(itemKey(d, it)); return o === true || o === false ? o : auto[i]; });
+  // past marks on the phone's own days live in mine.past, not in the shared trip/pastMarks
+  const pastGet = k => d.mine ? (has(mine.past, k) ? mine.past[k] : undefined) : pastOf(k);
+  const pastSet = (k, v) => { if(d.mine){ if(v === undefined) delete mine.past[k]; else mine.past[k] = v; saveMine(); } else setPast(k, v); };
+  const past = d.items.map((it, i) => { const o = pastGet(itemKey(d, it)); return o === true || o === false ? o : auto[i]; });
   const pastN = past.filter(Boolean).length;
   // What's happening now, what starts next, what's left with no set time, and tomorrow's first real item.
   const nowI = active ? d.items.findIndex((it, i) => !past[i] && spans[i].s != null && spans[i].s <= now && spans[i].e > now) : -1;
@@ -1243,15 +1331,16 @@ function renderToday(){
   el.innerHTML = `
     <div class="hero">
       <div class="date">${p.mo} ${p.day}<span>${p.wd}, day ${dayIdx + 1} of ${ds.length}</span></div>
-      <div class="city">${esc(d.city)}${d.start ? `<span class="muted small"> from ${esc(d.start)}</span>` : ""}</div>
+      ${d.mine ? cityRow(d) : `<div class="city">${esc(d.city)}${d.start ? `<span class="muted small"> from ${esc(d.start)}</span>` : ""}</div>`}
       ${wxHtml}
-      <div class="sleep">${hasStay ? `<button type="button" class="stayb" data-stay="${esc(d.stay)}" data-date="${esc(d.date)}"><span class="muted">Sleep</span> ${esc(d.sleep)}<span class="go">Booking details</span></button>` : `<p><span class="muted">Sleep</span> ${esc(d.sleep)}</p>`}${stay && stay.ja ? `<button type="button" class="btn" data-driver="${esc(stay.id)}" aria-label="Driver card: name and address in Japanese">Driver</button>` : ""}</div>
+      ${d.mine && !d.sleep && !hasStay ? "" : `<div class="sleep">${hasStay ? `<button type="button" class="stayb" data-stay="${esc(d.stay)}" data-date="${esc(d.date)}"><span class="muted">Sleep</span> ${esc(d.sleep)}<span class="go">Booking details</span></button>` : `<p><span class="muted">Sleep</span> ${esc(d.sleep)}</p>`}${stay && stay.ja ? `<button type="button" class="btn" data-driver="${esc(stay.id)}" aria-label="Driver card: name and address in Japanese">Driver</button>` : ""}</div>`}
       ${lines}
     </div>
     ${todos.length ? `<div class="tips tdy"><h2>To do${isToday ? "" : " that day"}</h2><ul class="todo">${todos.map(x => { const dp = parts(x.due), late = !x.done && x.due < j.date;
       return `<li class="${x.done ? "done" : ""}${late ? " late" : ""}"><input type="checkbox" id="tdt-${esc(x.id)}" data-todo="${esc(x.id)}" ${x.done ? "checked" : ""} ${ro ? "disabled" : ""}><label for="tdt-${esc(x.id)}">${esc(x.text)}${late ? `<span class="due">Overdue since ${dp.mo} ${dp.day}</span>` : ""}</label></li>`; }).join("")}</ul></div>` : ""}
     ${active ? originBar() : ""}
     ${pastN ? `<button type="button" class="btn earlier" id="earlierBtn" aria-expanded="${showEarlier}">${showEarlier ? "Hide" : "Show"} past items (${pastN})</button>` : ""}
+    ${d.mine && !d.items.length ? `<div class="empty">Nothing planned for this day yet. On the Places tab, tap “+ Day” on a place to put it here.</div>` : ""}
     <ol class="line">${d.items.map((it, i) => { if(past[i] && !showEarlier) return "";
       const pl = it.place ? pm[it.place] : null;
       const vague = it.m == null || !/^\d/.test(it.t.replace("~",""));
@@ -1268,16 +1357,23 @@ function renderToday(){
           ${docBlock(it.docs, it.title)}
           ${qrBlock(it.qr)}
           ${placeActs(pl, it.links)}
+          ${d.mine ? `<div class="acts"><button type="button" class="btn small warnb" data-rmitem="${i}" aria-label="Remove ${esc(it.title)}">Remove</button></div>` : ""}
         </div></li>`; }).join("")}</ol>
     ${d.tips && d.tips.length ? `<div class="tips"><h2>Tips for the day</h2><ul>${d.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}`;
   wireOrigin(el); if(active) startEtas();
   const eb = $("#earlierBtn"); if(eb) eb.onclick = () => { showEarlier = !showEarlier; renderToday(); };
   el.querySelectorAll("[data-todo]").forEach(cb => cb.onchange = () => toggleTodo(cb.dataset.todo, cb.checked));
+  el.querySelectorAll(".citysel").forEach(sel => sel.onchange = () => { if(!d.mine) return; d.city = sel.value; saveMine(); const c = sel.closest(".cityrow"); if(c) c.querySelector(".city").textContent = d.city; });
+  el.querySelectorAll("[data-rmitem]").forEach(b => b.onclick = () => {
+    if(!d.mine) return; const i = +b.dataset.rmitem, it = d.items[i]; if(!it) return;
+    d.items.splice(i, 1); saveMine(); render();
+    toast(`Removed ${it.title}.`, "Undo", () => { d.items.splice(Math.min(i, d.items.length), 0, it); saveMine(); render(); });
+  });
   el.querySelectorAll(".badge[data-k]").forEach(b => b.onclick = () => {
     const i = +b.dataset.k, k = itemKey(d, d.items[i]), toPast = !past[i];
-    const prev0 = pastOf(k);
-    setPast(k, toPast === auto[i] ? undefined : toPast);
-    toast(toPast ? "Moved to past items." : "Back on the list.", "Undo", () => { setPast(k, prev0); renderToday(); });
+    const prev0 = pastGet(k);
+    pastSet(k, toPast === auto[i] ? undefined : toPast);
+    toast(toPast ? "Moved to past items." : "Back on the list.", "Undo", () => { pastSet(k, prev0); renderToday(); });
     renderToday();
   });
 }
@@ -1295,7 +1391,7 @@ function renderTrip(){
     ${ds.length ? "" : EMPTY_DAYS}
     <ul class="days">${ds.map((d, i) => { const p = parts(d.date);
       const fixed = d.items.filter(it => it.m != null && it.status !== "Not booked" && it.type !== "Sleep" && it.type !== "Task").slice(0, 2).map(it => it.t + " " + it.title.split(",")[0]).join("; ");
-      return `<li><button type="button" data-goday="${i}"${d.date < t ? ' class="muted"' : ""}><div class="dn">${p.day}<small>${p.mo} ${p.wd}</small></div><div><div class="dc">${esc(d.city)}</div><div class="dl">${esc(fixed || d.items.map(it => it.title).slice(0, 1).join(""))}</div><div class="dl">Sleep: ${esc(d.sleep)}</div></div></button></li>`; }).join("")}</ul>
+      return `<li><button type="button" data-goday="${i}"${d.date < t ? ' class="muted"' : ""}><div class="dn">${p.day}<small>${p.mo} ${p.wd}</small></div><div><div class="dc">${esc(d.city)}</div><div class="dl">${esc(fixed || d.items.map(it => it.title).slice(0, 1).join(""))}</div>${d.sleep ? `<div class="dl">Sleep: ${esc(d.sleep)}</div>` : ""}</div></button></li>`; }).join("")}</ul>
 
     <h2>Stays</h2>
     ${(S.stays?.stays || []).map(s => { const p = s.id ? pm[s.id] : null;
@@ -1427,7 +1523,7 @@ function renderPlaces(){
 }
 function renderPlacesBody(){
   AUTOVIS = autoVisitedSet();
-  const el = $("#placesBody"), gs = S.places?.groups || [];
+  const el = $("#placesBody"), gs = placeGroups();
   if(!gs.length){ el.innerHTML = EMPTY; return; }
   if(city !== "All" && !gs.some(g => g.name === city)){ city = "All"; area = "All"; }
   const words = pq.split(/\s+/).filter(Boolean);
@@ -1443,7 +1539,7 @@ function renderPlacesBody(){
   const shown = inType.filter(p => showVisited || !isVisited(p.id));
   const chip = (attr, val, label, on, cls) => `<button type="button" class="btn${cls ? " " + cls : ""}" data-${attr}="${esc(val)}" aria-pressed="${on}">${esc(label)}</button>`;
   const cities = ["All", ...gs.map(g => g.name)];
-  let html = originBar() + `<div class="filters" role="group" aria-label="City">${cities.map(c => chip("city", c, c, c === city)).join("")}</div>`;
+  let html = originBar() + `<div class="filters" role="group" aria-label="City">${cities.map(c => chip("city", c, c, c === city)).join("")}<button type="button" class="btn addc" data-addcity="1" aria-label="Add a city">${ICON_PLUS}City</button></div>`;
   if(city !== "All" && areas.length > 1){
     const byType = a => inCity.filter(p => areaOf(p) === a && (ptype === "All" || p.cat === ptype)).length;
     html += `<div class="frow"><span class="flabel">Area</span><div class="filters sub" role="group" aria-label="Area">${chip("area", "All", "All of " + city, area === "All")}${areas.map(a => chip("area", a, a + " (" + byType(a) + ")", a === area, byType(a) ? "" : "zero")).join("")}</div></div>`;
@@ -1452,19 +1548,21 @@ function renderPlacesBody(){
     html += `<div class="frow"><span class="flabel">Type</span><div class="filters sub" role="group" aria-label="Type">${chip("ptype", "All", "All types", ptype === "All")}${types.map(t => chip("ptype", t, typeLabel(t) + " (" + inArea.filter(p => p.cat === t).length + ")", t === ptype)).join("")}</div></div>`;
   }
   if(S.meta?.mapsListUrl) html += `<p>${ext(S.meta.mapsListUrl, "Open our shared Google Maps list", "primary")}</p>`;
+  const cityG = city !== "All" ? gs.find(g => g.name === city) : null;
+  if(cityG) html += `<p class="acts"><button type="button" class="btn addc" data-addplace="${esc(city)}">${ICON_PLUS}Place in ${esc(city)}</button>${cityG.mine && !cityG.places.length ? `<button type="button" class="btn warnb" data-rmcity="${esc(city)}">Remove ${esc(city)}</button>` : ""}</p>`;
   if(visN) html += `<p><button type="button" class="btn" id="visToggle" aria-pressed="${showVisited}">${showVisited ? "Hide" : "Show"} visited (${visN})</button></p>`;
   const when = placeWhen();
-  const canPlan = !!db && !window.__APK && days().length > 0;
+  const canPlan = days().length > 0 && (usingMine() || (!!db && !window.__APK));
   const row = p => `
-      <div class="place${isVisited(p.id) ? " visited" : ""}">${canPlan ? `<button type="button" class="btn addday" data-addday="${esc(p.id)}" aria-label="Add ${esc(p.name)} to a day">${ICON_PLUS}Day</button>` : ""}<div class="ttl"><span class="cat ${esc(p.cat)}" aria-hidden="true"></span>${esc(p.name)}${whenTag(when[p.id])}${isVisited(p.id) ? `<span class="st">Visited</span>` : ""}${p.needsDetails ? `<span class="st" title="Added from Ask. Exact Google Maps details get filled in during the next chat with Claude.">Details pending</span>` : ""}</div>
+      <div class="place${isVisited(p.id) ? " visited" : ""}">${canPlan && (!p.mine || usingMine()) ? `<button type="button" class="btn addday" data-addday="${esc(p.id)}" aria-label="Add ${esc(p.name)} to a day">${ICON_PLUS}Day</button>` : ""}<div class="ttl"><span class="cat ${esc(p.cat)}" aria-hidden="true"></span>${esc(p.name)}${whenTag(when[p.id])}${isVisited(p.id) ? `<span class="st">Visited</span>` : ""}${p.needsDetails ? `<span class="st" title="Added from Ask. Exact Google Maps details get filled in during the next chat with Claude.">Details pending</span>` : ""}</div>
         ${hoursLine(p)}
         ${etaLine(p)}
-        <div class="where">${esc(p.area)}. ${esc(p.station)}</div>
+        ${p.area || p.station ? `<div class="where">${esc([p.area, p.station].filter(Boolean).join(". "))}</div>` : ""}
         ${p.note ? `<div class="small">${esc(p.note)}</div>` : ""}
         ${floorBlock(p)}
         ${routeBlock(p)}
-        ${placeActs(p, null, true).replace(/<\/div>\s*$/, `<button type="button" class="btn visbtn" data-visit="${esc(p.id)}" aria-pressed="${isVisited(p.id)}" aria-label="${isVisited(p.id) ? "Visited. Tap to put it back on the list" : "Mark visited"}">${ICON_CHECK}Visited</button></div>`)}</div>`;
-  if(!shown.length) html += `<div class="empty">${words.length ? `Nothing matches “${esc(pq)}”${city !== "All" || ptype !== "All" ? " with these filters" : ""}.` : "Nothing here with these filters."}</div>`;
+        ${placeActs(p, null, true).replace(/<\/div>\s*$/, `<button type="button" class="btn visbtn" data-visit="${esc(p.id)}" aria-pressed="${isVisited(p.id)}" aria-label="${isVisited(p.id) ? "Visited. Tap to put it back on the list" : "Mark visited"}">${ICON_CHECK}Visited</button>${p.mine ? `<button type="button" class="btn warnb" data-rmplace="${esc(p.id)}" aria-label="Remove ${esc(p.name)}">Remove</button>` : ""}</div>`)}</div>`;
+  if(!shown.length) html += `<div class="empty">${words.length ? `Nothing matches “${esc(pq)}”${city !== "All" || ptype !== "All" ? " with these filters" : ""}.` : cityG && !cityG.places.length ? `No places in ${esc(city)} yet. Add your own with “+ Place in ${esc(city)}”.` : "Nothing here with these filters."}</div>`;
   else {
     // Group by city when showing every city, by area when one city is picked.
     const key = city === "All" ? (p => p.city) : areaOf;
@@ -1479,6 +1577,10 @@ function renderPlacesBody(){
   const vt = $("#visToggle"); if(vt) vt.onclick = () => { showVisited = !showVisited; renderPlacesBody(); };
   wireOrigin(el); startEtas();
   el.querySelectorAll("[data-addday]").forEach(b => b.onclick = () => { const p = inCity.find(x => x.id === b.dataset.addday); if(p) openAddDay(p); });
+  el.querySelectorAll("[data-addcity]").forEach(b => b.onclick = openCitySheet);
+  el.querySelectorAll("[data-addplace]").forEach(b => b.onclick = () => openPlaceSheet(b.dataset.addplace));
+  el.querySelectorAll("[data-rmplace]").forEach(b => b.onclick = () => removeMinePlace(b.dataset.rmplace));
+  el.querySelectorAll("[data-rmcity]").forEach(b => b.onclick = () => removeMineCity(b.dataset.rmcity));
   el.querySelectorAll("[data-visit]").forEach(b => b.onclick = () => {
     const id = b.dataset.visit, now = !isVisited(id), p = inType.find(x => x.id === id);
     setVisited(id, now);
@@ -2167,7 +2269,7 @@ function askTools(){
        d.items.push(it); sortItems(d); return stage("days", `${d.date}: added ${it.t} ${it.title}`); }},
     {name:"remove_item", description:"Removes a schedule item from a date, found by (part of) its title.", inputSchema:{type:"object", properties:{date:{type:"string"}, title:{type:"string"}}, required:["date", "title"]},
      execute:({date, title}) => { const d = day(date), it = findItem(d, title); if(it.status === "Booked" || it.type === "Wedding") throw new Error("That item is booked or a wedding event; it stays. Ask the user to cancel it outside the app first."); d.items = d.items.filter(x => x !== it); return stage("days", `${d.date}: removed ${it.title}`); }},
-    {name:"add_place", description:"Saves a new place under a city (Tokyo, Hakone, Kyoto, Osaka). cat is Food, Shop, Activity, Travel or Hotel. district must be one of that city's districts from the overview. Optional: station, note, ja (Japanese name), addr (Japanese address), tel.", inputSchema:{type:"object", properties:{city:{type:"string"}, name:{type:"string"}, area:{type:"string"}, district:{type:"string"}, cat:{type:"string"}, station:{type:"string"}, note:{type:"string"}, ja:{type:"string"}, addr:{type:"string"}, tel:{type:"string"}}, required:["city", "name", "area", "district", "cat"]},
+    {name:"add_place", description:"Saves a new place under a city (" + D().places.groups.map(x => x.name).join(", ") + "). cat is Food, Shop, Activity, Travel or Hotel. district must be one of that city's districts from the overview. Optional: station, note, ja (Japanese name), addr (Japanese address), tel.", inputSchema:{type:"object", properties:{city:{type:"string"}, name:{type:"string"}, area:{type:"string"}, district:{type:"string"}, cat:{type:"string"}, station:{type:"string"}, note:{type:"string"}, ja:{type:"string"}, addr:{type:"string"}, tel:{type:"string"}}, required:["city", "name", "area", "district", "cat"]},
      execute:a => { const g = D().places.groups.find(x => x.name.toLowerCase() === String(a.city).toLowerCase()); if(!g) throw new Error("city must be one of " + D().places.groups.map(x => x.name).join(", ")); if(!["Food", "Shop", "Activity", "Travel", "Hotel"].includes(a.cat)) throw new Error("cat must be Food, Shop, Activity, Travel or Hotel");
        let id = slug(a.name), n = 2; while(D().places.groups.some(x => x.places.some(p => p.id === id))) id = slug(a.name) + "_" + n++;
        const p = {id, name:String(a.name), area:String(a.area), district:String(a.district), station:a.station ? String(a.station) : "", placeId:"", lat:0, lng:0, cat:a.cat, needsDetails:true, addedAt:jst().date, note:a.note ? String(a.note) : ""}; if(a.ja) p.ja = String(a.ja); if(a.addr) p.addr = String(a.addr); if(a.tel) p.tel = String(a.tel); if(a.hours) p.hours = String(a.hours);
@@ -2314,7 +2416,7 @@ let askImgs = [];
    Japanese places best, so the query is the Japanese name when there is one. Fills ja, addr, lat, lng; the
    Google listing (placeId, station, hours) still comes from the next chat, so needsDetails stays on. */
 let mcpCap = undefined;
-const CITY_POS = {Tokyo:[139.7671, 35.6812], Kyoto:[135.7681, 34.9858], Hakone:[139.1069, 35.2324], Osaka:[135.5023, 34.6937]};
+const CITY_POS = {Tokyo:[139.7671, 35.6812], Kyoto:[135.7681, 34.9858], Osaka:[135.5023, 34.6937]};
 function parseMapbox(payload){
   const out = [];
   const feats = payload && typeof payload === "object" ? (payload.features || payload.results || []) : [];
@@ -2391,13 +2493,27 @@ function renderAddDays(){
 }
 function closeAddDay(){ $("#addSheet").hidden = true; addP = null; if(lastFocus) lastFocus.focus(); syncBack(); }
 async function saveAddDay(){
-  if(!addP || !addDate || !db) return;
+  if(!addP || !addDate || !(db || usingMine())) return;
+  if(addP.mine && !usingMine()){ closeAddDay(); toast("Your own places can go on your own days only."); return; }
   const time = $("#addTime").value, any = $("#addAny").checked || !time;
   const m = any ? null : (+time.slice(0, 2)) * 60 + (+time.slice(3, 5));
   const it = {t:any ? "Anytime" : time, m, type:CAT_TYPE[addP.cat] || "Activity", title:$("#addName").value.trim() || addP.name, status:"Plan", place:addP.id, addedInApp:true};
   // the place's own description goes first, then anything typed in Note
   const note = $("#addNote").value.trim(), lines = [addP.note, note].filter(Boolean); if(lines.length) it.detail = lines;
   if(m != null) it.end = m + 60;
+  if(usingMine()){
+    // the plan is this phone's own: no shared write, no copy to the owner's calendar
+    delete it.addedInApp;
+    const d = mine.days.find(x => x.date === addDate); if(!d) return;
+    const items = d.items || (d.items = []);
+    let i = m == null ? items.findIndex(x => x.type === "Sleep") : items.findIndex(x => x.type === "Sleep" || (x.m != null ? x.m : vagueM(String(x.t || ""))) > m);
+    if(i < 0) i = items.length;
+    items.splice(i, 0, it); saveMine();
+    const q = parts(addDate), name = it.title;
+    closeAddDay(); render();
+    toast(`Added ${name} to ${q.wd}, ${q.mo} ${q.day}.`, "Undo", () => { const k = items.indexOf(it); if(k >= 0){ items.splice(k, 1); saveMine(); render(); } });
+    return;
+  }
   const before = S.days, next = JSON.parse(JSON.stringify(S.days));
   const d = next.days.find(x => x.date === addDate); if(!d) return;
   const items = d.items || (d.items = []);
@@ -2418,6 +2534,139 @@ $("#addCancel").onclick = closeAddDay;
 $("#addAny").onchange = e => { $("#addTime").disabled = e.target.checked; };
 $("#addSheet").addEventListener("click", e => { if(e.target.id === "addSheet") closeAddDay(); });
 document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("#addSheet").hidden) closeAddDay(); });
+
+/* ---- Set up this copy: the phone's own time zone, dates, cities and places ----
+   Opens once on the first start (Later skips it), and from Settings. Everything here is per phone (jt-mine). */
+const TZ_FALLBACK = ["Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Vancouver", "America/Denver", "America/Phoenix", "America/Chicago", "America/Mexico_City", "America/New_York", "America/Toronto", "America/Sao_Paulo", "America/Argentina/Buenos_Aires", "Europe/London", "Europe/Dublin", "Europe/Paris", "Europe/Berlin", "Europe/Madrid", "Europe/Rome", "Europe/Amsterdam", "Europe/Stockholm", "Europe/Athens", "Europe/Istanbul", "Europe/Moscow", "Asia/Dubai", "Asia/Kolkata", "Asia/Bangkok", "Asia/Singapore", "Asia/Hong_Kong", "Asia/Shanghai", "Asia/Taipei", "Asia/Manila", "Asia/Seoul", "Asia/Tokyo", "Australia/Perth", "Australia/Brisbane", "Australia/Sydney", "Australia/Melbourne", "Pacific/Auckland"];
+function phoneTz(){ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone || ""; }catch(e){ return ""; } }
+function tzList(){
+  let l = []; try{ l = Intl.supportedValuesOf("timeZone"); }catch(e){ l = []; }
+  if(!l || !l.length) l = TZ_FALLBACK.slice();
+  [phoneTz(), mine.tz, S.meta && S.meta.homeTz].filter(Boolean).forEach(z => { if(!l.includes(z)) l = [z, ...l]; });
+  return l;
+}
+function tzNow(tz){
+  try{ const F = new Intl.DateTimeFormat("en-US", {timeZone:tz, weekday:"short", hour:"2-digit", minute:"2-digit", hourCycle:"h23", timeZoneName:"short"}); const P = {}; F.formatToParts(new Date()).forEach(x => { P[x.type] = x.value; }); return `${P.weekday} ${P.hour}:${P.minute} ${P.timeZoneName || ""}`.trim(); }
+  catch(e){ return ""; }
+}
+let setupShown = false, setupDefCity = "";
+function maybeSetup(){
+  if(mine.done || setupShown || !S.places) return;
+  // the Android app's splash copy may have saved a setup after this page read jt-mine
+  try{ const m = JSON.parse(store.get(MINEKEY) || "null"); if(m && m.done){ Object.assign(mine, m); normMine(); return; } }catch(e){}
+  if(drawer.classList.contains("open")) return;   // closeMenu tries again
+  openSetup();
+}
+function openSetup(){
+  lastFocus = document.activeElement;
+  const ph = phoneTz(), cur = mine.tz || ph || (S.meta && S.meta.homeTz) || HOME_TZ_DEFAULT;
+  $("#setupTz").innerHTML = tzList().map(z => `<option value="${esc(z)}"${z === cur ? " selected" : ""}>${esc(z.replace(/_/g, " "))}${z === ph ? " (this phone)" : ""}</option>`).join("");
+  setupTzNote();
+  const shared = sharedDays().length > 0;
+  $("#setupDatesWrap").hidden = shared;
+  if(!shared){
+    const ds = mine.days;
+    $("#setupFrom").value = ds.length ? ds[0].date : ""; $("#setupTo").value = ds.length ? ds[ds.length - 1].date : "";
+    $("#setupDatesNote").textContent = ds.length ? "Changing the dates keeps what you planned on the days that stay in range." : "One day per date appears on the Today tab. Put places on a day from the Places tab.";
+  }
+  renderSetupCities();
+  $("#setupNewCity").value = "";
+  setupShown = true;
+  $("#setupSheet").hidden = false; $("#setupSheet .sheet-card").scrollTop = 0; syncBack();
+  setTimeout(() => $("#setupTz").focus({preventScroll:true}), 50);
+}
+function setupTzNote(){ const z = $("#setupTz").value; $("#setupTzNow").textContent = z ? "Now " + tzNow(z) + " there." : ""; }
+function renderSetupCities(){
+  const names = placeGroups().map(g => g.name), def = (mine.days[0] && mine.days[0].city) || names[0] || "";
+  setupDefCity = def; $("#setupCityRow").hidden = sharedDays().length > 0;
+  $("#setupCity").innerHTML = names.map(n => `<option value="${esc(n)}"${n === def ? " selected" : ""}>${esc(n)}</option>`).join("");
+  $("#setupCities").innerHTML = mine.cities.map(c => `<button type="button" class="btn" data-rmc="${esc(c)}" aria-label="Remove ${esc(c)}">${esc(c)} ✕</button>`).join("");
+  $("#setupCities").querySelectorAll("[data-rmc]").forEach(b => b.onclick = () => { removeMineCity(b.dataset.rmc); renderSetupCities(); });
+}
+function closeSetup(){ if(!mine.done){ mine.done = true; saveMine(); } $("#setupSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+function saveSetup(){
+  if(!$("#setupDatesWrap").hidden){
+    const a = $("#setupFrom").value, b = $("#setupTo").value;
+    if((a || b) && !(a && b)){ toast("Give both the first and the last day, or leave both empty."); return; }
+    if(a && b){
+      if(b < a){ toast("The last day comes before the first day."); return; }
+      const n = Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
+      if(n > 90){ toast("That is more than 90 days. Pick a shorter range."); return; }
+      const cityDef = $("#setupCity").value || "Japan";
+      if(cityDef !== setupDefCity) mine.days.forEach(d => { if(d.city === setupDefCity) d.city = cityDef; });
+      const old = new Map(mine.days.map(d => [d.date, d])), out = [];
+      for(let i = 0; i < n; i++){ const date = new Date(Date.parse(a) + i * 864e5).toISOString().slice(0, 10); out.push(old.get(date) || {date, city:cityDef, sleep:"", stay:null, items:[], mine:true}); }
+      mine.days = out;
+    } else mine.days = [];
+  }
+  mine.tz = $("#setupTz").value || ""; mine.done = true; saveMine();
+  dayIdx = -1; dayPicked = false; showEarlier = false; tickClock(); closeSetup(); renderSettings(); render();
+  toast("Saved on this phone.");
+}
+function mineNote(){
+  const tz = mine.tz || (S.meta && S.meta.homeTz) || HOME_TZ_DEFAULT, ds = mine.days;
+  const p = ds.length ? parts(ds[0].date) : null, q = ds.length ? parts(ds[ds.length - 1].date) : null;
+  return `Home time zone: ${tz.replace(/_/g, " ")}${mine.tz ? "" : " (the shared default)"}. `
+    + (ds.length ? `Your days: ${ds.length}, ${p.mo} ${p.day} to ${q.mo} ${q.day}${usingMine() ? "" : " (not shown while the shared plan has days)"}. ` : "No dates set. ")
+    + (mine.cities.length ? `Cities you added: ${mine.cities.join(", ")}. ` : "") + (mine.places.length ? `Places you added: ${mine.places.length}.` : "");
+}
+function addMineCity(name){
+  const n = String(name || "").trim().replace(/\s+/g, " ").slice(0, 40); if(!n) return "";
+  const hit = placeGroups().find(g => String(g.name).toLowerCase() === n.toLowerCase()); if(hit) return hit.name;
+  mine.cities.push(n); saveMine(); return n;
+}
+function removeMineCity(name){
+  const ci = mine.cities.indexOf(name); if(ci < 0) return;
+  const gone = mine.places.filter(p => p.city === name);
+  mine.cities.splice(ci, 1); mine.places = mine.places.filter(p => p.city !== name); saveMine();
+  if(city === name){ city = "All"; area = "All"; saveFilters(); }
+  render();
+  toast(`${name} removed${gone.length ? ` with ${gone.length} place${gone.length === 1 ? "" : "s"}` : ""}.`, "Undo", () => { mine.cities.splice(Math.min(ci, mine.cities.length), 0, name); mine.places.push(...gone); saveMine(); render(); });
+}
+function openCitySheet(){ lastFocus = document.activeElement; $("#cityName").value = ""; $("#citySheet").hidden = false; syncBack(); setTimeout(() => $("#cityName").focus({preventScroll:true}), 50); }
+function closeCitySheet(){ $("#citySheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+let plCity = "";
+function openPlaceSheet(c){
+  plCity = c; lastFocus = document.activeElement;
+  $("#placeWhere").textContent = `In ${c}. Kept on this phone; Maps and Directions search by name.`;
+  ["#plName", "#plJa", "#plArea", "#plNote"].forEach(x => { $(x).value = ""; }); $("#plCat").value = "Food";
+  $("#placeSheet").hidden = false; $("#placeSheet .sheet-card").scrollTop = 0; syncBack();
+  setTimeout(() => $("#plName").focus({preventScroll:true}), 50);
+}
+function closePlaceSheet(){ $("#placeSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+function savePlaceSheet(){
+  const name = $("#plName").value.trim(); if(!name){ toast("Give the place a name."); $("#plName").focus(); return; }
+  const base = "my_" + (name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 24) || "place");
+  let id = base, n = 2; const pm = placeMap(); while(pm[id]) id = base + "_" + n++;
+  const area = $("#plArea").value.trim(), ja = $("#plJa").value.trim(), note = $("#plNote").value.trim();
+  const p = {id, name, area, district:area, station:"", placeId:"", lat:0, lng:0, cat:$("#plCat").value || "Food", note, city:plCity, mine:true, addedAt:jst().date};
+  if(ja) p.ja = ja;
+  mine.places.push(p); saveMine();
+  closePlaceSheet(); render();
+  toast(`${name} added to ${plCity}.`, "Undo", () => removeMinePlace(id, true));
+}
+function removeMinePlace(id, quiet){
+  const i = mine.places.findIndex(p => p.id === id); if(i < 0) return;
+  const [p] = mine.places.splice(i, 1); saveMine(); render();
+  if(!quiet) toast(`${p.name} removed.`, "Undo", () => { mine.places.splice(Math.min(i, mine.places.length), 0, p); saveMine(); render(); });
+}
+function cityRow(d){
+  const names = [...new Set([...placeGroups().map(g => g.name), d.city].filter(Boolean))];
+  return `<div class="cityrow"><div class="city">${esc(d.city || "Japan")}</div><label class="cityl">City<select class="citysel" aria-label="City for this day">${names.map(n => `<option value="${esc(n)}"${n === d.city ? " selected" : ""}>${esc(n)}</option>`).join("")}</select></label></div>`;
+}
+$("#setupTz").onchange = setupTzNote;
+$("#setupAddCity").onclick = () => { const n = addMineCity($("#setupNewCity").value); if(!n){ toast("Type a city name."); return; } const keep = $("#setupCity").value; $("#setupNewCity").value = ""; renderSetupCities(); if(keep) $("#setupCity").value = keep; };
+$("#setupNewCity").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#setupAddCity").click(); } });
+$("#setupOk").onclick = saveSetup;
+$("#setupLater").onclick = () => { mine.done = true; saveMine(); closeSetup(); toast("You can set this up anytime from the menu, under Settings."); };
+$("#cityOk").onclick = () => { const n = addMineCity($("#cityName").value); if(!n){ toast("Type a city name."); return; } city = n; area = "All"; saveFilters(); closeCitySheet(); render(); toast(`${n} added. Now add your places to it.`); };
+$("#cityName").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#cityOk").click(); } });
+$("#cityCancel").onclick = closeCitySheet;
+$("#plOk").onclick = savePlaceSheet;
+$("#plCancel").onclick = closePlaceSheet;
+[["#setupSheet", closeSetup], ["#citySheet", closeCitySheet], ["#placeSheet", closePlaceSheet]].forEach(([id, fn]) => $(id).addEventListener("click", e => { if(e.target === $(id)) fn(); }));
+document.addEventListener("keydown", e => { if(e.key !== "Escape") return; if(!$("#placeSheet").hidden) closePlaceSheet(); else if(!$("#citySheet").hidden) closeCitySheet(); else if(!$("#setupSheet").hidden) closeSetup(); });
+document.addEventListener("click", e => { if(e.target.closest("[data-setup]")) openSetup(); });
 
 /* ---- Travel times from where you are ----
    Origin: the phone's location (the Android app's own fix via TripApp.getLocation, else the browser's), or a place
@@ -2442,7 +2691,7 @@ function estimate(km){
 function fmtMin(m){ return m >= 60 ? `${Math.floor(m / 60)} h${m % 60 ? " " + (m % 60) + " min" : ""}` : `${m} min`; }
 function etaText(e){ if(!e) return ""; return `${e.est ? "about " : ""}${fmtMin(e.min)} ${e.mode === "walk" ? "walk" : "by " + e.mode}${e.via ? " · " + e.via : ""}`; }
 function placeCoords(p){ return p && +p.lat && +p.lng ? {lat:+p.lat, lng:+p.lng} : null; }
-function findPlace(id){ for(const g of (S.places?.groups || [])) for(const p of g.places) if(p.id === id) return {...p, city:g.name}; return null; }
+function findPlace(id){ for(const g of placeGroups()) for(const p of g.places) if(p.id === id) return {...p, city:g.name}; return null; }
 function originCell(){ return origin ? origin.lat.toFixed(3) + "," + origin.lng.toFixed(3) : ""; }
 function etaFor(p){
   const c = placeCoords(p); if(!origin || !c) return null;
@@ -2621,6 +2870,7 @@ function render(){
   else if(tab === "speak") renderSpeak();
   renderTodoBadge();
   anonInputs();
+  maybeSetup();
   requestAnimationFrame(tryRestore);
   requestAnimationFrame(fades);
 }
@@ -2707,8 +2957,9 @@ function subscribe(){
     if(!s.exists){ if(OPTIONAL.includes(nm) && S[nm]){ S[nm] = null; saveCache(); scheduleRender(); } return; }
     const data = s.data();
     if(S[nm] === data) return;   // an unchanged document comes back as the same object
+    const wasMine = nm === "days" && usingMine();
     S[nm] = data;
-    if(nm === "days" && dayIdx < 0) dayIdx = startDayIdx();
+    if(nm === "days" && (dayIdx < 0 || wasMine !== usingMine())) dayIdx = startDayIdx();
     if(nm === "meta"){ markChecked(); renderSettings(); }
     saveCache(); scheduleRender();
   }, connFail)));
@@ -2814,7 +3065,7 @@ async function saveOffline(withDocs){
 $("#offBtn").onclick = () => saveOffline(false);
 $("#offDocBtn").onclick = () => saveOffline(true);
 
-function closeMenu(){ drawer.classList.remove("open"); scrim.hidden = true; menuBtn.setAttribute("aria-expanded","false"); setInert(false); menuBtn.focus(); syncBack(); }
+function closeMenu(){ drawer.classList.remove("open"); scrim.hidden = true; menuBtn.setAttribute("aria-expanded","false"); setInert(false); menuBtn.focus(); syncBack(); maybeSetup(); }
 menuBtn.onclick = openMenu;
 $("#drawerClose").onclick = closeMenu;
 scrim.onclick = closeMenu;
@@ -2834,6 +3085,7 @@ $("#setBtn").onclick = () => { const p = $("#setPanel"); p.hidden = !p.hidden; $
 /* settings */
 function renderSettings(){
   document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.themeSet === theme)));
+  $("#mineNote").textContent = mineNote();
   const over = parseFloat(store.get("jt-rate") || ""), m = S.meta?.rate;
   const ri = $("#rateSet");
   if(document.activeElement !== ri){ ri.value = over > 0 ? String(over) : ""; ri.placeholder = m ? String(m.jpyPerUsd) : ""; }
@@ -2858,6 +3110,14 @@ function setRate(v){ store.set("jt-rate", v > 0 ? String(v) : ""); renderSetting
 $("#rateSet").onchange = e => setRate(parseFloat(e.target.value));
 $("#rateClear").onclick = () => { $("#rateSet").value = ""; setRate(0); };
 $("#resetBtn").onclick = () => { store.del(CACHE); syncNow(); };
+$("#setupBtn").onclick = () => { closeMenu(); openSetup(); };
+$("#mineForget").onclick = () => {
+  const prev = JSON.stringify(mine);
+  mine = {done:true, tz:"", days:[], cities:[], places:[], past:{}}; saveMine();
+  const back = () => { dayIdx = -1; dayPicked = false; if(city !== "All" && !placeGroups().some(g => g.name === city)){ city = "All"; area = "All"; saveFilters(); } tickClock(); renderSettings(); render(); };
+  back(); closeMenu();
+  toast("Your setup on this phone is forgotten.", "Undo", () => { mine = JSON.parse(prev); normMine(); saveMine(); back(); });
+};
 // Android app only: the app hides the claude.ai bar; this switch brings it back.
 if(window.TripApp && window.TripApp.setChrome && !window.__APK){
   $("#chromeOpt").hidden = false;
@@ -2880,7 +3140,7 @@ const ptr = $("#ptr"), PULL = 70;
 let pStart = null, pDist = 0, pOn = false;
 function hidePtr(){ ptr.classList.remove("pulling"); ptr.style.opacity = "0"; ptr.style.transform = "translate(-50%, -20px)"; }
 document.addEventListener("touchstart", e => {
-  if(window.scrollY > 0 || drawer.classList.contains("open") || !$("#show").hidden || e.touches.length !== 1){ pStart = null; return; }
+  if(window.scrollY > 0 || drawer.classList.contains("open") || !$("#show").hidden || document.querySelector(".sheet:not([hidden])") || e.touches.length !== 1){ pStart = null; return; }
   pStart = e.touches[0].clientY; pDist = 0; pOn = false;
 }, {passive:true});
 document.addEventListener("touchmove", e => {

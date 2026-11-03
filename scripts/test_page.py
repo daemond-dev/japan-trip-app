@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Load app/index.html against the data folder with a stub claude.ai runtime and check every tab renders.
 Prints one JSON report per color scheme (title, clock, tab text, console errors) and saves screenshots to /tmp.
+On the first start the page opens "Set up this copy"; the harness fills it (home time zone, dates around today, an added
+city) and then checks the phone's own days, places and "+ Day" (see docs/NOTES.md, "Set up this copy").
 Usage: python3 scripts/test_page.py [live|offline|static|sw] [--page app/index.html] [--data data]
   live (default): stub window.claude.use serving the data, as the published artifact would.
   offline: the Android offline copy (patched page + data.js + shim.js) with a stub window.TripApp.
@@ -8,7 +10,7 @@ Usage: python3 scripts/test_page.py [live|offline|static|sw] [--page app/index.h
   sw: builds the static site, serves it on localhost and checks the service worker installs and the page reloads offline.
 Exits non-zero when a page error or console error is seen. Needs Playwright with Chromium
 (pip install playwright; python -m playwright install chromium)."""
-import json, os, sys, glob, time
+import json, os, sys, glob, time, re, datetime
 from playwright.sync_api import sync_playwright
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,7 +74,9 @@ def sw_test():
     base = f"http://127.0.0.1:{port}/"
     failed = []
     with sync_playwright() as pw:
-        b = pw.chromium.launch(); ctx = b.new_context(viewport={"width": 390, "height": 844}); pg = ctx.new_page()
+        b = pw.chromium.launch(); ctx = b.new_context(viewport={"width": 390, "height": 844})
+        ctx.add_init_script("try{ localStorage.setItem('jt-mine', JSON.stringify({done:true})); }catch(e){}")   # this test is about the worker, not the first-start sheet
+        pg = ctx.new_page()
         errors = []
         pg.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
         pg.on("console", lambda m: errors.append("console.error: " + m.text) if m.type == "error" else None)
@@ -91,6 +95,58 @@ def sw_test():
     print(json.dumps(report, indent=1))
     if state != "activated" or cached < 7 or cards < 1 or errors: failed.append(report)
     return failed
+
+def jst_date(days=0):
+    return (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=9, days=days)).strftime("%Y-%m-%d")
+
+def run_setup(pg, errors):
+    """The first-start sheet: pick a home zone, dates from yesterday to three days ahead, add a city, save."""
+    st = {"shown": pg.locator("#setupSheet").evaluate("e => !e.hidden")}
+    if not st["shown"]:
+        errors.append("setup sheet did not open on first start"); return st
+    pg.select_option("#setupTz", "America/New_York")
+    st["dates"] = pg.locator("#setupDatesWrap").evaluate("e => !e.hidden")
+    if st["dates"]:
+        pg.fill("#setupFrom", jst_date(-1)); pg.fill("#setupTo", jst_date(3))
+    pg.fill("#setupNewCity", "Nara"); pg.click("#setupAddCity"); pg.wait_for_timeout(200)
+    st["city_options"] = pg.locator("#setupCity option").all_inner_texts()
+    pg.click("#setupOk"); pg.wait_for_timeout(700)
+    st["closed"] = pg.locator("#setupSheet").evaluate("e => e.hidden")
+    st["clock"] = pg.locator("#clock").inner_text()
+    st["today"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
+    if not st["closed"]: errors.append("setup sheet still open after Save")
+    if not re.search(r"\bE[SD]T\b", st["clock"]): errors.append("clock does not show the chosen zone: " + st["clock"])
+    if st["dates"] and "day 2 of 5" not in st["today"]: errors.append("Today does not show the phone's own days: " + st["today"])
+    if "Nara" not in st["city_options"]: errors.append("added city missing from the city list: " + json.dumps(st["city_options"]))
+    return st
+
+def own_places(pg, tab, errors):
+    """The phone's own city and place, "+ Day" onto the phone's own day, and a city added from the Places tab."""
+    o = {}
+    pg.click('[data-city="Nara"]'); pg.wait_for_timeout(300)
+    o["nara_empty"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
+    pg.click("[data-addplace]"); pg.wait_for_timeout(300)
+    pg.fill("#plName", "Nakatanidou"); pg.fill("#plJa", "中谷堂"); pg.select_option("#plCat", "Food"); pg.fill("#plArea", "Sanjo-dori")
+    pg.click("#plOk"); pg.wait_for_timeout(400)
+    o["nara_cards"] = pg.locator("main .place").count()
+    o["map_link"] = pg.locator("main .place a.btn").first.get_attribute("href")
+    pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300); o["hidden_when_visited"] = pg.locator("main .place").count() == 0
+    pg.click("#visToggle"); pg.wait_for_timeout(300); pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300)
+    o["addday_buttons"] = pg.locator("[data-addday]").count()
+    if o["addday_buttons"]:
+        pg.locator("[data-addday]").first.click(); pg.wait_for_timeout(300); pg.click("#addOk"); pg.wait_for_timeout(500)
+    tab("today"); o["today"] = pg.locator("main").inner_text()[:400].replace("\n", " | ")
+    o["remove_buttons"] = pg.locator("[data-rmitem]").count()
+    tab("places"); pg.click("[data-addcity]"); pg.wait_for_timeout(200); pg.fill("#cityName", "Kobe"); pg.click("#cityOk"); pg.wait_for_timeout(400)
+    o["cities"] = pg.locator('.filters [data-city]').all_inner_texts()
+    pg.click('[data-city="All"]'); pg.wait_for_timeout(300)
+    if o["nara_cards"] != 1: errors.append("own place not shown under its city: " + json.dumps(o))
+    if not (o["map_link"] or "").startswith("https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E8%B0%B7%E5%A0%82"): errors.append("own place Maps link does not search by its Japanese name: " + str(o["map_link"]))
+    if not o["addday_buttons"]: errors.append("+ Day missing on the phone's own days")
+    elif "Nakatanidou" not in o["today"] or not o["remove_buttons"]: errors.append("+ Day did not land on the phone's own day: " + json.dumps(o))
+    if "Kobe" not in o["cities"] or "Nara" not in o["cities"]: errors.append("added cities missing from the filter: " + json.dumps(o["cities"]))
+    if not o["hidden_when_visited"]: errors.append("Visited did not hide the phone's own place")
+    return o
 
 def main():
     if MODE == "sw":
@@ -114,6 +170,7 @@ def main():
             pg.goto("file://" + os.path.abspath(page_path))
             pg.wait_for_timeout(1500)
             out = {"scheme": scheme}
+            out["setup"] = run_setup(pg, errors)
             out["title"] = pg.title()
             out["h1"] = pg.locator("#appTitle").inner_text()
             out["clock"] = pg.locator("#clock").inner_text()
@@ -124,6 +181,7 @@ def main():
             pg.evaluate("location.hash = '#reservations'"); pg.wait_for_timeout(600); out["res"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
             tab("places"); out["places_cards"] = pg.locator("main .card, main .place").count(); out["places_text"] = pg.locator("main").inner_text()[:160].replace("\n", " | ")
             pg.screenshot(path=f"/tmp/shot-{scheme}-{MODE}-places.png")
+            out["own"] = own_places(pg, tab, errors)
             tab("yen"); out["yen"] = pg.locator("main").inner_text()[:160].replace("\n", " | ")
             tab("speak"); pg.wait_for_timeout(600)
             out["speak_themes"] = pg.locator("main button").all_inner_texts()[:40]
@@ -142,6 +200,7 @@ def main():
             pg.screenshot(path=f"/tmp/shot-{scheme}-{MODE}-drawer.png")
             out["errors"] = errors
             out["writes"] = pg.evaluate("window.__writes ? window.__writes.length : null")
+            if MODE == "live" and out["writes"]: errors.append("the phone's own setup reached the shared database: " + json.dumps(pg.evaluate("window.__writes"))[:400])
             print(json.dumps(out, ensure_ascii=False, indent=1))
             if errors: failed.append(scheme)
             ctx.close()
