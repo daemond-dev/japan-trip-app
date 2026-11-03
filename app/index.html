@@ -2552,6 +2552,7 @@ function tzNow(tz){
 let setupShown = false, setupDefCity = "";
 function maybeSetup(){
   if(mine.done || setupShown || !S.places) return;
+  try{ if(TA && TA.isSplash && TA.isSplash()) return; }catch(e){}   // the Android app's splash copy is thrown away; the live page asks
   // the Android app's splash copy may have saved a setup after this page read jt-mine
   try{ const m = JSON.parse(store.get(MINEKEY) || "null"); if(m && m.done){ Object.assign(mine, m); normMine(); return; } }catch(e){}
   if(drawer.classList.contains("open")) return;   // closeMenu tries again
@@ -2985,11 +2986,12 @@ async function syncNow(){
   b.disabled = true; b.textContent = "Syncing…";
   try{
     const snaps = await withTimeout(Promise.all(NAMES.map(nm => db.doc("trip/" + nm).get())), 15000);
+    const wasMine = usingMine();
     snaps.forEach((s, i) => { if(s.exists) S[NAMES[i]] = s.data(); });
     const qs = await withTimeout(db.collection("todo").orderBy("order").get(), 15000);
     S.todos = qs.docs.map(d => ({id:d.id, ...d.data()}));
     store.set(CACHE, JSON.stringify(S)); store.set("jt-cache-at", String(Date.now()));
-    if(dayIdx >= days().length) dayIdx = todayIdx();
+    if(dayIdx >= days().length || wasMine !== usingMine()) dayIdx = startDayIdx();
     setLive(true); subscribe(); markChecked(); renderSettings(); render();
     toast("Up to date. " + planStamp());
   }catch(e){ setLive(false); toast("Couldn’t reach the trip data, so you’re seeing the copy saved on this phone. Try again when the connection is better."); }

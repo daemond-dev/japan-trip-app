@@ -614,6 +614,8 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public boolean isStaticHost() { return STATIC_LIVE && !onSplash && showingLive; }
         @JavascriptInterface
+        public boolean isSplash() { return onSplash; }   // the page skips its first-start sheet on the splash copy, which is dropped once the live page is up
+        @JavascriptInterface
         public synchronized void saveData(String json) {
             try (FileOutputStream o = new FileOutputStream(dataFile())) { o.write(json.getBytes(StandardCharsets.UTF_8)); } catch (Exception e) { }
         }

@@ -96,8 +96,13 @@ def sw_test():
     if state != "activated" or cached < 7 or cards < 1 or errors: failed.append(report)
     return failed
 
+# One clock for the harness and the page: Date.now in the page is shifted to noon Japan time of today's Japan date, so no
+# step of a run can straddle midnight and the dates typed into the setup sheet always match the page's "today".
+_NOW = datetime.datetime.now(datetime.timezone.utc)
+PIN = (_NOW + datetime.timedelta(hours=9)).replace(hour=3, minute=0, second=0, microsecond=0)   # 03:00 UTC = 12:00 JST
+CLOCK_SCRIPT = "(function(){ var o = %d; var n = Date.now; Date.now = function(){ return n() + o; }; })();" % int((PIN - _NOW).total_seconds() * 1000)
 def jst_date(days=0):
-    return (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=9, days=days)).strftime("%Y-%m-%d")
+    return (PIN + datetime.timedelta(hours=9, days=days)).strftime("%Y-%m-%d")
 
 def run_setup(pg, errors):
     """The first-start sheet: pick a home zone, dates from yesterday to three days ahead, add a city, save."""
@@ -177,6 +182,7 @@ def main():
             errors = []
             pg.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
             pg.on("console", lambda m: errors.append("console." + m.type + ": " + m.text) if m.type in ("error", "warning") else None)
+            pg.add_init_script(CLOCK_SCRIPT)
             if MODE == "offline": pg.add_init_script(APK_STUB)
             elif MODE == "live": pg.add_init_script(LIVE_STUB)
             pg.goto("file://" + os.path.abspath(page_path))
