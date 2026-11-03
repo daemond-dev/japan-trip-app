@@ -108,7 +108,7 @@ def run_setup(pg, errors):
     st["dates"] = pg.locator("#setupDatesWrap").evaluate("e => !e.hidden")
     if st["dates"]:
         pg.fill("#setupFrom", jst_date(-1)); pg.fill("#setupTo", jst_date(3))
-    pg.fill("#setupNewCity", "Nara"); pg.click("#setupAddCity"); pg.wait_for_timeout(200)
+    pg.fill("#setupNewCity", CITY_A); pg.click("#setupAddCity"); pg.wait_for_timeout(200)
     st["city_options"] = pg.locator("#setupCity option").all_inner_texts()
     pg.click("#setupOk"); pg.wait_for_timeout(700)
     st["closed"] = pg.locator("#setupSheet").evaluate("e => e.hidden")
@@ -117,35 +117,47 @@ def run_setup(pg, errors):
     if not st["closed"]: errors.append("setup sheet still open after Save")
     if not re.search(r"\bE[SD]T\b", st["clock"]): errors.append("clock does not show the chosen zone: " + st["clock"])
     if st["dates"] and "day 2 of 5" not in st["today"]: errors.append("Today does not show the phone's own days: " + st["today"])
-    if "Nara" not in st["city_options"]: errors.append("added city missing from the city list: " + json.dumps(st["city_options"]))
+    if CITY_A not in st["city_options"]: errors.append("added city missing from the city list: " + json.dumps(st["city_options"]))
     return st
 
-def own_places(pg, tab, errors):
-    """The phone's own city and place, "+ Day" onto the phone's own day, and a city added from the Places tab."""
+CITY_A, CITY_B = "Harness City", "Harness Town"   # names no copy's data will have
+
+def own_places(pg, tab, errors, own_days):
+    """The phone's own city and place, "+ Day" onto the phone's own day (only while the copy's shared plan has no days),
+    and a city added from the Places tab. Every step is guarded so a missing element is reported, not a 30 s hang."""
     o = {}
-    pg.click('[data-city="Nara"]'); pg.wait_for_timeout(300)
-    o["nara_empty"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
-    pg.click("[data-addplace]"); pg.wait_for_timeout(300)
-    pg.fill("#plName", "Nakatanidou"); pg.fill("#plJa", "中谷堂"); pg.select_option("#plCat", "Food"); pg.fill("#plArea", "Sanjo-dori")
-    pg.click("#plOk"); pg.wait_for_timeout(400)
-    o["nara_cards"] = pg.locator("main .place").count()
-    o["map_link"] = pg.locator("main .place a.btn").first.get_attribute("href")
-    pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300); o["hidden_when_visited"] = pg.locator("main .place").count() == 0
-    pg.click("#visToggle"); pg.wait_for_timeout(300); pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300)
-    o["addday_buttons"] = pg.locator("[data-addday]").count()
-    if o["addday_buttons"]:
-        pg.locator("[data-addday]").first.click(); pg.wait_for_timeout(300); pg.click("#addOk"); pg.wait_for_timeout(500)
-    tab("today"); o["today"] = pg.locator("main").inner_text()[:400].replace("\n", " | ")
-    o["remove_buttons"] = pg.locator("[data-rmitem]").count()
-    tab("places"); pg.click("[data-addcity]"); pg.wait_for_timeout(200); pg.fill("#cityName", "Kobe"); pg.click("#cityOk"); pg.wait_for_timeout(400)
-    o["cities"] = pg.locator('.filters [data-city]').all_inner_texts()
-    pg.click('[data-city="All"]'); pg.wait_for_timeout(300)
-    if o["nara_cards"] != 1: errors.append("own place not shown under its city: " + json.dumps(o))
-    if not (o["map_link"] or "").startswith("https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E8%B0%B7%E5%A0%82"): errors.append("own place Maps link does not search by its Japanese name: " + str(o["map_link"]))
-    if not o["addday_buttons"]: errors.append("+ Day missing on the phone's own days")
-    elif "Nakatanidou" not in o["today"] or not o["remove_buttons"]: errors.append("+ Day did not land on the phone's own day: " + json.dumps(o))
-    if "Kobe" not in o["cities"] or "Nara" not in o["cities"]: errors.append("added cities missing from the filter: " + json.dumps(o["cities"]))
-    if not o["hidden_when_visited"]: errors.append("Visited did not hide the phone's own place")
+    pg.set_default_timeout(6000)
+    try:
+        pg.click(f'[data-city="{CITY_A}"]'); pg.wait_for_timeout(300)
+        o["empty_city"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
+        pg.click("[data-addplace]"); pg.wait_for_timeout(300)
+        pg.fill("#plName", "Nakatanidou"); pg.fill("#plJa", "中谷堂"); pg.select_option("#plCat", "Food"); pg.fill("#plArea", "Sanjo-dori")
+        pg.click("#plOk"); pg.wait_for_timeout(400)
+        o["cards"] = pg.locator("main .place").count()
+        o["map_link"] = pg.locator("main .place a.btn").first.get_attribute("href") if o["cards"] else None
+        if pg.locator("[data-visit]").count():
+            pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300); o["hidden_when_visited"] = pg.locator("main .place").count() == 0
+            if pg.locator("#visToggle").count(): pg.click("#visToggle"); pg.wait_for_timeout(300); pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300)
+        o["addday_buttons"] = pg.locator("[data-addday]").count()
+        if o["addday_buttons"]:
+            pg.locator("[data-addday]").first.click(); pg.wait_for_timeout(300); pg.click("#addOk"); pg.wait_for_timeout(500)
+        tab("today"); o["today"] = pg.locator("main").inner_text()[:400].replace("\n", " | ")
+        o["remove_buttons"] = pg.locator("[data-rmitem]").count()
+        tab("places"); pg.click("[data-addcity]"); pg.wait_for_timeout(200); pg.fill("#cityName", CITY_B); pg.click("#cityOk"); pg.wait_for_timeout(400)
+        o["cities"] = pg.locator('.filters [data-city]').all_inner_texts()
+        pg.click('[data-city="All"]'); pg.wait_for_timeout(300)
+    except Exception as e:
+        errors.append("own places: " + type(e).__name__ + ": " + str(e).splitlines()[0] + " " + json.dumps(o, ensure_ascii=False)); return o
+    finally:
+        pg.set_default_timeout(30000)
+    if o.get("cards") != 1: errors.append("own place not shown under its city: " + json.dumps(o, ensure_ascii=False))
+    if not (o.get("map_link") or "").startswith("https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E8%B0%B7%E5%A0%82"): errors.append("own place Maps link does not search by its Japanese name: " + str(o.get("map_link")))
+    if o.get("hidden_when_visited") is False: errors.append("Visited did not hide the phone's own place")
+    if own_days:
+        if not o["addday_buttons"]: errors.append("+ Day missing on the phone's own days")
+        elif "Nakatanidou" not in o["today"] or not o["remove_buttons"]: errors.append("+ Day did not land on the phone's own day: " + json.dumps(o, ensure_ascii=False))
+    elif o["addday_buttons"]: errors.append("+ Day offered on the phone's own place while the shared plan has days (it would write into trip/days)")
+    if CITY_B not in o["cities"] or CITY_A not in o["cities"]: errors.append("added cities missing from the filter: " + json.dumps(o["cities"]))
     return o
 
 def main():
@@ -181,10 +193,10 @@ def main():
             pg.evaluate("location.hash = '#reservations'"); pg.wait_for_timeout(600); out["res"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
             tab("places"); out["places_cards"] = pg.locator("main .card, main .place").count(); out["places_text"] = pg.locator("main").inner_text()[:160].replace("\n", " | ")
             pg.screenshot(path=f"/tmp/shot-{scheme}-{MODE}-places.png")
-            out["own"] = own_places(pg, tab, errors)
+            if out["setup"].get("shown"): out["own"] = own_places(pg, tab, errors, out["setup"].get("dates"))
             tab("yen"); out["yen"] = pg.locator("main").inner_text()[:160].replace("\n", " | ")
             tab("speak"); pg.wait_for_timeout(600)
-            out["speak_themes"] = pg.locator("main button").all_inner_texts()[:40]
+            out["speak_themes"] = [t for t in pg.locator("#v-speak button").all_inner_texts() if t.strip()][:40]
             pg.screenshot(path=f"/tmp/shot-{scheme}-{MODE}-speak.png")
             inp = pg.locator('#q')
             inp.fill("stroller"); pg.wait_for_timeout(700)

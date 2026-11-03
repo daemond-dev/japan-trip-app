@@ -1184,7 +1184,7 @@ function isVisited(id){
   return AUTOVIS.has(id);
 }
 function saveVisLocal(){ store.set(VISKEY, JSON.stringify(visOv)); }
-const isMinePlace = id => mine.places.some(p => p.id === id);
+const isMinePlace = id => /^my_/.test(String(id)) || mine.places.some(p => p.id === id);   // own ids carry the my_ prefix, so a removed one still never reaches the shared doc
 function setVisited(id, v){
   if(isMinePlace(id)){ visOv[id] = v; saveVisLocal(); renderPlacesBody(); return; }   // the phone's own place: never in the shared doc
   if(db && !window.__APK){
@@ -2618,7 +2618,7 @@ function addMineCity(name){
 function removeMineCity(name){
   const ci = mine.cities.indexOf(name); if(ci < 0) return;
   const gone = mine.places.filter(p => p.city === name);
-  mine.cities.splice(ci, 1); mine.places = mine.places.filter(p => p.city !== name); saveMine();
+  mine.cities.splice(ci, 1); mine.places = mine.places.filter(p => p.city !== name); forgetVisited(gone.map(p => p.id)); saveMine();
   if(city === name){ city = "All"; area = "All"; saveFilters(); }
   render();
   toast(`${name} removed${gone.length ? ` with ${gone.length} place${gone.length === 1 ? "" : "s"}` : ""}.`, "Undo", () => { mine.cities.splice(Math.min(ci, mine.cities.length), 0, name); mine.places.push(...gone); saveMine(); render(); });
@@ -2645,10 +2645,11 @@ function savePlaceSheet(){
   closePlaceSheet(); render();
   toast(`${name} added to ${plCity}.`, "Undo", () => removeMinePlace(id, true));
 }
+function forgetVisited(ids){ let ch = false; ids.forEach(id => { if(has(visOv, id)){ delete visOv[id]; ch = true; } }); if(ch) saveVisLocal(); }
 function removeMinePlace(id, quiet){
   const i = mine.places.findIndex(p => p.id === id); if(i < 0) return;
-  const [p] = mine.places.splice(i, 1); saveMine(); render();
-  if(!quiet) toast(`${p.name} removed.`, "Undo", () => { mine.places.splice(Math.min(i, mine.places.length), 0, p); saveMine(); render(); });
+  const [p] = mine.places.splice(i, 1), vis = visOv[id]; forgetVisited([id]); saveMine(); render();
+  if(!quiet) toast(`${p.name} removed.`, "Undo", () => { mine.places.splice(Math.min(i, mine.places.length), 0, p); if(vis !== undefined){ visOv[id] = vis; saveVisLocal(); } saveMine(); render(); });
 }
 function cityRow(d){
   const names = [...new Set([...placeGroups().map(g => g.name), d.city].filter(Boolean))];
@@ -3113,6 +3114,7 @@ $("#resetBtn").onclick = () => { store.del(CACHE); syncNow(); };
 $("#setupBtn").onclick = () => { closeMenu(); openSetup(); };
 $("#mineForget").onclick = () => {
   const prev = JSON.stringify(mine);
+  forgetVisited(mine.places.map(p => p.id));
   mine = {done:true, tz:"", days:[], cities:[], places:[], past:{}}; saveMine();
   const back = () => { dayIdx = -1; dayPicked = false; if(city !== "All" && !placeGroups().some(g => g.name === city)){ city = "All"; area = "All"; saveFilters(); } tickClock(); renderSettings(); render(); };
   back(); closeMenu();
