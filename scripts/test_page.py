@@ -2,7 +2,7 @@
 """Load app/index.html against the data folder with a stub claude.ai runtime and check every tab renders.
 Prints one JSON report per color scheme (title, clock, tab text, console errors) and saves screenshots to /tmp.
 On the first start the page opens "Set up this copy"; the harness fills it (home time zone, dates around today, an added
-city) and then checks the phone's own days, places and "+ Day" (see docs/NOTES.md, "Set up this copy").
+city, a non-default Most days pick, a failing Save) and then checks the phone's own days, places, "+ Day" and "+ Item" (see docs/NOTES.md, "Set up this copy").
 Usage: python3 scripts/test_page.py [live|offline|static|sw] [--page app/index.html] [--data data]
   live (default): stub window.claude.use serving the data, as the published artifact would.
   offline: the Android offline copy (patched page + data.js + shim.js) with a stub window.TripApp.
@@ -104,74 +104,125 @@ CLOCK_SCRIPT = "(function(){ var o = %d; var n = Date.now; Date.now = function()
 def jst_date(days=0):
     return (PIN + datetime.timedelta(hours=9, days=days)).strftime("%Y-%m-%d")
 
+MINE_JS = "JSON.parse(localStorage.getItem('jt-mine') || '{}')"
+
 def run_setup(pg, errors):
-    """The first-start sheet: pick a home zone, dates from yesterday to three days ahead, add a city, save."""
+    """The first-start sheet: pick a home zone, dates from yesterday to three days ahead, add a city (and re-add it), pick a
+    non-default city under Most days, leave a second city typed in the field, try a Save that must fail, then Save."""
     st = {"shown": pg.locator("#setupSheet").evaluate("e => !e.hidden")}
     if not st["shown"]:
         errors.append("setup sheet did not open on first start"); return st
+    # Save and Later are inside the card as it opens, with nothing scrolled (the action row is pinned)
+    st["save_in_view"] = pg.evaluate("(() => { const c = document.querySelector('#setupSheet .sheet-card').getBoundingClientRect(), b = document.querySelector('#setupOk').getBoundingClientRect(); return b.top >= c.top && b.bottom <= c.bottom + 1; })()")
+    if not st["save_in_view"]: errors.append("Save is below the fold of the setup card as it opens")
     pg.select_option("#setupTz", "America/New_York")
     st["dates"] = pg.locator("#setupDatesWrap").evaluate("e => !e.hidden")
     if st["dates"]:
         pg.fill("#setupFrom", jst_date(-1)); pg.fill("#setupTo", jst_date(3))
     pg.fill("#setupNewCity", CITY_A); pg.click("#setupAddCity"); pg.wait_for_timeout(200)
+    st["focus_after_add"] = pg.evaluate("document.activeElement && document.activeElement.id")   # the field keeps the keyboard
+    if st["focus_after_add"] != "setupNewCity": errors.append("Add moved the focus off the New city field: " + str(st["focus_after_add"]))
+    pg.fill("#setupNewCity", CITY_A.lower()); pg.click("#setupAddCity"); pg.wait_for_timeout(200)   # again, in another case
+    st["dup_toast"] = pg.locator("#toast").inner_text()
+    st["chips"] = pg.locator("#setupCities .cchip").count()
+    if st["chips"] != 1 or "added" in st["dup_toast"]: errors.append("re-adding a city: chips %d, toast %r" % (st["chips"], st["dup_toast"]))
     st["city_options"] = pg.locator("#setupCity option").all_inner_texts()
-    pg.fill("#setupNewCity", CITY_C)   # typed but never "added": Save must take it
     st["default_city"] = pg.evaluate("document.querySelector('#setupCity').value")
     want = (trip.get("meta") or {}).get("mainCity")
     if want and st["default_city"] != want: errors.append("suggested city is %r, meta.mainCity says %r" % (st["default_city"], want))
+    others = [c for c in st["city_options"] if c != st["default_city"]]
+    st["picked_city"] = others[0] if others else st["default_city"]
+    if st["dates"]: pg.select_option("#setupCity", st["picked_city"])
+    pg.fill("#setupNewCity", CITY_C)   # typed but never "added": Save must take it
+    if st["dates"]:
+        # a Save that fails its checks changes nothing: the field, the pick and the stored cities stay as they were
+        pg.fill("#setupTo", ""); pg.click("#setupOk"); pg.wait_for_timeout(300)
+        st["bad_save"] = pg.evaluate("({open: !document.querySelector('#setupSheet').hidden, field: document.querySelector('#setupNewCity').value, pick: document.querySelector('#setupCity').value, cities: (%s.cities || [])})" % MINE_JS)
+        if not st["bad_save"]["open"] or st["bad_save"]["field"] != CITY_C or st["bad_save"]["pick"] != st["picked_city"] or CITY_C in st["bad_save"]["cities"]:
+            errors.append("a failed Save changed the sheet: " + json.dumps(st["bad_save"]))
+        pg.fill("#setupTo", jst_date(3))
     pg.click("#setupOk"); pg.wait_for_timeout(700)
     st["closed"] = pg.locator("#setupSheet").evaluate("e => e.hidden")
     st["clock"] = pg.locator("#clock").inner_text()
     st["today"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
     if not st["closed"]: errors.append("setup sheet still open after Save")
     if not re.search(r"\bE[SD]T\b", st["clock"]): errors.append("clock does not show the chosen zone: " + st["clock"])
-    if st["dates"] and "day 2 of 5" not in st["today"]: errors.append("Today does not show the phone's own days: " + st["today"])
+    if st["dates"]:
+        if "day 2 of 5" not in st["today"]: errors.append("Today does not show the phone's own days: " + st["today"])
+        st["day_cities"] = pg.evaluate("[...new Set((%s.days || []).map(d => d.city))]" % MINE_JS)
+        if st["day_cities"] != [st["picked_city"]]: errors.append("the Most days pick did not reach the days: " + json.dumps(st))
     if CITY_A not in st["city_options"]: errors.append("added city missing from the city list: " + json.dumps(st["city_options"]))
     return st
 
 CITY_A, CITY_B, CITY_C, CITY_D = "Harness City", "Harness Town", "Harness Village", "Harness Port"   # names no copy's data will have
 
+LONG_NAME = "Harness " + "x" * 70   # a name that must wrap, not widen the page
+
 def own_places(pg, tab, errors, own_days):
-    """The phone's own city and place, "+ Day" onto the phone's own day (only while the copy's shared plan has no days),
-    and a city added from the Places tab. Every step is guarded so a missing element is reported, not a 30 s hang."""
+    """The phone's own city and place, "+ Day" onto the phone's own day and "+ Item" on it (only while the copy's shared plan
+    has no days), a city added from the Places tab, and a place added while the City filter is on All.
+    Every step is guarded so a missing element is reported, not a 30 s hang."""
     o = {}
     pg.set_default_timeout(6000)
     try:
+        o["addplace_all"] = pg.locator("[data-addplace]").count()   # "+ Place" is there before a city is picked
         pg.click(f'[data-city="{CITY_A}"]'); pg.wait_for_timeout(300)
         o["empty_city"] = pg.locator("main").inner_text()[:200].replace("\n", " | ")
         pg.click("[data-addplace]"); pg.wait_for_timeout(300)
-        pg.fill("#plName", "Nakatanidou"); pg.fill("#plJa", "中谷堂"); pg.select_option("#plCat", "Food"); pg.fill("#plArea", "Sanjo-dori")
+        o["city_row_hidden"] = pg.locator("#plCityRow").evaluate("e => e.hidden")   # the city is known, no picker
+        pg.fill("#plName", "Nakatanidou"); pg.fill("#plJa", "中谷堂"); pg.keyboard.press("Enter")
+        o["enter_from_ja"] = pg.evaluate("document.activeElement && document.activeElement.id")
+        pg.select_option("#plCat", "Food"); pg.fill("#plArea", "Sanjo-dori")
         pg.click("#plOk"); pg.wait_for_timeout(400)
         o["cards"] = pg.locator("main .place").count()
         o["map_link"] = pg.locator("main .place a.btn").first.get_attribute("href") if o["cards"] else None
+        o["headings"] = pg.locator("#placesBody h2").all_inner_texts()
         if pg.locator("[data-visit]").count():
             pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300); o["hidden_when_visited"] = pg.locator("main .place").count() == 0
             if pg.locator("#visToggle").count(): pg.click("#visToggle"); pg.wait_for_timeout(300); pg.locator("[data-visit]").first.click(); pg.wait_for_timeout(300)
         o["addday_buttons"] = pg.locator("[data-addday]").count()
         if o["addday_buttons"]:
             pg.locator("[data-addday]").first.click(); pg.wait_for_timeout(300); pg.click("#addOk"); pg.wait_for_timeout(500)
-        tab("today"); o["today"] = pg.locator("main").inner_text()[:400].replace("\n", " | ")
+        if own_days:   # a free-form item with a time already over (the clock is pinned to 12:00) shows up at once, under past items
+            tab("today"); pg.click("[data-additem]"); pg.wait_for_timeout(300)
+            pg.fill("#addTime", "09:00"); pg.fill("#addName", "Harness note"); pg.click("#addOk"); pg.wait_for_timeout(500)
+            o["item_toast"] = pg.locator("#toast").inner_text()
+        tab("today"); o["today"] = pg.locator("main").inner_text()[:500].replace("\n", " | ")
         o["remove_buttons"] = pg.locator("[data-rmitem]").count()
         if own_days:   # "Add a city…" from the Today hero's picker sets that day's city
-            tab("today"); pg.select_option(".citysel", "__add"); pg.wait_for_timeout(200); pg.fill("#cityName", CITY_D); pg.click("#cityOk"); pg.wait_for_timeout(400)
+            pg.select_option(".citysel", "__add"); pg.wait_for_timeout(200); pg.fill("#cityName", CITY_D); pg.click("#cityOk"); pg.wait_for_timeout(400)
             o["hero_city"] = pg.locator(".hero .cityrow .city").inner_text()
         tab("places"); pg.click("[data-addcity]"); pg.wait_for_timeout(200); pg.fill("#cityName", CITY_B); pg.click("#cityOk"); pg.wait_for_timeout(400)
         o["cities"] = pg.locator('.filters [data-city]').all_inner_texts()
         pg.click('[data-city="All"]'); pg.wait_for_timeout(300)
+        # a place added from "All": the sheet asks for the city; a very long name must not widen the page
+        pg.click("[data-addplace]"); pg.wait_for_timeout(300)
+        o["city_row_shown"] = pg.locator("#plCityRow").evaluate("e => !e.hidden")
+        pg.select_option("#plCity", CITY_B); pg.fill("#plName", LONG_NAME); pg.click("#plOk"); pg.wait_for_timeout(400)
+        o["long_in_city"] = pg.locator(f'[data-city="{CITY_B}"]').count() and (pg.evaluate("(%s.places || []).filter(p => p.city === %s).length" % (MINE_JS, json.dumps(CITY_B))))
+        o["page_width"] = pg.evaluate("[document.documentElement.scrollWidth, innerWidth]")
     except Exception as e:
         errors.append("own places: " + type(e).__name__ + ": " + str(e).splitlines()[0] + " " + json.dumps(o, ensure_ascii=False)); return o
     finally:
         pg.set_default_timeout(30000)
+    if o.get("addplace_all") != 1: errors.append("+ Place missing while the City filter is on All")
+    if o.get("city_row_hidden") is not True: errors.append("the place sheet asks for a city that was already picked")
+    if o.get("enter_from_ja") != "plArea": errors.append("Enter in the Japanese field did not move to Area: " + str(o.get("enter_from_ja")))
     if o.get("cards") != 1: errors.append("own place not shown under its city: " + json.dumps(o, ensure_ascii=False))
-    if not (o.get("map_link") or "").startswith("https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E8%B0%B7%E5%A0%82"): errors.append("own place Maps link does not search by its Japanese name: " + str(o.get("map_link")))
+    if o.get("headings"): errors.append("one group under a picked city still gets a heading: " + json.dumps(o["headings"]))
+    link = o.get("map_link") or ""
+    if not link.startswith("https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E8%B0%B7%E5%A0%82") or "Harness%20City" not in link: errors.append("own place Maps link does not search by its Japanese name and city: " + link)
     if o.get("hidden_when_visited") is False: errors.append("Visited did not hide the phone's own place")
     if own_days:
         if not o["addday_buttons"]: errors.append("+ Day missing on the phone's own days")
         elif "Nakatanidou" not in o["today"] or not o["remove_buttons"]: errors.append("+ Day did not land on the phone's own day: " + json.dumps(o, ensure_ascii=False))
+        if "Harness note" not in o["today"] or "past items" not in o.get("item_toast", ""): errors.append("+ Item with a past time did not show up under past items: " + json.dumps(o, ensure_ascii=False))
     elif o["addday_buttons"]: errors.append("+ Day offered on the phone's own place while the shared plan has days (it would write into trip/days)")
     if CITY_B not in o["cities"] or CITY_A not in o["cities"]: errors.append("added cities missing from the filter: " + json.dumps(o["cities"]))
     if CITY_C not in o["cities"]: errors.append("a city typed in the setup sheet but not added was dropped on Save: " + json.dumps(o["cities"]))
     if own_days and o.get("hero_city") != CITY_D: errors.append("Add a city from the Today picker did not set the day's city: " + json.dumps(o.get("hero_city")))
+    if o.get("city_row_shown") is not True or not o.get("long_in_city"): errors.append("adding a place from All did not ask for a city or did not file it there: " + json.dumps(o, ensure_ascii=False))
+    if o.get("page_width") and o["page_width"][0] > o["page_width"][1]: errors.append("a long place name widened the page: " + json.dumps(o["page_width"]))
     return o
 
 def main():

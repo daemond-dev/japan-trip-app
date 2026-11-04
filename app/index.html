@@ -450,15 +450,24 @@ html{touch-action:pan-x pan-y}
 .show .en{font-size:15px;color:var(--ink-2)}
 .show .rom{margin-top:-10px;font-size:16px;line-height:1.4;color:var(--ink-2);overflow-wrap:anywhere}
 .show .row{display:flex;gap:8px;justify-content:space-between}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:27;max-width:calc(100% - 32px);padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:14px}
+/* Above the drawer (31) and the sheets (26). Taps pass through the text so a covered field can still be tapped; the Undo button takes them. */
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:40;max-width:calc(100% - 32px);padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:14px;pointer-events:none;overflow-wrap:anywhere}
 .toast[hidden]{display:none}
-.toast button{margin-left:12px;padding:2px 12px;border:1px solid currentColor;border-radius:99px;background:none;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+.toast button{margin-left:12px;padding:2px 12px;border:1px solid currentColor;border-radius:99px;background:none;color:inherit;font:inherit;font-weight:700;cursor:pointer;pointer-events:auto}
+.ttl,.hero .city,.days .dc,.days .dl,.place .where,.det{overflow-wrap:anywhere}
 @media (prefers-reduced-motion:no-preference){ .show:not([hidden]){animation:rise .18s ease-out} @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}} }
 /* Set up this copy, Add a city, Add a place */
 .sheet-card h3{margin:16px 0 6px;font-size:15px;color:var(--ink)}
 .sheet-card select,.addrow select,.addrow input[type=date]{flex:1;min-width:0;font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink)}
 #setupTz{width:100%}
 .addrow .btn{flex:0 0 auto}
+.addrow[hidden]{display:none}
+/* The setup sheet is taller than a phone screen: Save and Later stay pinned at the bottom of the card. */
+#setupSheet .sheet-card{padding-bottom:0}
+#setupSheet .sheet-card > .acts{position:sticky;bottom:0;margin:12px -18px 0;padding:10px 18px calc(env(safe-area-inset-bottom,0px) + 14px);background:var(--surface);border-top:1px solid var(--rule)}
+/* A city chip in the setup sheet is inert; only its ✕ removes */
+.cchip{padding-right:2px}
+.cchip .x{min-width:32px;min-height:32px;margin:-6px 0;padding:0 6px;border:0;border-radius:99px;background:none;color:var(--ink-2);font:inherit;font-size:15px;cursor:pointer}
 .hero .cityrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
 .hero .cityrow .city{margin-top:0;min-width:0}
 .hero .cityrow select{flex:0 1 auto;min-width:0;font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
@@ -553,8 +562,8 @@ html{touch-action:pan-x pan-y}
     <h3>Cities</h3>
     <label class="addrow" id="setupCityRow"><span>Most days</span><select id="setupCity" aria-label="City for most of your days"></select></label>
     <div class="filters sub" id="setupCities" role="group" aria-label="Cities you added"></div>
-    <div class="addrow"><span>New city</span><input type="text" id="setupNewCity" placeholder="e.g. Nara" autocomplete="off" enterkeyhint="done" aria-label="City to add"><button type="button" class="btn primary" id="setupAddCity">Add</button></div>
-    <p class="note">Added cities show up here as chips, under Most days, and on the Places tab, where you can add your own places to them.</p>
+    <label class="addrow" for="setupNewCity"><span>New city</span><input type="text" id="setupNewCity" placeholder="e.g. Nara" autocomplete="off" enterkeyhint="done" maxlength="40"><button type="button" class="btn primary" id="setupAddCity">Add</button></label>
+    <p class="note" id="setupCityNote"></p>
     <div class="acts"><button type="button" class="btn primary" id="setupOk">Save</button><button type="button" class="btn" id="setupLater">Later</button></div>
   </div>
 </div>
@@ -562,7 +571,7 @@ html{touch-action:pan-x pan-y}
   <div class="sheet-card">
     <div class="sheet-ttl" id="cityTitle">Add a city</div>
     <p class="note">Kept on this phone. You can then add your own places under it and give your days that city.</p>
-    <label class="addrow"><span>City</span><input type="text" id="cityName" placeholder="e.g. Nara" autocomplete="off" enterkeyhint="done"></label>
+    <label class="addrow"><span>City</span><input type="text" id="cityName" placeholder="e.g. Nara" autocomplete="off" enterkeyhint="done" maxlength="40"></label>
     <div class="acts"><button type="button" class="btn primary" id="cityOk">Add</button><button type="button" class="btn" id="cityCancel">Cancel</button></div>
   </div>
 </div>
@@ -570,10 +579,11 @@ html{touch-action:pan-x pan-y}
   <div class="sheet-card">
     <div class="sheet-ttl" id="placeTitle">Add a place</div>
     <p class="note" id="placeWhere"></p>
-    <label class="addrow"><span>Name</span><input type="text" id="plName" autocomplete="off" enterkeyhint="next"></label>
-    <label class="addrow"><span>Japanese</span><input type="text" id="plJa" placeholder="Optional; helps the Maps search" autocomplete="off"></label>
+    <label class="addrow" id="plCityRow" hidden><span>City</span><select id="plCity" aria-label="City"></select></label>
+    <label class="addrow"><span>Name</span><input type="text" id="plName" autocomplete="off" enterkeyhint="next" maxlength="80"></label>
+    <label class="addrow"><span>Japanese</span><input type="text" id="plJa" placeholder="Optional; helps the Maps search" autocomplete="off" enterkeyhint="next"></label>
     <label class="addrow"><span>Type</span><select id="plCat"><option value="Food">Restaurant</option><option value="Shop">Shop</option><option value="Activity">Sightseeing</option><option value="Travel">Travel</option><option value="Hotel">Hotel</option></select></label>
-    <label class="addrow"><span>Area</span><input type="text" id="plArea" placeholder="Neighborhood or station, optional" autocomplete="off"></label>
+    <label class="addrow"><span>Area</span><input type="text" id="plArea" placeholder="Neighborhood or station, optional" autocomplete="off" enterkeyhint="next"></label>
     <label class="addrow"><span>Note</span><input type="text" id="plNote" placeholder="Optional" autocomplete="off" enterkeyhint="done"></label>
     <div class="acts"><button type="button" class="btn primary" id="plOk">Add</button><button type="button" class="btn" id="plCancel">Cancel</button></div>
   </div>
@@ -585,8 +595,8 @@ html{touch-action:pan-x pan-y}
     <div class="filters sub" id="addDays" role="group" aria-label="Day"></div>
     <label class="addrow"><span>Time</span><input type="time" id="addTime" step="300"></label>
     <label class="addrow chk"><input type="checkbox" id="addAny"><span>No set time</span></label>
-    <label class="addrow"><span>Title</span><input type="text" id="addName" autocomplete="off"></label>
-    <label class="addrow"><span>Note</span><input type="text" id="addNote" placeholder="Optional" autocomplete="off"></label>
+    <label class="addrow"><span>Title</span><input type="text" id="addName" autocomplete="off" enterkeyhint="next" maxlength="80"></label>
+    <label class="addrow"><span>Note</span><input type="text" id="addNote" placeholder="Optional" autocomplete="off" enterkeyhint="done"></label>
     <div class="acts"><button type="button" class="btn primary" id="addOk">Add to the day</button><button type="button" class="btn" id="addCancel">Cancel</button></div>
   </div>
 </div>
@@ -755,7 +765,8 @@ function trApp(){
   return "https://translate.google.com/";
 }
 // Places from Google Maps carry a placeId; places added from Ask may only have coordinates (TomTom) or a name and area.
-const mapQuery = p => p.lat && p.lng && !p.placeId ? p.lat + "," + p.lng : [p.mine && p.ja ? p.ja : p.name, p.placeId ? "" : p.area, p.placeId ? "" : "Japan"].filter(Boolean).join(", ");
+/* A place with no Google place id is searched by name, area, city and country, so a chain or a common temple name lands in the right city. */
+const mapQuery = p => p.lat && p.lng && !p.placeId ? p.lat + "," + p.lng : [p.mine && p.ja ? p.ja : p.name, p.placeId ? "" : p.area, p.placeId || String(p.area || "").toLowerCase().includes(String(p.city || "").toLowerCase()) ? "" : p.city, p.placeId ? "" : "Japan"].filter(Boolean).join(", ");
 const mapUrl = p => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(mapQuery(p)) + (p.placeId ? "&query_place_id=" + encodeURIComponent(p.placeId) : "");
 const dirUrl = p => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(mapQuery(p)) + (p.placeId ? "&destination_place_id=" + encodeURIComponent(p.placeId) : "") + "&travelmode=transit";
 const telUrl = n => "tel:" + String(n).replace(/[^0-9+]/g, "");
@@ -775,6 +786,8 @@ const sharedDays = () => S.days?.days || [];
 const usingMine = () => !sharedDays().length && mine.days.length > 0;
 const days = () => sharedDays().length ? sharedDays() : mine.days;
 const rate = () => { const o = parseFloat(store.get("jt-rate") || ""); if(o > 0) return o; return S.meta?.rate?.jpyPerUsd || 0; };
+/* A typed amount: "1,500" and "19,700" are thousands, "12,5" (a comma keyboard) is a decimal. */
+const num = v => { let s = String(v).replace(/[^0-9.,]/g, ""); if(!s.includes(".") && /,\d{1,2}$/.test(s)) s = s.replace(/,(\d{1,2})$/, ".$1"); return parseFloat(s.replace(/,/g, "")) || 0; };
 const yen = n => "¥" + Math.round(n).toLocaleString("en-US");
 const usd = n => n < 100 ? "$" + n.toFixed(2) : "$" + Math.round(n).toLocaleString("en-US");
 
@@ -796,6 +809,9 @@ let toastT = 0;
 function toast(msg, action, fn){
   const t = $("#toast"); t.textContent = msg;
   if(action){ const b = document.createElement("button"); b.type = "button"; b.textContent = action; b.onclick = () => { t.hidden = true; fn(); }; t.appendChild(b); }
+  // while a sheet is open the toast sits just above its card, not over the field being typed in
+  const card = document.querySelector(".sheet:not([hidden]) .sheet-card");
+  t.style.bottom = card ? Math.min(innerHeight - 72, Math.round(innerHeight - card.getBoundingClientRect().top + 12)) + "px" : "";
   t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, action ? 6000 : 3800);
 }
 
@@ -1040,7 +1056,7 @@ document.addEventListener("click", e => {
   const dv = e.target.closest("[data-doc]"); if(dv){ openDoc(dv.dataset.doc, +dv.dataset.pages || 1, dv.dataset.title, dv.dataset.owner); return; }
   if(e.target.closest("#docvClose")){ closeDoc(); return; }
   if(e.target.closest("#docvSave")){ saveDocPdf(); return; }
-  if(e.target.closest("#sheetDone") || e.target.id === "sheet"){ closeSheet(); return; }
+  if(e.target.closest("#sheetDone")){ closeSheet(); return; }
   const tr = e.target.closest("[data-tr]");
   if(tr && window.TripApp && window.TripApp.openTranslate){ e.preventDefault(); try{ window.TripApp.openTranslate(tr.dataset.sl, tr.dataset.tl, tr.dataset.tr); }catch(err){} return; }
   const b = e.target.closest("[data-driver]"); if(b){ const p = placeMap()[b.dataset.driver]; if(p && p.ja) driverCard(p); return; }
@@ -1060,6 +1076,7 @@ const TABS = ["today","reservations","trip","places","yen","speak"];
 let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : (TABS.includes(spot.tab) ? spot.tab : "today");
 let tabStack = [];
 function setTab(t, opts){
+  blurIn("main");   // a search box keeps the keyboard up otherwise
   if(!(opts && opts.fromBack) && t !== tab){ tabStack.push(tab); if(tabStack.length > 30) tabStack.shift(); }
   tab = t;
   TABS.forEach(x => { $("#v-" + x).hidden = x !== t; });
@@ -1215,7 +1232,7 @@ function renderStrip(){
   requestAnimationFrame(fades);
 }
 
-const EMPTY_LOAD = `<div class="empty">Nothing loaded yet. Open this page while online, or ask Claude to sync the app.</div>`;
+const EMPTY_LOAD = `<div class="empty">Nothing loaded yet. ${window.__APK && window.__APK.static ? "Reload the page while online." : "Open this page while online, or ask Claude to sync the app."}</div>`;
 const EMPTY_DAYS = `<div class="empty">No days yet. Add your travel dates and the Today tab gets one day per date; put places on a day from the Places tab.<div class="acts" style="margin-top:12px"><button type="button" class="btn primary" data-setup="1">Set up this copy</button></div></div>`;
 /* "Nothing loaded" only while the data hasn't arrived; once it has, an empty day list is an empty itinerary. */
 const emptyMsg = () => (S.days && Array.isArray(S.days.days)) ? EMPTY_DAYS : EMPTY_LOAD;
@@ -1341,7 +1358,8 @@ function renderToday(){
       return `<li class="${x.done ? "done" : ""}${late ? " late" : ""}"><input type="checkbox" id="tdt-${esc(x.id)}" data-todo="${esc(x.id)}" ${x.done ? "checked" : ""} ${ro ? "disabled" : ""}><label for="tdt-${esc(x.id)}">${esc(x.text)}${late ? `<span class="due">Overdue since ${dp.mo} ${dp.day}</span>` : ""}</label></li>`; }).join("")}</ul></div>` : ""}
     ${active ? originBar() : ""}
     ${pastN ? `<button type="button" class="btn earlier" id="earlierBtn" aria-expanded="${showEarlier}">${showEarlier ? "Hide" : "Show"} past items (${pastN})</button>` : ""}
-    ${d.mine && !d.items.length ? `<div class="empty">Nothing planned for this day yet. On the Places tab, tap “+ Day” on a place to put it here.</div>` : ""}
+    ${d.mine ? `<p class="acts"><button type="button" class="btn addc" data-additem="1">${ICON_PLUS}Item</button></p>` : ""}
+    ${d.mine && !d.items.length ? `<div class="empty">Nothing planned for this day yet. Tap “+ Item” for a time or a note, or put a place here with “+ Day” on the Places tab.</div>` : ""}
     <ol class="line">${d.items.map((it, i) => { if(past[i] && !showEarlier) return "";
       const pl = it.place ? pm[it.place] : null;
       const vague = it.m == null || !/^\d/.test(it.t.replace("~",""));
@@ -1366,9 +1384,10 @@ function renderToday(){
   el.querySelectorAll("[data-todo]").forEach(cb => cb.onchange = () => toggleTodo(cb.dataset.todo, cb.checked));
   el.querySelectorAll(".citysel").forEach(sel => sel.onchange = () => {
     if(!d.mine) return;
-    if(sel.value === "__add"){ sel.value = d.city; openCitySheet(n => { d.city = n; saveMine(); render(); toast(`${n} added and set for this day.`); }); return; }
+    if(sel.value === "__add"){ sel.value = d.city; openCitySheet((n, added) => { d.city = n; saveMine(); render(); toast(added ? `${n} added and set for this day.` : `${n} set for this day.`); }); return; }
     d.city = sel.value; saveMine(); const c = sel.closest(".cityrow"); if(c) c.querySelector(".city").textContent = d.city;
   });
+  el.querySelectorAll("[data-additem]").forEach(b => b.onclick = () => { if(d.mine) openAddDay(null, d.date); });
   el.querySelectorAll("[data-rmitem]").forEach(b => b.onclick = () => {
     if(!d.mine) return; const i = +b.dataset.rmitem, it = d.items[i]; if(!it) return;
     d.items.splice(i, 1); saveMine(); render();
@@ -1506,7 +1525,7 @@ let city = F.city || "All", area = F.area || "All", ptype = F.ptype || "All", pq
 const TYPE_LABEL = {Food:"Restaurants", Shop:"Shops", Activity:"Sightseeing", Travel:"Travel", Hotel:"Hotels", Wedding:"Wedding"};
 const TYPE_ORDER = ["Food", "Shop", "Activity", "Travel", "Hotel", "Wedding"];
 const typeLabel = c => TYPE_LABEL[c] || c;
-const areaOf = p => p.district || "Other";
+const areaOf = p => p.district || (p.mine ? "No area" : "Other");
 /* which days each place is on the plan (items and stays) */
 function placeWhen(){ const w = {}; const add = (id, date) => { if(id) (w[id] = w[id] || []).push(date); }; days().forEach(d => { d.items.forEach(it => add(it.place, d.date)); add(d.stay, d.date); }); return w; }
 function whenTag(dates){
@@ -1523,13 +1542,14 @@ function renderPlaces(){
     placesBuilt = true;
     let pT = 0;
     $("#pq").oninput = e => { const v = e.target.value.trim().toLowerCase(); clearTimeout(pT); pT = setTimeout(() => { pq = v; renderPlacesBody(); }, 60); };
+    $("#pq").onkeydown = blurOnEnter;
   }
   renderPlacesBody();
 }
 function renderPlacesBody(){
   AUTOVIS = autoVisitedSet();
   const el = $("#placesBody"), gs = placeGroups();
-  if(!gs.length){ el.innerHTML = EMPTY; return; }
+  if(!S.places){ el.innerHTML = EMPTY; return; }   // an empty list still gets the filter row, so a city can be added
   if(city !== "All" && !gs.some(g => g.name === city)){ city = "All"; area = "All"; }
   const words = pq.split(/\s+/).filter(Boolean);
   const hitP = p => !words.length || words.every(w => [p.name, p.ja, p.ro, p.area, p.district, p.station, p.note, p.city, p.addr].join(" ").toLowerCase().includes(w));
@@ -1554,12 +1574,14 @@ function renderPlacesBody(){
   }
   if(S.meta?.mapsListUrl) html += `<p>${ext(S.meta.mapsListUrl, "Open our shared Google Maps list", "primary")}</p>`;
   const cityG = city !== "All" ? gs.find(g => g.name === city) : null;
-  if(cityG) html += `<p class="acts"><button type="button" class="btn addc" data-addplace="${esc(city)}">${ICON_PLUS}Place in ${esc(city)}</button>${cityG.mine && !cityG.places.length ? `<button type="button" class="btn warnb" data-rmcity="${esc(city)}">Remove ${esc(city)}</button>` : ""}</p>`;
+  html += `<p class="acts"><button type="button" class="btn addc" data-addplace="${cityG ? esc(city) : ""}">${ICON_PLUS}${cityG ? "Place in " + esc(city) : "Place"}</button>${cityG && cityG.mine && !cityG.places.length ? `<button type="button" class="btn warnb" data-rmcity="${esc(city)}">Remove ${esc(city)}</button>` : ""}</p>`;
+  if(S.days && Array.isArray(S.days.days) && !days().length) html += `<p class="acts"><button type="button" class="btn" data-setup="1">Set your dates to put places on a day</button></p>`;
   if(visN) html += `<p><button type="button" class="btn" id="visToggle" aria-pressed="${showVisited}">${showVisited ? "Hide" : "Show"} visited (${visN})</button></p>`;
   const when = placeWhen();
   const canPlan = days().length > 0 && (usingMine() || (!!db && !window.__APK));
   const row = p => `
-      <div class="place${isVisited(p.id) ? " visited" : ""}">${canPlan && (!p.mine || usingMine()) ? `<button type="button" class="btn addday" data-addday="${esc(p.id)}" aria-label="Add ${esc(p.name)} to a day">${ICON_PLUS}Day</button>` : ""}<div class="ttl"><span class="cat ${esc(p.cat)}" aria-hidden="true"></span>${esc(p.name)}${whenTag(when[p.id])}${isVisited(p.id) ? `<span class="st">Visited</span>` : ""}${p.needsDetails ? `<span class="st" title="Added from Ask. Exact Google Maps details get filled in during the next chat with Claude.">Details pending</span>` : ""}</div>
+      <div class="place${isVisited(p.id) ? " visited" : ""}">${canPlan && (!p.mine || usingMine()) ? `<button type="button" class="btn addday" data-addday="${esc(p.id)}" aria-label="Add ${esc(p.name)} to a day">${ICON_PLUS}Day</button>` : ""}<div class="ttl"><span class="cat ${esc(p.cat)}" aria-hidden="true"></span>${esc(p.name)}${whenTag(when[p.id])}${isVisited(p.id) ? `<span class="st">Visited</span>` : ""}${p.needsDetails ? `<span class="st">Details pending</span>` : ""}</div>
+        ${p.needsDetails ? `<div class="small">Added from Ask. Exact Google Maps details get filled in during the next chat with Claude.</div>` : ""}
         ${hoursLine(p)}
         ${etaLine(p)}
         ${p.area || p.station ? `<div class="where">${esc([p.area, p.station].filter(Boolean).join(". "))}</div>` : ""}
@@ -1567,12 +1589,12 @@ function renderPlacesBody(){
         ${floorBlock(p)}
         ${routeBlock(p)}
         ${placeActs(p, null, true).replace(/<\/div>\s*$/, `<button type="button" class="btn visbtn" data-visit="${esc(p.id)}" aria-pressed="${isVisited(p.id)}" aria-label="${isVisited(p.id) ? "Visited. Tap to put it back on the list" : "Mark visited"}">${ICON_CHECK}Visited</button>${p.mine ? `<button type="button" class="btn warnb" data-rmplace="${esc(p.id)}" aria-label="Remove ${esc(p.name)}">Remove</button>` : ""}</div>`)}</div>`;
-  if(!shown.length) html += `<div class="empty">${words.length ? `Nothing matches “${esc(pq)}”${city !== "All" || ptype !== "All" ? " with these filters" : ""}.` : cityG && !cityG.places.length ? `No places in ${esc(city)} yet. Add your own with “+ Place in ${esc(city)}”.` : "Nothing here with these filters."}</div>`;
+  if(!shown.length) html += `<div class="empty">${words.length ? `Nothing matches “${esc(pq)}”${city !== "All" || ptype !== "All" ? " with these filters" : ""}. Add it with “+ Place”.` : !gs.length ? "No places yet. Add a city with “+ City”, then your places." : cityG && !cityG.places.length ? `No places in ${esc(city)} yet. Add your own with “+ Place in ${esc(city)}”.` : "Nothing here with these filters."}</div>`;
   else {
-    // Group by city when showing every city, by area when one city is picked.
+    // Group by city when showing every city, by area when one city is picked; one group under a picked city needs no heading.
     const key = city === "All" ? (p => p.city) : areaOf;
     const heads = [...new Set(shown.map(key))];
-    html += heads.map(h => `<h2>${esc(h)}</h2>${shown.filter(p => key(p) === h).map(row).join("")}`).join("");
+    html += heads.map(h => `${city !== "All" && heads.length === 1 ? "" : `<h2>${esc(h)}</h2>`}${shown.filter(p => key(p) === h).map(row).join("")}`).join("");
   }
   el.innerHTML = html;
   el.querySelectorAll('.filters.sub [aria-pressed="true"]').forEach(b => { if(b.dataset.area !== "All" && b.dataset.ptype !== "All") hScroll(b, false); });
@@ -1620,7 +1642,6 @@ function renderYen(){
       <div id="priceList"></div>`;
     yenBuilt = true;
     const iy = $("#inY"), id = $("#inD");
-    const num = v => parseFloat(String(v).replace(/[^0-9.]/g, "")) || 0;
     iy.oninput = () => { const R = rate(); id.value = R && iy.value ? (num(iy.value) / R).toFixed(2) : ""; };
     id.oninput = () => { const R = rate(); iy.value = R && id.value ? Math.round(num(id.value) * R).toLocaleString("en-US") : ""; };
     el.querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
@@ -1670,7 +1691,7 @@ function renderSpeak(){
     $("#q").oninput = e => { qSync(); const v = e.target.value.trim().toLowerCase(); clearTimeout(qT); qT = setTimeout(() => { if(v !== q){ q = v; renderSpeakBody(); } }, 60); };
     $("#qClear").onclick = () => { clearTimeout(qT); $("#q").value = ""; qSync(); if(q !== ""){ q = ""; renderSpeakBody(); } };
     qSync();
-    $("#numIn").oninput = renderNum;
+    $("#numIn").oninput = renderNum; $("#numIn").onkeydown = blurOnEnter; $("#q").onkeydown = blurOnEnter;
     el.querySelectorAll("[data-nm]").forEach(x => x.onclick = () => { numMode = x.dataset.nm; renderNum(); });
     wireSpeakBody($("#speakBody"));
   }
@@ -1979,7 +2000,7 @@ function renderSheet(){
   }).join("");
   $("#sheetList").querySelectorAll("[data-sec]").forEach(c => c.onchange = () => setSection(p.ja, c.dataset.sec, c.checked));
 }
-function closeSheet(){ $("#sheet").hidden = true; sheetP = null; if(lastFocus) lastFocus.focus(); syncBack(); }
+function closeSheet(){ blurIn("#sheet"); $("#sheet").hidden = true; sheetP = null; if(lastFocus) lastFocus.focus(); syncBack(); }
 /* Delete a phrase from every section (and from Pinned), with Undo. */
 async function deletePhrase(ja){
   const P = S.phrases; if(!P || !db) return;
@@ -2476,19 +2497,23 @@ function closeAsk(){ if(!askOpen) return; askOpen = false; $("#askv").hidden = t
    and Driver; it's marked addedInApp so the next chat with Claude copies it to the calendar and Rough Plan. */
 let addP = null, addDate = null;
 const CAT_TYPE = {Food:"Food", Shop:"Activity", Activity:"Activity", Travel:"Travel", Hotel:"Hotel", Wedding:"Activity"};
-function openAddDay(p){
-  addP = p; lastFocus = document.activeElement;
+/* p: the place to put on a day; null with a date: a free-form item (a flight, a check-in, a meeting point) on one of the phone's own days. */
+function openAddDay(p, date){
+  addP = p || null; lastFocus = document.activeElement;
   const ds = days(), t = jst().date;
-  const upcoming = ds.filter(d => d.date >= t);
-  const sameCity = upcoming.find(d => String(d.city || "").toLowerCase().includes(String(p.city || "").toLowerCase()));
-  addDate = (upcoming.find(d => d.date === t) && (!sameCity || sameCity.date === t)) ? t : (sameCity || upcoming[0] || ds[ds.length - 1]).date;
-  $("#addWhat").textContent = `${p.name}${p.area ? " · " + p.area : ""}`;
-  $("#addName").value = p.name; $("#addNote").value = ""; $("#addTime").value = ""; $("#addAny").checked = false;
+  if(p){
+    const upcoming = ds.filter(d => d.date >= t);
+    const sameCity = upcoming.find(d => String(d.city || "").toLowerCase().includes(String(p.city || "").toLowerCase()));
+    addDate = (upcoming.find(d => d.date === t) && (!sameCity || sameCity.date === t)) ? t : (sameCity || upcoming[0] || ds[ds.length - 1]).date;
+  } else addDate = date;
+  $("#addWhat").textContent = p ? `${p.name}${p.area ? " · " + p.area : ""}` : "A note for the day, with a time or without.";
+  $("#addName").value = p ? p.name : ""; $("#addName").placeholder = p ? "" : "e.g. Flight lands, Check-in, Meet in the lobby";
+  $("#addNote").value = ""; $("#addTime").value = ""; $("#addAny").checked = false; $("#addTime").disabled = false;
   renderAddDays();
   $("#addSheet").hidden = false; syncBack();
   $("#addSheet .sheet-card").scrollTop = 0;
   const cur = $("#addDays [aria-pressed=\"true\"]"); if(cur) hScroll(cur, true);
-  setTimeout(() => $("#addTime").focus({preventScroll:true}), 50);
+  setTimeout(() => $(p ? "#addTime" : "#addName").focus({preventScroll:true}), 50);
 }
 function renderAddDays(){
   const t = jst().date;
@@ -2496,16 +2521,21 @@ function renderAddDays(){
     return `<button type="button" class="btn" data-adate="${d.date}" aria-pressed="${d.date === addDate}">${q.wd} ${q.mo} ${q.day}<small>${esc(String(d.city || "").split(/[ ,(→]/)[0])}</small></button>`; }).join("");
   $("#addDays").querySelectorAll("[data-adate]").forEach(b => b.onclick = () => { addDate = b.dataset.adate; renderAddDays(); });
 }
-function closeAddDay(){ $("#addSheet").hidden = true; addP = null; if(lastFocus) lastFocus.focus(); syncBack(); }
+function closeAddDay(){ blurIn("#addSheet"); $("#addSheet").hidden = true; addP = null; if(lastFocus) lastFocus.focus(); syncBack(); }
 async function saveAddDay(){
-  if(!addP || !addDate || !(db || usingMine())) return;
-  if(addP.mine && !usingMine()){ closeAddDay(); toast("Your own places can go on your own days only."); return; }
+  if(!addDate || !(db || usingMine()) || (!addP && !usingMine())) return;
+  if(addP && addP.mine && !usingMine()){ closeAddDay(); toast("Your own places can go on your own days only."); return; }
+  const title = $("#addName").value.trim();
+  if(!addP && !title){ toast("Give it a title."); $("#addName").focus(); return; }
   const time = $("#addTime").value, any = $("#addAny").checked || !time;
   const m = any ? null : (+time.slice(0, 2)) * 60 + (+time.slice(3, 5));
-  const it = {t:any ? "Anytime" : time, m, type:CAT_TYPE[addP.cat] || "Activity", title:$("#addName").value.trim() || addP.name, status:"Plan", place:addP.id, addedInApp:true};
+  const it = {t:any ? "Anytime" : time, m, type:addP ? (CAT_TYPE[addP.cat] || "Activity") : "Activity", title:title || addP.name, status:"Plan"};
+  if(addP){ it.place = addP.id; it.addedInApp = true; }
   // the place's own description goes first, then anything typed in Note
-  const note = $("#addNote").value.trim(), lines = [addP.note, note].filter(Boolean); if(lines.length) it.detail = lines;
+  const note = $("#addNote").value.trim(), lines = [addP && addP.note, note].filter(Boolean); if(lines.length) it.detail = lines;
   if(m != null) it.end = m + 60;
+  // an item whose time is already over would fold straight into past items: show them and say so
+  const over = m != null && addDate === jst().date && itemSpan({date:addDate}, it).e <= Date.now(), overNote = over ? ", under past items (it\u2019s already over)" : "";
   if(usingMine()){
     // the plan is this phone's own: no shared write, no copy to the owner's calendar
     delete it.addedInApp;
@@ -2515,8 +2545,8 @@ async function saveAddDay(){
     if(i < 0) i = items.length;
     items.splice(i, 0, it); saveMine();
     const q = parts(addDate), name = it.title;
-    closeAddDay(); render();
-    toast(`Added ${name} to ${q.wd}, ${q.mo} ${q.day}.`, "Undo", () => { const k = items.indexOf(it); if(k >= 0){ items.splice(k, 1); saveMine(); render(); } });
+    closeAddDay(); if(over) showEarlier = true; render();
+    toast(`Added ${name} to ${q.wd}, ${q.mo} ${q.day}${overNote}.`, "Undo", () => { const k = items.indexOf(it); if(k >= 0){ items.splice(k, 1); saveMine(); render(); } });
     return;
   }
   const before = S.days, next = JSON.parse(JSON.stringify(S.days));
@@ -2528,16 +2558,17 @@ async function saveAddDay(){
   items.splice(i, 0, it);
   const q = parts(addDate), name = it.title;
   closeAddDay();
-  S.days = next; saveCache(); render();
+  S.days = next; saveCache(); if(over) showEarlier = true; render();
   try{
     await db.doc("trip/days").set(next);
-    toast(`Added ${name} to ${q.wd}, ${q.mo} ${q.day}.`, "Undo", async () => { S.days = before; saveCache(); render(); try{ await db.doc("trip/days").set(before); }catch(e){ toast("Couldn\u2019t undo."); } });
+    toast(`Added ${name} to ${q.wd}, ${q.mo} ${q.day}${overNote}.`, "Undo", async () => { S.days = before; saveCache(); render(); try{ await db.doc("trip/days").set(before); }catch(e){ toast("Couldn\u2019t undo."); } });
   }catch(e){ S.days = before; saveCache(); render(); toast("Couldn\u2019t add it. Try again when you\u2019re connected."); }
 }
 $("#addOk").onclick = saveAddDay;
 $("#addCancel").onclick = closeAddDay;
 $("#addAny").onchange = e => { $("#addTime").disabled = e.target.checked; };
-$("#addSheet").addEventListener("click", e => { if(e.target.id === "addSheet") closeAddDay(); });
+$("#addName").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#addNote").focus(); } });
+$("#addNote").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); saveAddDay(); } });
 document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("#addSheet").hidden) closeAddDay(); });
 
 /* ---- Set up this copy: the phone's own time zone, dates, cities and places ----
@@ -2585,32 +2616,54 @@ function setupTzNote(){ const z = $("#setupTz").value; $("#setupTzNow").textCont
 /* The city suggested for a traveler's days: meta.mainCity when it is one of the cities in the data, else the first city. */
 function mainCity(){ const names = placeGroups().map(g => g.name), m = S.meta && S.meta.mainCity; return (m && names.find(n => n.toLowerCase() === String(m).toLowerCase())) || names[0] || ""; }
 function renderSetupCities(){
-  const names = placeGroups().map(g => g.name), def = (mine.days[0] && mine.days[0].city) || mainCity();
-  setupDefCity = def; $("#setupCityRow").hidden = sharedDays().length > 0;
+  const names = placeGroups().map(g => g.name), def = (mine.days[0] && mine.days[0].city) || mainCity(), shared = sharedDays().length > 0;
+  if(def && !names.includes(def)) names.push(def);   // the days keep their city as a plain name when its group was removed
+  setupDefCity = def; $("#setupCityRow").hidden = shared || !names.length;
   $("#setupCity").innerHTML = names.map(n => `<option value="${esc(n)}"${n === def ? " selected" : ""}>${esc(n)}</option>`).join("");
-  $("#setupCities").innerHTML = mine.cities.map(c => `<button type="button" class="btn" data-rmc="${esc(c)}" aria-label="Remove ${esc(c)}">${esc(c)} ✕</button>`).join("");
-  $("#setupCities").querySelectorAll("[data-rmc]").forEach(b => b.onclick = () => { removeMineCity(b.dataset.rmc); renderSetupCities(); });
+  $("#setupCityNote").textContent = shared || !names.length ? "Added cities show up here as chips and on the Places tab, where you can add your own places to them." : "Added cities show up here as chips, under Most days, and on the Places tab, where you can add your own places to them.";
+  $("#setupCities").innerHTML = mine.cities.map(c => `<span class="btn cchip">${esc(c)}<button type="button" class="x" data-rmc="${esc(c)}" aria-label="Remove ${esc(c)}">✕</button></span>`).join("");
+  $("#setupCities").querySelectorAll("[data-rmc]").forEach(b => b.onclick = () => removeMineCity(b.dataset.rmc));
 }
-function closeSetup(){ if(!mine.done){ mine.done = true; saveMine(); } blurIn("#setupSheet"); $("#setupSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+/* Redraw the chips and the Most days list while the sheet is open (a city came or went), keeping the pick. */
+function refreshSetupCities(){
+  if($("#setupSheet").hidden) return;
+  const keep = $("#setupCity").value; renderSetupCities();
+  if(keep && [...$("#setupCity").options].some(o => o.value === keep)) $("#setupCity").value = keep;
+}
+/* Closing the first-start sheet any way but Save marks it done and says where it lives; later closes are silent. */
+function closeSetup(){
+  const first = !mine.done; if(first){ mine.done = true; saveMine(); }
+  blurIn("#setupSheet"); $("#setupSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack();
+  if(first) toast("You can set this up anytime from the menu, under Settings.");
+}
 function saveSetup(){
-  if($("#setupNewCity").value.trim()){ addMineCity($("#setupNewCity").value); $("#setupNewCity").value = ""; renderSetupCities(); }   // typed but not yet added: take it
-  if(!$("#setupDatesWrap").hidden){
-    const a = $("#setupFrom").value, b = $("#setupTo").value;
-    if((a || b) && !(a && b)){ toast("Give both the first and the last day, or leave both empty."); return; }
-    if(a && b){
-      if(b < a){ toast("The last day comes before the first day."); return; }
-      const n = Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
-      if(n > 90){ toast("That is more than 90 days. Pick a shorter range."); return; }
+  const datesOn = !$("#setupDatesWrap").hidden, a = datesOn ? $("#setupFrom").value : "", b = datesOn ? $("#setupTo").value : "";
+  if((a || b) && !(a && b)){ toast("Give both the first and the last day, or leave both empty."); return; }
+  if(a && b && b < a){ toast("The last day comes before the first day."); return; }
+  const n = a && b ? Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1 : 0;
+  if(n > 90){ toast("That is more than 90 days. Pick a shorter range."); return; }
+  const prev = JSON.stringify(mine);
+  const typed = $("#setupNewCity").value.trim();
+  if(typed){ addMineCity(typed); $("#setupNewCity").value = ""; refreshSetupCities(); }   // typed but not yet added: take it, keeping the Most days pick
+  let lost = [];
+  if(datesOn){
+    if(n){
       const cityDef = $("#setupCity").value || mainCity() || "Japan";
       if(cityDef !== setupDefCity) mine.days.forEach(d => { if(d.city === setupDefCity) d.city = cityDef; });
       const old = new Map(mine.days.map(d => [d.date, d])), out = [];
       for(let i = 0; i < n; i++){ const date = new Date(Date.parse(a) + i * 864e5).toISOString().slice(0, 10); out.push(old.get(date) || {date, city:cityDef, sleep:"", stay:null, items:[], mine:true}); }
+      const keep = new Set(out.map(d => d.date)); lost = mine.days.filter(d => !keep.has(d.date) && (d.items || []).length);
       mine.days = out;
-    } else mine.days = [];
+    } else { lost = mine.days.filter(d => (d.items || []).length); mine.days = []; }
   }
   mine.tz = $("#setupTz").value || ""; mine.done = true; saveMine();
-  dayIdx = -1; dayPicked = false; showEarlier = false; tickClock(); closeSetup(); renderSettings(); render();
-  toast("Saved on this phone.");
+  const back = () => { dayIdx = -1; dayPicked = false; showEarlier = false; tickClock(); renderSettings(); render(); };
+  closeSetup(); back();
+  if(lost.length){
+    // days that left the range took their plan with them: say so, with a way back
+    const k = lost.reduce((s, d) => s + d.items.length, 0), when = lost.map(d => { const q = parts(d.date); return q.mo + " " + q.day; }).join(", ");
+    toast(`Saved. ${k} planned item${k === 1 ? "" : "s"} on ${when} dropped.`, "Undo", () => { const o = JSON.parse(prev); o.tz = mine.tz; o.done = true; mine = o; normMine(); saveMine(); back(); });
+  } else toast("Saved on this phone.");
 }
 function mineNote(){
   const tz = mine.tz || (S.meta && S.meta.homeTz) || HOME_TZ_DEFAULT, ds = mine.days;
@@ -2619,32 +2672,40 @@ function mineNote(){
     + (ds.length ? `Your days: ${ds.length}, ${p.mo} ${p.day} to ${q.mo} ${q.day}${usingMine() ? "" : " (not shown while the shared plan has days)"}. ` : "No dates set. ")
     + (mine.cities.length ? `Cities you added: ${mine.cities.join(", ")}. ` : "") + (mine.places.length ? `Places you added: ${mine.places.length}.` : "");
 }
+/* Returns {name, added}: the canonical name (a city already in the guide matches case-insensitively) and whether it was new. */
 function addMineCity(name){
-  const n = String(name || "").trim().replace(/\s+/g, " ").slice(0, 40); if(!n) return "";
-  const hit = placeGroups().find(g => String(g.name).toLowerCase() === n.toLowerCase()); if(hit) return hit.name;
-  mine.cities.push(n); saveMine(); return n;
+  const n = String(name || "").trim().replace(/\s+/g, " ").slice(0, 40); if(!n) return null;
+  const hit = placeGroups().find(g => String(g.name).toLowerCase() === n.toLowerCase()); if(hit) return {name:hit.name, added:false};
+  mine.cities.push(n); saveMine(); return {name:n, added:true};
 }
 function removeMineCity(name){
   const ci = mine.cities.indexOf(name); if(ci < 0) return;
-  const gone = mine.places.filter(p => p.city === name);
+  const gone = mine.places.filter(p => p.city === name), vis = {}; gone.forEach(p => { if(has(visOv, p.id)) vis[p.id] = visOv[p.id]; });
   mine.cities.splice(ci, 1); mine.places = mine.places.filter(p => p.city !== name); forgetVisited(gone.map(p => p.id)); saveMine();
   if(city === name){ city = "All"; area = "All"; saveFilters(); }
-  render();
-  toast(`${name} removed${gone.length ? ` with ${gone.length} place${gone.length === 1 ? "" : "s"}` : ""}.`, "Undo", () => { mine.cities.splice(Math.min(ci, mine.cities.length), 0, name); mine.places.push(...gone); saveMine(); render(); });
+  render(); refreshSetupCities();
+  toast(`${name} removed${gone.length ? ` with ${gone.length} place${gone.length === 1 ? "" : "s"}` : ""}.`, "Undo", () => { mine.cities.splice(Math.min(ci, mine.cities.length), 0, name); mine.places.push(...gone); if(Object.keys(vis).length){ Object.assign(visOv, vis); saveVisLocal(); } saveMine(); render(); refreshSetupCities(); });
 }
 let cityAfter = null;   // what to do with a city added from the city sheet; null = show it on the Places tab
 function openCitySheet(after){ cityAfter = typeof after === "function" ? after : null; lastFocus = document.activeElement; $("#cityName").value = ""; $("#citySheet").hidden = false; syncBack(); setTimeout(() => $("#cityName").focus({preventScroll:true}), 50); }
 function closeCitySheet(){ blurIn("#citySheet"); $("#citySheet").hidden = true; cityAfter = null; if(lastFocus) lastFocus.focus(); syncBack(); }
 let plCity = "";
+/* c: the city the place goes under; "" shows a City picker (the day's city, else the suggested city, preselected). */
 function openPlaceSheet(c){
-  plCity = c; lastFocus = document.activeElement;
-  $("#placeWhere").textContent = `In ${c}. Kept on this phone; Maps and Directions search by name.`;
+  lastFocus = document.activeElement;
+  const names = placeGroups().map(g => g.name), d = days()[dayIdx];
+  plCity = c || (d && d.city && names.includes(d.city) ? d.city : "") || mainCity();
+  $("#plCity").innerHTML = names.map(n => `<option value="${esc(n)}"${n === plCity ? " selected" : ""}>${esc(n)}</option>`).join("");
+  $("#plCityRow").hidden = !!c || !names.length;
+  $("#placeWhere").textContent = (c ? `In ${c}. ` : names.length ? "" : "Add a city first, with “+ City” on the Places tab. ") + "Kept on this phone; Maps and Directions search by name." + (sharedDays().length ? " The days here are the shared plan, so your places stay on the Places tab." : "");
   ["#plName", "#plJa", "#plArea", "#plNote"].forEach(x => { $(x).value = ""; }); $("#plCat").value = "Food";
   $("#placeSheet").hidden = false; $("#placeSheet .sheet-card").scrollTop = 0; syncBack();
   setTimeout(() => $("#plName").focus({preventScroll:true}), 50);
 }
 function closePlaceSheet(){ blurIn("#placeSheet"); $("#placeSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
 function savePlaceSheet(){
+  if(!$("#plCityRow").hidden) plCity = $("#plCity").value || plCity;
+  if(!plCity){ closePlaceSheet(); toast("Add a city first, with “+ City”."); return; }
   const name = $("#plName").value.trim(); if(!name){ toast("Give the place a name."); $("#plName").focus(); return; }
   const base = "my_" + (name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 24) || "place");
   let id = base, n = 2; const pm = placeMap(); while(pm[id]) id = base + "_" + n++;
@@ -2667,33 +2728,47 @@ function cityRow(d){
 }
 $("#setupTz").onchange = setupTzNote;
 $("#setupAddCity").onclick = () => {
-  const typed = $("#setupNewCity").value, n = addMineCity(typed); if(!n){ toast("Type a city name."); $("#setupNewCity").focus(); return; }
-  const keep = $("#setupCity").value; $("#setupNewCity").value = ""; renderSetupCities(); if(keep) $("#setupCity").value = keep;
-  toast(mine.cities.includes(n) ? `${n} added. Pick it under Most days if that is where you will be.` : `${n} is already in the guide.`);
+  const r = addMineCity($("#setupNewCity").value); if(!r){ toast("Type a city name."); $("#setupNewCity").focus(); return; }
+  $("#setupNewCity").value = ""; refreshSetupCities();
+  toast(!r.added ? `${r.name} is already in the list.` : $("#setupCityRow").hidden ? `${r.name} added. Find it on the Places tab.` : `${r.name} added. Pick it under Most days if that is where you will be.`);
 };
 $("#setupNewCity").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#setupAddCity").click(); } });
 $("#setupOk").onclick = saveSetup;
-$("#setupLater").onclick = () => { mine.done = true; saveMine(); closeSetup(); toast("You can set this up anytime from the menu, under Settings."); };
+$("#setupLater").onclick = closeSetup;
 $("#cityOk").onclick = () => {
-  const n = addMineCity($("#cityName").value); if(!n){ toast("Type a city name."); $("#cityName").focus(); return; }
-  const after = cityAfter; closeCitySheet();
-  if(after){ after(n); return; }
-  city = n; area = "All"; saveFilters(); render(); toast(`${n} added. Now add your places to it.`);
+  const r = addMineCity($("#cityName").value); if(!r){ toast("Type a city name."); $("#cityName").focus(); return; }
+  const after = cityAfter, n = r.name; closeCitySheet();
+  if(after){ after(n, r.added); return; }
+  city = n; area = "All"; saveFilters(); render(); toast(r.added ? `${n} added. Now add your places to it.` : `Showing ${n}.`);
 };
 $("#cityName").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#cityOk").click(); } });
 $("#cityCancel").onclick = closeCitySheet;
 $("#plOk").onclick = savePlaceSheet;
 $("#plNote").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); savePlaceSheet(); } });
 $("#plName").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#plJa").focus(); } });
+$("#plJa").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#plArea").focus(); } });
+$("#plArea").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#plNote").focus(); } });
 $("#plCancel").onclick = closePlaceSheet;
-[["#setupSheet", closeSetup], ["#citySheet", closeCitySheet], ["#placeSheet", closePlaceSheet]].forEach(([id, fn]) => $(id).addEventListener("click", e => { if(e.target === $(id)) fn(); }));
-/* While a field in a sheet has the keyboard up, a tap on one of the sheet's buttons would first blur the field; on iPhone the
-   keyboard then closes, the bottom sheet moves, and the tap lands on nothing. Keeping the focus makes the tap a plain click. */
+/* A tap on the dimmed backdrop closes a sheet, but only when the press started there too: a press that begins on a button and
+   ends on the backdrop (a pointer that drifts) would otherwise click their common ancestor, the sheet, and close it. */
+function backdropClose(id, fn){
+  const s = $(id); let down = null;
+  s.addEventListener("pointerdown", e => { down = e.target; });
+  s.addEventListener("pointercancel", () => { down = null; });
+  s.addEventListener("click", e => { const d = down; down = null; if(e.target === s && d === s) fn(); });
+}
+backdropClose("#setupSheet", closeSetup); backdropClose("#citySheet", closeCitySheet); backdropClose("#placeSheet", closePlaceSheet); backdropClose("#addSheet", closeAddDay); backdropClose("#sheet", closeSheet);
+/* While a field has the keyboard up, a tap on a bottom-anchored button (a sheet's, Ask's Send, a tab) would first blur the field;
+   on iPhone the keyboard then closes, the button moves, and the tap lands on nothing. Keeping the focus makes the tap a plain click.
+   Kept narrow on purpose: a tap on a card or a chip after a search should still drop the keyboard. */
 document.addEventListener("mousedown", e => {
-  const b = e.target.closest(".sheet-card button"), a = document.activeElement;
-  if(b && a && a !== b && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.closest(".sheet-card") === b.closest(".sheet-card")) e.preventDefault();
+  const b = e.target.closest(".sheet-card button, .askfoot button, .tabs button"), a = document.activeElement;
+  if(!b || !a || a === b || !/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+  const card = b.closest(".sheet-card");
+  if(card ? a.closest(".sheet-card") === card : (b.closest(".askfoot") ? a.id === "askIn" : true)) e.preventDefault();
 });
 function blurIn(sel){ const a = document.activeElement; if(a && a.blur && a.closest(sel)) a.blur(); }
+function blurOnEnter(e){ if(e.key === "Enter"){ e.preventDefault(); e.target.blur(); } }   // search fields: the keyboard's Search key closes it
 document.addEventListener("keydown", e => { if(e.key !== "Escape") return; if(!$("#placeSheet").hidden) closePlaceSheet(); else if(!$("#citySheet").hidden) closeCitySheet(); else if(!$("#setupSheet").hidden) closeSetup(); });
 document.addEventListener("click", e => { if(e.target.closest("[data-setup]")) openSetup(); });
 
@@ -3137,7 +3212,7 @@ async function renderCacheNote(){
 }
 document.querySelectorAll("[data-theme-set]").forEach(b => b.onclick = () => { theme = b.dataset.themeSet; store.set("jt-theme", theme); applyTheme(); renderSettings(); });
 function setRate(v){ store.set("jt-rate", v > 0 ? String(v) : ""); renderSettings(); if(yenBuilt) renderYen(); }
-$("#rateSet").onchange = e => setRate(parseFloat(e.target.value));
+$("#rateSet").onchange = e => setRate(num(e.target.value));
 $("#rateClear").onclick = () => { $("#rateSet").value = ""; setRate(0); };
 $("#resetBtn").onclick = () => { store.del(CACHE); syncNow(); };
 $("#setupBtn").onclick = () => { closeMenu(); openSetup(); };
@@ -3171,7 +3246,7 @@ const ptr = $("#ptr"), PULL = 70;
 let pStart = null, pDist = 0, pOn = false;
 function hidePtr(){ ptr.classList.remove("pulling"); ptr.style.opacity = "0"; ptr.style.transform = "translate(-50%, -20px)"; }
 document.addEventListener("touchstart", e => {
-  if(window.scrollY > 0 || drawer.classList.contains("open") || !$("#show").hidden || document.querySelector(".sheet:not([hidden])") || e.touches.length !== 1){ pStart = null; return; }
+  if(window.scrollY > 0 || drawer.classList.contains("open") || !$("#show").hidden || docOpen || askOpen || document.querySelector(".sheet:not([hidden])") || e.touches.length !== 1){ pStart = null; return; }
   pStart = e.touches[0].clientY; pDist = 0; pOn = false;
 }, {passive:true});
 document.addEventListener("touchmove", e => {
