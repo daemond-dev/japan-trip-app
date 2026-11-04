@@ -553,7 +553,8 @@ html{touch-action:pan-x pan-y}
     <h3>Cities</h3>
     <label class="addrow" id="setupCityRow"><span>Most days</span><select id="setupCity" aria-label="City for most of your days"></select></label>
     <div class="filters sub" id="setupCities" role="group" aria-label="Cities you added"></div>
-    <div class="addrow"><span>Add</span><input type="text" id="setupNewCity" placeholder="Another city, e.g. Nara" autocomplete="off" aria-label="City to add"><button type="button" class="btn" id="setupAddCity">Add</button></div>
+    <div class="addrow"><span>New city</span><input type="text" id="setupNewCity" placeholder="e.g. Nara" autocomplete="off" enterkeyhint="done" aria-label="City to add"><button type="button" class="btn primary" id="setupAddCity">Add</button></div>
+    <p class="note">Added cities show up here as chips, under Most days, and on the Places tab, where you can add your own places to them.</p>
     <div class="acts"><button type="button" class="btn primary" id="setupOk">Save</button><button type="button" class="btn" id="setupLater">Later</button></div>
   </div>
 </div>
@@ -561,7 +562,7 @@ html{touch-action:pan-x pan-y}
   <div class="sheet-card">
     <div class="sheet-ttl" id="cityTitle">Add a city</div>
     <p class="note">Kept on this phone. You can then add your own places under it and give your days that city.</p>
-    <label class="addrow"><span>City</span><input type="text" id="cityName" placeholder="e.g. Nara" autocomplete="off"></label>
+    <label class="addrow"><span>City</span><input type="text" id="cityName" placeholder="e.g. Nara" autocomplete="off" enterkeyhint="done"></label>
     <div class="acts"><button type="button" class="btn primary" id="cityOk">Add</button><button type="button" class="btn" id="cityCancel">Cancel</button></div>
   </div>
 </div>
@@ -569,11 +570,11 @@ html{touch-action:pan-x pan-y}
   <div class="sheet-card">
     <div class="sheet-ttl" id="placeTitle">Add a place</div>
     <p class="note" id="placeWhere"></p>
-    <label class="addrow"><span>Name</span><input type="text" id="plName" autocomplete="off"></label>
+    <label class="addrow"><span>Name</span><input type="text" id="plName" autocomplete="off" enterkeyhint="next"></label>
     <label class="addrow"><span>Japanese</span><input type="text" id="plJa" placeholder="Optional; helps the Maps search" autocomplete="off"></label>
     <label class="addrow"><span>Type</span><select id="plCat"><option value="Food">Restaurant</option><option value="Shop">Shop</option><option value="Activity">Sightseeing</option><option value="Travel">Travel</option><option value="Hotel">Hotel</option></select></label>
     <label class="addrow"><span>Area</span><input type="text" id="plArea" placeholder="Neighborhood or station, optional" autocomplete="off"></label>
-    <label class="addrow"><span>Note</span><input type="text" id="plNote" placeholder="Optional" autocomplete="off"></label>
+    <label class="addrow"><span>Note</span><input type="text" id="plNote" placeholder="Optional" autocomplete="off" enterkeyhint="done"></label>
     <div class="acts"><button type="button" class="btn primary" id="plOk">Add</button><button type="button" class="btn" id="plCancel">Cancel</button></div>
   </div>
 </div>
@@ -1363,7 +1364,11 @@ function renderToday(){
   wireOrigin(el); if(active) startEtas();
   const eb = $("#earlierBtn"); if(eb) eb.onclick = () => { showEarlier = !showEarlier; renderToday(); };
   el.querySelectorAll("[data-todo]").forEach(cb => cb.onchange = () => toggleTodo(cb.dataset.todo, cb.checked));
-  el.querySelectorAll(".citysel").forEach(sel => sel.onchange = () => { if(!d.mine) return; d.city = sel.value; saveMine(); const c = sel.closest(".cityrow"); if(c) c.querySelector(".city").textContent = d.city; });
+  el.querySelectorAll(".citysel").forEach(sel => sel.onchange = () => {
+    if(!d.mine) return;
+    if(sel.value === "__add"){ sel.value = d.city; openCitySheet(n => { d.city = n; saveMine(); render(); toast(`${n} added and set for this day.`); }); return; }
+    d.city = sel.value; saveMine(); const c = sel.closest(".cityrow"); if(c) c.querySelector(".city").textContent = d.city;
+  });
   el.querySelectorAll("[data-rmitem]").forEach(b => b.onclick = () => {
     if(!d.mine) return; const i = +b.dataset.rmitem, it = d.items[i]; if(!it) return;
     d.items.splice(i, 1); saveMine(); render();
@@ -2586,8 +2591,9 @@ function renderSetupCities(){
   $("#setupCities").innerHTML = mine.cities.map(c => `<button type="button" class="btn" data-rmc="${esc(c)}" aria-label="Remove ${esc(c)}">${esc(c)} ✕</button>`).join("");
   $("#setupCities").querySelectorAll("[data-rmc]").forEach(b => b.onclick = () => { removeMineCity(b.dataset.rmc); renderSetupCities(); });
 }
-function closeSetup(){ if(!mine.done){ mine.done = true; saveMine(); } $("#setupSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+function closeSetup(){ if(!mine.done){ mine.done = true; saveMine(); } blurIn("#setupSheet"); $("#setupSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
 function saveSetup(){
+  if($("#setupNewCity").value.trim()){ addMineCity($("#setupNewCity").value); $("#setupNewCity").value = ""; renderSetupCities(); }   // typed but not yet added: take it
   if(!$("#setupDatesWrap").hidden){
     const a = $("#setupFrom").value, b = $("#setupTo").value;
     if((a || b) && !(a && b)){ toast("Give both the first and the last day, or leave both empty."); return; }
@@ -2626,8 +2632,9 @@ function removeMineCity(name){
   render();
   toast(`${name} removed${gone.length ? ` with ${gone.length} place${gone.length === 1 ? "" : "s"}` : ""}.`, "Undo", () => { mine.cities.splice(Math.min(ci, mine.cities.length), 0, name); mine.places.push(...gone); saveMine(); render(); });
 }
-function openCitySheet(){ lastFocus = document.activeElement; $("#cityName").value = ""; $("#citySheet").hidden = false; syncBack(); setTimeout(() => $("#cityName").focus({preventScroll:true}), 50); }
-function closeCitySheet(){ $("#citySheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+let cityAfter = null;   // what to do with a city added from the city sheet; null = show it on the Places tab
+function openCitySheet(after){ cityAfter = typeof after === "function" ? after : null; lastFocus = document.activeElement; $("#cityName").value = ""; $("#citySheet").hidden = false; syncBack(); setTimeout(() => $("#cityName").focus({preventScroll:true}), 50); }
+function closeCitySheet(){ blurIn("#citySheet"); $("#citySheet").hidden = true; cityAfter = null; if(lastFocus) lastFocus.focus(); syncBack(); }
 let plCity = "";
 function openPlaceSheet(c){
   plCity = c; lastFocus = document.activeElement;
@@ -2636,7 +2643,7 @@ function openPlaceSheet(c){
   $("#placeSheet").hidden = false; $("#placeSheet .sheet-card").scrollTop = 0; syncBack();
   setTimeout(() => $("#plName").focus({preventScroll:true}), 50);
 }
-function closePlaceSheet(){ $("#placeSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
+function closePlaceSheet(){ blurIn("#placeSheet"); $("#placeSheet").hidden = true; if(lastFocus) lastFocus.focus(); syncBack(); }
 function savePlaceSheet(){
   const name = $("#plName").value.trim(); if(!name){ toast("Give the place a name."); $("#plName").focus(); return; }
   const base = "my_" + (name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 24) || "place");
@@ -2656,19 +2663,37 @@ function removeMinePlace(id, quiet){
 }
 function cityRow(d){
   const names = [...new Set([...placeGroups().map(g => g.name), d.city].filter(Boolean))];
-  return `<div class="cityrow"><div class="city">${esc(d.city || "Japan")}</div><label class="cityl">City<select class="citysel" aria-label="City for this day">${names.map(n => `<option value="${esc(n)}"${n === d.city ? " selected" : ""}>${esc(n)}</option>`).join("")}</select></label></div>`;
+  return `<div class="cityrow"><div class="city">${esc(d.city || "Japan")}</div><label class="cityl">City<select class="citysel" aria-label="City for this day">${names.map(n => `<option value="${esc(n)}"${n === d.city ? " selected" : ""}>${esc(n)}</option>`).join("")}<option value="__add">Add a city…</option></select></label></div>`;
 }
 $("#setupTz").onchange = setupTzNote;
-$("#setupAddCity").onclick = () => { const n = addMineCity($("#setupNewCity").value); if(!n){ toast("Type a city name."); return; } const keep = $("#setupCity").value; $("#setupNewCity").value = ""; renderSetupCities(); if(keep) $("#setupCity").value = keep; };
+$("#setupAddCity").onclick = () => {
+  const typed = $("#setupNewCity").value, n = addMineCity(typed); if(!n){ toast("Type a city name."); $("#setupNewCity").focus(); return; }
+  const keep = $("#setupCity").value; $("#setupNewCity").value = ""; renderSetupCities(); if(keep) $("#setupCity").value = keep;
+  toast(mine.cities.includes(n) ? `${n} added. Pick it under Most days if that is where you will be.` : `${n} is already in the guide.`);
+};
 $("#setupNewCity").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#setupAddCity").click(); } });
 $("#setupOk").onclick = saveSetup;
 $("#setupLater").onclick = () => { mine.done = true; saveMine(); closeSetup(); toast("You can set this up anytime from the menu, under Settings."); };
-$("#cityOk").onclick = () => { const n = addMineCity($("#cityName").value); if(!n){ toast("Type a city name."); return; } city = n; area = "All"; saveFilters(); closeCitySheet(); render(); toast(`${n} added. Now add your places to it.`); };
+$("#cityOk").onclick = () => {
+  const n = addMineCity($("#cityName").value); if(!n){ toast("Type a city name."); $("#cityName").focus(); return; }
+  const after = cityAfter; closeCitySheet();
+  if(after){ after(n); return; }
+  city = n; area = "All"; saveFilters(); render(); toast(`${n} added. Now add your places to it.`);
+};
 $("#cityName").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#cityOk").click(); } });
 $("#cityCancel").onclick = closeCitySheet;
 $("#plOk").onclick = savePlaceSheet;
+$("#plNote").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); savePlaceSheet(); } });
+$("#plName").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); $("#plJa").focus(); } });
 $("#plCancel").onclick = closePlaceSheet;
 [["#setupSheet", closeSetup], ["#citySheet", closeCitySheet], ["#placeSheet", closePlaceSheet]].forEach(([id, fn]) => $(id).addEventListener("click", e => { if(e.target === $(id)) fn(); }));
+/* While a field in a sheet has the keyboard up, a tap on one of the sheet's buttons would first blur the field; on iPhone the
+   keyboard then closes, the bottom sheet moves, and the tap lands on nothing. Keeping the focus makes the tap a plain click. */
+document.addEventListener("mousedown", e => {
+  const b = e.target.closest(".sheet-card button"), a = document.activeElement;
+  if(b && a && a !== b && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.closest(".sheet-card") === b.closest(".sheet-card")) e.preventDefault();
+});
+function blurIn(sel){ const a = document.activeElement; if(a && a.blur && a.closest(sel)) a.blur(); }
 document.addEventListener("keydown", e => { if(e.key !== "Escape") return; if(!$("#placeSheet").hidden) closePlaceSheet(); else if(!$("#citySheet").hidden) closeCitySheet(); else if(!$("#setupSheet").hidden) closeSetup(); });
 document.addEventListener("click", e => { if(e.target.closest("[data-setup]")) openSetup(); });
 

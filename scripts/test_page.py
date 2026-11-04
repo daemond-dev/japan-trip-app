@@ -115,6 +115,7 @@ def run_setup(pg, errors):
         pg.fill("#setupFrom", jst_date(-1)); pg.fill("#setupTo", jst_date(3))
     pg.fill("#setupNewCity", CITY_A); pg.click("#setupAddCity"); pg.wait_for_timeout(200)
     st["city_options"] = pg.locator("#setupCity option").all_inner_texts()
+    pg.fill("#setupNewCity", CITY_C)   # typed but never "added": Save must take it
     st["default_city"] = pg.evaluate("document.querySelector('#setupCity').value")
     want = (trip.get("meta") or {}).get("mainCity")
     if want and st["default_city"] != want: errors.append("suggested city is %r, meta.mainCity says %r" % (st["default_city"], want))
@@ -128,7 +129,7 @@ def run_setup(pg, errors):
     if CITY_A not in st["city_options"]: errors.append("added city missing from the city list: " + json.dumps(st["city_options"]))
     return st
 
-CITY_A, CITY_B = "Harness City", "Harness Town"   # names no copy's data will have
+CITY_A, CITY_B, CITY_C, CITY_D = "Harness City", "Harness Town", "Harness Village", "Harness Port"   # names no copy's data will have
 
 def own_places(pg, tab, errors, own_days):
     """The phone's own city and place, "+ Day" onto the phone's own day (only while the copy's shared plan has no days),
@@ -151,6 +152,9 @@ def own_places(pg, tab, errors, own_days):
             pg.locator("[data-addday]").first.click(); pg.wait_for_timeout(300); pg.click("#addOk"); pg.wait_for_timeout(500)
         tab("today"); o["today"] = pg.locator("main").inner_text()[:400].replace("\n", " | ")
         o["remove_buttons"] = pg.locator("[data-rmitem]").count()
+        if own_days:   # "Add a city…" from the Today hero's picker sets that day's city
+            tab("today"); pg.select_option(".citysel", "__add"); pg.wait_for_timeout(200); pg.fill("#cityName", CITY_D); pg.click("#cityOk"); pg.wait_for_timeout(400)
+            o["hero_city"] = pg.locator(".hero .cityrow .city").inner_text()
         tab("places"); pg.click("[data-addcity]"); pg.wait_for_timeout(200); pg.fill("#cityName", CITY_B); pg.click("#cityOk"); pg.wait_for_timeout(400)
         o["cities"] = pg.locator('.filters [data-city]').all_inner_texts()
         pg.click('[data-city="All"]'); pg.wait_for_timeout(300)
@@ -166,6 +170,8 @@ def own_places(pg, tab, errors, own_days):
         elif "Nakatanidou" not in o["today"] or not o["remove_buttons"]: errors.append("+ Day did not land on the phone's own day: " + json.dumps(o, ensure_ascii=False))
     elif o["addday_buttons"]: errors.append("+ Day offered on the phone's own place while the shared plan has days (it would write into trip/days)")
     if CITY_B not in o["cities"] or CITY_A not in o["cities"]: errors.append("added cities missing from the filter: " + json.dumps(o["cities"]))
+    if CITY_C not in o["cities"]: errors.append("a city typed in the setup sheet but not added was dropped on Save: " + json.dumps(o["cities"]))
+    if own_days and o.get("hero_city") != CITY_D: errors.append("Add a city from the Today picker did not set the day's city: " + json.dumps(o.get("hero_city")))
     return o
 
 def main():
