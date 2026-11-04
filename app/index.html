@@ -2577,8 +2577,10 @@ function openSetup(){
   setTimeout(() => $("#setupTz").focus({preventScroll:true}), 50);
 }
 function setupTzNote(){ const z = $("#setupTz").value; $("#setupTzNow").textContent = z ? "Now " + tzNow(z) + " there." : ""; }
+/* The city suggested for a traveler's days: meta.mainCity when it is one of the cities in the data, else the first city. */
+function mainCity(){ const names = placeGroups().map(g => g.name), m = S.meta && S.meta.mainCity; return (m && names.find(n => n.toLowerCase() === String(m).toLowerCase())) || names[0] || ""; }
 function renderSetupCities(){
-  const names = placeGroups().map(g => g.name), def = (mine.days[0] && mine.days[0].city) || names[0] || "";
+  const names = placeGroups().map(g => g.name), def = (mine.days[0] && mine.days[0].city) || mainCity();
   setupDefCity = def; $("#setupCityRow").hidden = sharedDays().length > 0;
   $("#setupCity").innerHTML = names.map(n => `<option value="${esc(n)}"${n === def ? " selected" : ""}>${esc(n)}</option>`).join("");
   $("#setupCities").innerHTML = mine.cities.map(c => `<button type="button" class="btn" data-rmc="${esc(c)}" aria-label="Remove ${esc(c)}">${esc(c)} ✕</button>`).join("");
@@ -2593,7 +2595,7 @@ function saveSetup(){
       if(b < a){ toast("The last day comes before the first day."); return; }
       const n = Math.round((Date.parse(b) - Date.parse(a)) / 864e5) + 1;
       if(n > 90){ toast("That is more than 90 days. Pick a shorter range."); return; }
-      const cityDef = $("#setupCity").value || "Japan";
+      const cityDef = $("#setupCity").value || mainCity() || "Japan";
       if(cityDef !== setupDefCity) mine.days.forEach(d => { if(d.city === setupDefCity) d.city = cityDef; });
       const old = new Map(mine.days.map(d => [d.date, d])), out = [];
       for(let i = 0; i < n; i++){ const date = new Date(Date.parse(a) + i * 864e5).toISOString().slice(0, 10); out.push(old.get(date) || {date, city:cityDef, sleep:"", stay:null, items:[], mine:true}); }

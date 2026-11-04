@@ -1,6 +1,7 @@
 {
  "title": "Japan 2026",
  "homeTz": "America/Los_Angeles",
+ "mainCity": "Kyoto",
  "travelers": "",
  "rate": {
   "asOf": "2026-10-30",
