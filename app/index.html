@@ -451,7 +451,7 @@ html{touch-action:pan-x pan-y}
 .show .rom{margin-top:-10px;font-size:16px;line-height:1.4;color:var(--ink-2);overflow-wrap:anywhere}
 .show .row{display:flex;gap:8px;justify-content:space-between}
 /* Above the drawer (31) and the sheets (26). Taps pass through the text so a covered field can still be tapped; the Undo button takes them. */
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:40;max-width:calc(100% - 32px);padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:14px;pointer-events:none;overflow-wrap:anywhere}
+.toast{position:fixed;left:50%;transform:translateX(-50%);width:max-content;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:40;max-width:calc(100% - 32px);padding:10px 14px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:14px;pointer-events:none;overflow-wrap:anywhere}
 .toast[hidden]{display:none}
 .toast button{margin-left:12px;padding:2px 12px;border:1px solid currentColor;border-radius:99px;background:none;color:inherit;font:inherit;font-weight:700;cursor:pointer;pointer-events:auto}
 .ttl,.hero .city,.days .dc,.days .dl,.place .where,.det{overflow-wrap:anywhere}
@@ -786,8 +786,8 @@ const sharedDays = () => S.days?.days || [];
 const usingMine = () => !sharedDays().length && mine.days.length > 0;
 const days = () => sharedDays().length ? sharedDays() : mine.days;
 const rate = () => { const o = parseFloat(store.get("jt-rate") || ""); if(o > 0) return o; return S.meta?.rate?.jpyPerUsd || 0; };
-/* A typed amount: "1,500" and "19,700" are thousands, "12,5" (a comma keyboard) is a decimal. */
-const num = v => { let s = String(v).replace(/[^0-9.,]/g, ""); if(!s.includes(".") && /,\d{1,2}$/.test(s)) s = s.replace(/,(\d{1,2})$/, ".$1"); return parseFloat(s.replace(/,/g, "")) || 0; };
+/* A typed amount: "1,500" and "19,700" are thousands, "12,5" (a comma keyboard) is a decimal, and with both separators the last one is the decimal point ("1.234,56"). */
+const num = v => { let s = String(v).replace(/[^0-9.,]/g, ""); if(s.includes(".") && s.includes(",")){ const i = Math.max(s.lastIndexOf("."), s.lastIndexOf(",")); s = s.slice(0, i).replace(/[.,]/g, "") + "." + s.slice(i + 1); } else if(!s.includes(".") && /,\d{1,2}$/.test(s)) s = s.replace(/,(\d{1,2})$/, ".$1"); return parseFloat(s.replace(/,/g, "")) || 0; };
 const yen = n => "¥" + Math.round(n).toLocaleString("en-US");
 const usd = n => n < 100 ? "$" + n.toFixed(2) : "$" + Math.round(n).toLocaleString("en-US");
 
@@ -811,8 +811,9 @@ function toast(msg, action, fn){
   if(action){ const b = document.createElement("button"); b.type = "button"; b.textContent = action; b.onclick = () => { t.hidden = true; fn(); }; t.appendChild(b); }
   // while a sheet is open the toast sits just above its card, not over the field being typed in
   const card = document.querySelector(".sheet:not([hidden]) .sheet-card");
-  t.style.bottom = card ? Math.min(innerHeight - 72, Math.round(innerHeight - card.getBoundingClientRect().top + 12)) + "px" : "";
-  t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, action ? 6000 : 3800);
+  t.hidden = false;   // shown first, so its height is known for the cap
+  t.style.bottom = card ? Math.max(0, Math.min(innerHeight - t.offsetHeight - 8, Math.round(innerHeight - card.getBoundingClientRect().top + 12))) + "px" : "";
+  clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, action ? 6000 : 3800);
 }
 
 /* show-to-staff overlay */
@@ -2487,7 +2488,7 @@ function askAddFiles(files){
 }
 function openAsk(){
   if(!sampleFn) return;
-  lastFocus = document.activeElement; askOpen = true; $("#askv").hidden = false;
+  blurIn("main"); lastFocus = document.activeElement; askOpen = true; $("#askv").hidden = false;
   if(!askMsgs.length){ try{ askMsgs = JSON.parse(store.get(ASKKEY) || "[]"); }catch(e){ askMsgs = []; } }
   askRender(); syncBack(); setTimeout(() => $("#askIn").focus(), 50);
 }
@@ -2662,7 +2663,7 @@ function saveSetup(){
   if(lost.length){
     // days that left the range took their plan with them: say so, with a way back
     const k = lost.reduce((s, d) => s + d.items.length, 0), when = lost.map(d => { const q = parts(d.date); return q.mo + " " + q.day; }).join(", ");
-    toast(`Saved. ${k} planned item${k === 1 ? "" : "s"} on ${when} dropped.`, "Undo", () => { const o = JSON.parse(prev); o.tz = mine.tz; o.done = true; mine = o; normMine(); saveMine(); back(); });
+    toast(`Saved. ${k} planned item${k === 1 ? "" : "s"} on ${when} dropped.`, "Undo", () => { const cur = new Map(mine.days.map(d => [d.date, d])); mine.days = JSON.parse(prev).days.map(d => cur.get(d.date) || d); normMine(); saveMine(); back(); });   // the days only: the city and zone just saved stay
   } else toast("Saved on this phone.");
 }
 function mineNote(){
@@ -2694,10 +2695,11 @@ let plCity = "";
 function openPlaceSheet(c){
   lastFocus = document.activeElement;
   const names = placeGroups().map(g => g.name), d = days()[dayIdx];
+  if(!c && !names.length){ openCitySheet(n => { render(); openPlaceSheet(n); }); return; }   // no city anywhere yet: ask for one first, then come back
   plCity = c || (d && d.city && names.includes(d.city) ? d.city : "") || mainCity();
   $("#plCity").innerHTML = names.map(n => `<option value="${esc(n)}"${n === plCity ? " selected" : ""}>${esc(n)}</option>`).join("");
   $("#plCityRow").hidden = !!c || !names.length;
-  $("#placeWhere").textContent = (c ? `In ${c}. ` : names.length ? "" : "Add a city first, with “+ City” on the Places tab. ") + "Kept on this phone; Maps and Directions search by name." + (sharedDays().length ? " The days here are the shared plan, so your places stay on the Places tab." : "");
+  $("#placeWhere").textContent = (c ? `In ${c}. ` : "") + "Kept on this phone; Maps and Directions search by name." + (sharedDays().length ? " The days here are the shared plan, so your places stay on the Places tab." : "");
   ["#plName", "#plJa", "#plArea", "#plNote"].forEach(x => { $(x).value = ""; }); $("#plCat").value = "Food";
   $("#placeSheet").hidden = false; $("#placeSheet .sheet-card").scrollTop = 0; syncBack();
   setTimeout(() => $("#plName").focus({preventScroll:true}), 50);
@@ -2767,7 +2769,7 @@ document.addEventListener("mousedown", e => {
   const card = b.closest(".sheet-card");
   if(card ? a.closest(".sheet-card") === card : (b.closest(".askfoot") ? a.id === "askIn" : true)) e.preventDefault();
 });
-function blurIn(sel){ const a = document.activeElement; if(a && a.blur && a.closest(sel)) a.blur(); }
+function blurIn(sel){ const a = document.activeElement; if(a && a.blur && a.closest(sel)) a.blur(); $("#toast").style.bottom = ""; }   // every sheet closes through here: a toast placed above its card goes back to the usual spot
 function blurOnEnter(e){ if(e.key === "Enter"){ e.preventDefault(); e.target.blur(); } }   // search fields: the keyboard's Search key closes it
 document.addEventListener("keydown", e => { if(e.key !== "Escape") return; if(!$("#placeSheet").hidden) closePlaceSheet(); else if(!$("#citySheet").hidden) closeCitySheet(); else if(!$("#setupSheet").hidden) closeSetup(); });
 document.addEventListener("click", e => { if(e.target.closest("[data-setup]")) openSetup(); });
