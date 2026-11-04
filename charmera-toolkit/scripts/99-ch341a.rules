@@ -1,0 +1,14 @@
+# udev rule: let a logged-in user open the CH341A SPI programmer (WCH, USB ID 1a86:5512) without sudo.
+# Needed by `charmera probe`, `backup` and `restore` on Linux when flashrom runs as your own user.
+#
+# Install:
+#   sudo cp scripts/99-ch341a.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules && sudo udevadm trigger
+#   then unplug and replug the programmer.
+#
+# TAG+="uaccess" grants access to the user at the active seat on systemd systems (most desktops).
+# GROUP="plugdev" covers Debian and Ubuntu, where that group exists; add yourself with
+# `sudo usermod -aG plugdev $USER` and log in again. On a distribution without plugdev, udev logs a
+# warning about the unknown group and the uaccess tag still applies.
+# Without this rule, run the commands with sudo (`sudo python3 -m charmera_toolkit backup ...`).
+SUBSYSTEM=="usb", ATTR{idVendor}=="1a86", ATTR{idProduct}=="5512", MODE="0660", GROUP="plugdev", TAG+="uaccess"
