@@ -37,6 +37,7 @@ jobs:
       - uses: android-actions/setup-android@v3
         with:
           accept-android-sdk-licenses: true
+          packages: platform-tools   # the action's default also asks for the retired "tools" package, which Google no longer serves, and fails
       - run: $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0"
       - run: curl -sSL -o /tmp/ecj.jar https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.38.0/ecj-3.38.0.jar
       - name: Write local.properties and the keystore

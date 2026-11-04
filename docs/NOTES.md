@@ -139,6 +139,7 @@ Everything personal is data. A guest of a shared copy personalizes on the phone 
 - Viewer-reserved URL hash tokens (settings, sidebar, customize, upgrade, downloads, comment-*) can't be used for in-page links.
 - Every db snapshot used to trigger a full render. Renders are coalesced in `scheduleRender` and unchanged documents (same frozen object) are skipped.
 - A non-passive `touchmove` on `document` made every scroll on every tab wait for the main thread. Keep it scoped to Speak.
+- `android-actions/setup-android@v3` installs `tools platform-tools` by default; Google retired `tools`, so the step failed with "Failed to find package 'tools'" (Nov 4, 2026). `apk.yml` passes `packages: platform-tools`; the platform and build-tools are installed by the next step.
 - The first-start sheet (`#setupSheet`) covers the page until Save or Later, so anything that drives the page (the harness, a screenshot script) must fill it or preset `jt-mine` with `done:true`.
 - When editing the page with text anchors, `/* trip tab */` and `<head>` each appear twice (the CSS has a `/* trip tab */` comment and the offline-copy template inside the script has its own `<head>`). Anchor on the JS line (`/* trip tab */\nlet canWrite`) and the first `<head>`.
 
